@@ -1,0 +1,76 @@
+import { Layout } from '@/components/layout/Layout';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Mail, Lock } from 'lucide-react';
+
+export default function LoginPage() {
+  return (
+    <Layout>
+      <section className="py-16 md:py-24 bg-hero min-h-[calc(100vh-200px)] flex items-center">
+        <div className="container">
+          <div className="max-w-md mx-auto">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary text-primary-foreground font-display text-2xl font-bold mb-4">
+                PL
+              </div>
+              <h1 className="font-display text-3xl font-bold text-foreground mb-2">
+                Witaj z powrotem!
+              </h1>
+              <p className="text-muted-foreground font-body">
+                Zaloguj się, aby kontynuować przygodę z Polą i Leonem
+              </p>
+            </div>
+
+            <div className="bg-card rounded-3xl shadow-card border border-border/50 p-8">
+              <form className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="font-body">Adres email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="twoj@email.pl"
+                      className="pl-10 h-12 rounded-xl font-body"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password" className="font-body">Hasło</Label>
+                    <Link to="/zapomniane-haslo" className="text-sm text-primary hover:underline font-body">
+                      Zapomniałeś hasła?
+                    </Link>
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      className="pl-10 h-12 rounded-xl font-body"
+                    />
+                  </div>
+                </div>
+
+                <Button type="submit" className="w-full h-12 rounded-xl font-display text-lg">
+                  Zaloguj się
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center text-sm text-muted-foreground font-body">
+                Nie masz jeszcze konta?{' '}
+                <Link to="/rejestracja" className="text-primary hover:underline font-semibold">
+                  Zarejestruj się
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+}
