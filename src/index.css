@@ -1,96 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Baloo+2:wght@500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* 
+  Pola i Leon Design System
+  Pastelowa, bajkowa paleta - spokojny, wieczorny klimat
+  Kolory inspirowane ilustracjami książek dla dzieci
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Główne tło - ciepły, zgaszony błękit */
+    --background: 210 25% 96%;
+    --foreground: 220 25% 20%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Karty i powierzchnie */
+    --card: 210 30% 98%;
+    --card-foreground: 220 25% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 210 30% 98%;
+    --popover-foreground: 220 25% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Kolor główny - ciepły granatowy/indygo */
+    --primary: 220 45% 35%;
+    --primary-foreground: 210 30% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Kolor pomocniczy - zgaszony miętowy */
+    --secondary: 160 25% 88%;
+    --secondary-foreground: 160 35% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Wyciszony - jasny szaro-niebieski */
+    --muted: 210 20% 92%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Akcent - ciepły brzoskwiniowy */
+    --accent: 25 75% 88%;
+    --accent-foreground: 25 50% 30%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destrukcyjny - przytłumiona czerwień */
+    --destructive: 0 55% 55%;
+    --destructive-foreground: 210 30% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Obramowania i inputy */
+    --border: 210 25% 88%;
+    --input: 210 25% 88%;
+    --ring: 220 45% 35%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Kolory bajkowe - specjalne dla aplikacji */
+    --dreamy-blue: 210 40% 85%;
+    --soft-mint: 160 30% 85%;
+    --warm-peach: 25 70% 90%;
+    --gentle-lavender: 260 30% 88%;
+    --sunset-coral: 15 65% 85%;
+    --forest-sage: 140 20% 80%;
+    
+    /* Gradient bajkowy - wieczorny */
+    --gradient-dreamy: linear-gradient(135deg, hsl(210 40% 85%) 0%, hsl(260 30% 88%) 50%, hsl(25 70% 90%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(210 25% 96%) 0%, hsl(210 40% 92%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 30% 98%) 0%, hsl(210 25% 95%) 100%);
+    
+    /* Cienie bajkowe */
+    --shadow-soft: 0 4px 20px -4px hsl(220 45% 35% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(220 45% 35% / 0.12);
+    --shadow-glow: 0 0 40px -10px hsl(25 75% 88% / 0.5);
+    
+    /* Sidebar */
+    --sidebar-background: 210 25% 97%;
+    --sidebar-foreground: 220 25% 25%;
+    --sidebar-primary: 220 45% 35%;
+    --sidebar-primary-foreground: 210 30% 98%;
+    --sidebar-accent: 25 75% 88%;
+    --sidebar-accent-foreground: 25 50% 30%;
+    --sidebar-border: 210 25% 90%;
+    --sidebar-ring: 220 45% 35%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 220 30% 12%;
+    --foreground: 210 30% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 25% 15%;
+    --card-foreground: 210 30% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 25% 15%;
+    --popover-foreground: 210 30% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 45% 70%;
+    --primary-foreground: 220 30% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 160 20% 25%;
+    --secondary-foreground: 160 25% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 20% 20%;
+    --muted-foreground: 215 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 25 50% 35%;
+    --accent-foreground: 25 70% 90%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 55% 45%;
+    --destructive-foreground: 210 30% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 20% 22%;
+    --input: 220 20% 22%;
+    --ring: 210 45% 70%;
+    
+    --dreamy-blue: 210 35% 25%;
+    --soft-mint: 160 25% 22%;
+    --warm-peach: 25 45% 25%;
+    --gentle-lavender: 260 25% 25%;
+    --sunset-coral: 15 50% 28%;
+    --forest-sage: 140 15% 22%;
+    
+    --gradient-dreamy: linear-gradient(135deg, hsl(210 35% 25%) 0%, hsl(260 25% 25%) 50%, hsl(25 45% 25%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(220 30% 12%) 0%, hsl(220 25% 16%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 25% 15%) 0%, hsl(220 20% 18%) 100%);
+    
+    --sidebar-background: 220 30% 10%;
+    --sidebar-foreground: 210 30% 90%;
+    --sidebar-primary: 210 45% 70%;
+    --sidebar-primary-foreground: 220 30% 12%;
+    --sidebar-accent: 25 50% 35%;
+    --sidebar-accent-foreground: 25 70% 90%;
+    --sidebar-border: 220 20% 18%;
+    --sidebar-ring: 210 45% 70%;
   }
 }
 
@@ -101,5 +137,90 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Nunito', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Baloo 2', cursive;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Baloo 2', cursive;
+  }
+  
+  .font-body {
+    font-family: 'Nunito', sans-serif;
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent-foreground)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-dreamy {
+    background: var(--gradient-dreamy);
+  }
+  
+  .bg-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-dreamy {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Animacje bajkowe */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-wiggle {
+    animation: wiggle 2s ease-in-out infinite;
+  }
+  
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
   }
 }
