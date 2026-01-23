@@ -1,11 +1,57 @@
+import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, Loader2 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { z } from 'zod';
+
+const registerSchema = z.object({
+  email: z.string().trim().email({ message: 'Nieprawidłowy adres email' }),
+  password: z.string().min(6, { message: 'Hasło musi mieć minimum 6 znaków' }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'Hasła nie są identyczne',
+  path: ['confirmPassword'],
+});
 
 export default function RegisterPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    const result = registerSchema.safeParse({ email, password, confirmPassword });
+    if (!result.success) {
+      const fieldErrors: { email?: string; password?: string; confirmPassword?: string } = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof typeof fieldErrors;
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signUp(email, password);
+      navigate('/logowanie');
+    } catch {
+      // Error is handled in useAuth
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <section className="py-16 md:py-24 bg-hero min-h-[calc(100vh-200px)] flex items-center">
@@ -24,20 +70,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="bg-card rounded-3xl shadow-card border border-border/50 p-8">
-              <form className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="font-body">Imię</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Twoje imię"
-                      className="pl-10 h-12 rounded-xl font-body"
-                    />
-                  </div>
-                </div>
-
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="font-body">Adres email</Label>
                   <div className="relative">
@@ -47,8 +80,14 @@ export default function RegisterPage() {
                       type="email"
                       placeholder="twoj@email.pl"
                       className="pl-10 h-12 rounded-xl font-body"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={isLoading}
                     />
                   </div>
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -58,23 +97,52 @@ export default function RegisterPage() {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Minimum 8 znaków"
+                      placeholder="Minimum 6 znaków"
                       className="pl-10 h-12 rounded-xl font-body"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      disabled={isLoading}
                     />
                   </div>
+                  {errors.password && (
+                    <p className="text-sm text-destructive">{errors.password}</p>
+                  )}
                 </div>
 
-                <Button type="submit" className="w-full h-12 rounded-xl font-display text-lg">
-                  Zarejestruj się
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="font-body">Potwierdź hasło</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Powtórz hasło"
+                      className="pl-10 h-12 rounded-xl font-body"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      disabled={isLoading}
+                    />
+                  </div>
+                  {errors.confirmPassword && (
+                    <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                  )}
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full h-12 rounded-xl font-display text-lg"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Rejestracja...
+                    </>
+                  ) : (
+                    'Zarejestruj się'
+                  )}
                 </Button>
               </form>
-
-              <p className="mt-4 text-xs text-center text-muted-foreground font-body">
-                Rejestrując się, akceptujesz nasz{' '}
-                <Link to="/regulamin" className="text-primary hover:underline">regulamin</Link>
-                {' '}i{' '}
-                <Link to="/polityka-prywatnosci" className="text-primary hover:underline">politykę prywatności</Link>.
-              </p>
 
               <div className="mt-6 text-center text-sm text-muted-foreground font-body">
                 Masz już konto?{' '}

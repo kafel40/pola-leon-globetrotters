@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      discovered_countries: {
+        Row: {
+          country_slug: string
+          discovered_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          country_slug: string
+          discovered_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          country_slug?: string
+          discovered_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      owned_ebooks: {
+        Row: {
+          country_slug: string
+          ebook_id: string
+          id: string
+          purchased_at: string
+          user_id: string
+        }
+        Insert: {
+          country_slug: string
+          ebook_id: string
+          id?: string
+          purchased_at?: string
+          user_id: string
+        }
+        Update: {
+          country_slug?: string
+          ebook_id?: string
+          id?: string
+          purchased_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          email: string
+          id: string
+          language: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          email: string
+          id?: string
+          language?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          email?: string
+          id?: string
+          language?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
