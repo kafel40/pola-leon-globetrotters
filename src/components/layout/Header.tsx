@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, BookOpen, Users, Map, ChevronDown } from 'lucide-react';
+import { Menu, Globe, BookOpen, Users, Map, ChevronDown, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import {
@@ -10,10 +10,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { continents } from '@/data/countries';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut, loading } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -21,6 +23,10 @@ export function Header() {
     { href: '/mapa', label: 'Mapa świata', icon: Map },
     { href: '/o-nas', label: 'O Poli i Leonie', icon: Users },
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -74,15 +80,33 @@ export function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-2">
-          <Button variant="ghost" asChild className="font-body">
-            <Link to="/logowanie">Zaloguj się</Link>
-          </Button>
-          <Button asChild className="font-display">
-            <Link to="/biblioteka">
-              <BookOpen className="h-4 w-4 mr-2" />
-              Moja biblioteka
-            </Link>
-          </Button>
+          {!loading && (
+            <>
+              {user ? (
+                <>
+                  <Button asChild className="font-display">
+                    <Link to="/biblioteka">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Moja biblioteka
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" onClick={handleSignOut} className="font-body">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Wyloguj
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" asChild className="font-body">
+                    <Link to="/logowanie">Zaloguj się</Link>
+                  </Button>
+                  <Button asChild className="font-display">
+                    <Link to="/rejestracja">Załóż konto</Link>
+                  </Button>
+                </>
+              )}
+            </>
+          )}
         </div>
 
         {/* Mobile Menu */}
@@ -146,23 +170,50 @@ export function Header() {
 
                 <div className="h-px bg-border my-2" />
 
-                <SheetClose asChild>
-                  <Link
-                    to="/logowanie"
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl font-body transition-colors hover:bg-muted"
-                  >
-                    Zaloguj się
-                  </Link>
-                </SheetClose>
-
-                <SheetClose asChild>
-                  <Link to="/biblioteka">
-                    <Button className="w-full font-display mt-2">
-                      <BookOpen className="h-4 w-4 mr-2" />
-                      Moja biblioteka
-                    </Button>
-                  </Link>
-                </SheetClose>
+                {!loading && (
+                  <>
+                    {user ? (
+                      <>
+                        <SheetClose asChild>
+                          <Link to="/biblioteka">
+                            <Button className="w-full font-display">
+                              <BookOpen className="h-4 w-4 mr-2" />
+                              Moja biblioteka
+                            </Button>
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Button 
+                            variant="ghost" 
+                            onClick={handleSignOut}
+                            className="w-full font-body mt-2"
+                          >
+                            <LogOut className="h-4 w-4 mr-2" />
+                            Wyloguj się
+                          </Button>
+                        </SheetClose>
+                      </>
+                    ) : (
+                      <>
+                        <SheetClose asChild>
+                          <Link
+                            to="/logowanie"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl font-body transition-colors hover:bg-muted"
+                          >
+                            Zaloguj się
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Link to="/rejestracja">
+                            <Button className="w-full font-display mt-2">
+                              Załóż konto
+                            </Button>
+                          </Link>
+                        </SheetClose>
+                      </>
+                    )}
+                  </>
+                )}
               </nav>
             </div>
           </SheetContent>
