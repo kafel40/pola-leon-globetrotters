@@ -166,6 +166,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      complete_ebook_purchase: {
+        Args: { _ebook_id: string; _payment_verified?: boolean }
+        Returns: boolean
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
