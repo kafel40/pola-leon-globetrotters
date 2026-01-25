@@ -21,7 +21,7 @@ export function Header() {
 
   const navLinks = [
     { href: '/mapa', label: 'Mapa świata', icon: Map },
-    { href: '/o-nas', label: 'O Poli i Leonie', icon: Users },
+    { href: '/o-nas', label: 'O nas', icon: Users },
   ];
 
   const handleSignOut = async () => {
