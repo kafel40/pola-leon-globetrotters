@@ -24,9 +24,24 @@ Deno.serve(async (req) => {
     // Parse request body
     const { ebookId, fileType } = await req.json()
     
-    if (!ebookId) {
+    if (!ebookId || typeof ebookId !== 'string') {
       return new Response(
-        JSON.stringify({ error: 'Missing ebookId parameter' }),
+        JSON.stringify({ error: 'Missing or invalid ebookId parameter' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Validate ebookId format to prevent SQL injection
+    // Must be either a valid UUID or a valid slug (lowercase letters, numbers, hyphens)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    const slugRegex = /^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$/
+    
+    const isUuid = uuidRegex.test(ebookId)
+    const isSlug = slugRegex.test(ebookId) && ebookId.length <= 100
+    
+    if (!isUuid && !isSlug) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid ebook identifier format' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -64,12 +79,19 @@ Deno.serve(async (req) => {
     const { data: isAdmin } = await supabaseAdmin
       .rpc('is_admin', { _user_id: user.id })
 
-    // Get the ebook details
-    const { data: ebook, error: ebookError } = await supabaseAdmin
+    // Get the ebook details using safe parameterized queries
+    let ebookQuery = supabaseAdmin
       .from('ebooks')
       .select('id, slug, pdf_url, epub_url, is_published')
-      .or(`id.eq.${ebookId},slug.eq.${ebookId}`)
-      .single()
+
+    // Use separate .eq() calls instead of .or() with string interpolation to prevent SQL injection
+    if (isUuid) {
+      ebookQuery = ebookQuery.eq('id', ebookId)
+    } else {
+      ebookQuery = ebookQuery.eq('slug', ebookId)
+    }
+
+    const { data: ebook, error: ebookError } = await ebookQuery.single()
 
     if (ebookError || !ebook) {
       return new Response(
