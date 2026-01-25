@@ -111,8 +111,14 @@ export default function AdminPage() {
       return null;
     }
 
-    const { data } = supabase.storage.from('ebooks').getPublicUrl(fileName);
-    return data.publicUrl;
+    // For covers, return public URL (allowed by storage policy)
+    // For pdf/epub, return just the path - access is controlled via edge function
+    if (folder === 'covers') {
+      const { data } = supabase.storage.from('ebooks').getPublicUrl(fileName);
+      return data.publicUrl;
+    } else {
+      return fileName; // Store just the path for secure access via edge function
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
