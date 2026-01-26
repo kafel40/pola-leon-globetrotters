@@ -46,7 +46,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* O nas */}
+          {/* Odkrywaj */}
           <div className="space-y-4">
             <h4 className="font-display font-bold text-foreground">Odkrywaj</h4>
             <nav className="flex flex-col gap-2 text-sm font-body">
@@ -62,7 +62,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Konto */}
+          {/* Konto i Prawne */}
           <div className="space-y-4">
             <h4 className="font-display font-bold text-foreground">Konto</h4>
             <nav className="flex flex-col gap-2 text-sm font-body">
@@ -73,13 +73,27 @@ export function Footer() {
                 Zarejestruj się
               </Link>
             </nav>
+            
+            <h4 className="font-display font-bold text-foreground pt-4">Informacje prawne</h4>
+            <nav className="flex flex-col gap-2 text-sm font-body">
+              <Link to="/prawne?tab=regulamin" className="text-muted-foreground hover:text-foreground transition-colors">
+                Regulamin
+              </Link>
+              <Link to="/prawne?tab=polityka" className="text-muted-foreground hover:text-foreground transition-colors">
+                Polityka Prywatności
+              </Link>
+            </nav>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground font-body">
-          <p className="flex items-center gap-1">
-            © {currentYear} Pola i Leon. Tworzone z <Heart className="h-4 w-4 text-accent-foreground fill-accent" /> dla dzieci.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="flex items-center gap-1">
+              © {currentYear} Pola i Leon. Tworzone z <Heart className="h-4 w-4 text-accent-foreground fill-accent" /> dla dzieci.
+            </p>
+            <span className="hidden sm:inline">•</span>
+            <p>Właściciel: CARSI Sp. z o.o.</p>
+          </div>
           <p>Wszelkie prawa zastrzeżone.</p>
         </div>
       </div>
