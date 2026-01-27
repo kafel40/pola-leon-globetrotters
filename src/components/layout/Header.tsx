@@ -90,6 +90,12 @@ export function Header() {
                       Moja biblioteka
                     </Link>
                   </Button>
+                  <Button variant="ghost" asChild className="font-body">
+                    <Link to="/konto">
+                      <Users className="h-4 w-4 mr-2" />
+                      Moje konto
+                    </Link>
+                  </Button>
                   <Button variant="ghost" onClick={handleSignOut} className="font-body">
                     <LogOut className="h-4 w-4 mr-2" />
                     Wyloguj
@@ -180,6 +186,15 @@ export function Header() {
                               <BookOpen className="h-4 w-4 mr-2" />
                               Moja biblioteka
                             </Button>
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Link
+                            to="/konto"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl font-body transition-colors hover:bg-muted mt-2"
+                          >
+                            <Users className="h-5 w-5" />
+                            Moje konto
                           </Link>
                         </SheetClose>
                         <SheetClose asChild>

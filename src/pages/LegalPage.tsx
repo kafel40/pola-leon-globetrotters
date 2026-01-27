@@ -55,22 +55,31 @@ const LegalPage = () => {
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 1. Postanowienia ogólne</h2>
                   <ol className="list-decimal pl-6 space-y-2">
                     <li>Niniejszy Regulamin określa zasady korzystania z serwisu internetowego oraz sklepu dostępnego pod adresem polaileon.pl.</li>
-                    <li>Serwis ma charakter edukacyjny i jest skierowany do rodziców, opiekunów dzieci oraz placówek edukacyjnych.</li>
+                    <li>Serwis ma charakter edukacyjny i jest skierowany do rodziców oraz opiekunów dzieci.</li>
                     <li>Właścicielem Serwisu jest spółka CARSI Sp. z o.o.</li>
                   </ol>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 2. Usługi i Płatności</h2>
                   <ol className="list-decimal pl-6 space-y-2">
-                    <li>Serwis oferuje darmowe treści edukacyjne (blog, bajki online) oraz płatne Treści Cyfrowe (pliki PDF, e-booki).</li>
+                    <li>Serwis oferuje darmowe treści edukacyjne oraz płatne Treści Cyfrowe (pliki PDF, e-booki).</li>
                     <li>Zamówienia na produkty cyfrowe realizowane są poprzez sklep internetowy.</li>
                     <li>Ceny podane w sklepie są cenami brutto (zawierają podatek VAT).</li>
                   </ol>
 
+                  <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 2a. Konto Użytkownika</h2>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li>W ramach Serwisu Użytkownik ma możliwość założenia darmowego Konta Użytkownika.</li>
+                    <li>Założenie Konta wymaga wypełnienia formularza rejestracyjnego, w tym podania adresu e-mail oraz ustanowienia hasła, a także akceptacji Regulaminu i Polityki Prywatności.</li>
+                    <li>Konto Użytkownika umożliwia: dostęp do historii zamówień, zarządzanie danymi osobowymi, dostęp do "Mojej Biblioteki" (zakupionych treści cyfrowych) oraz zarządzanie zgodami marketingowymi.</li>
+                    <li>Użytkownik jest zobowiązany do zachowania w tajemnicy danych do logowania i nieudostępniania ich osobom trzecim.</li>
+                    <li>Użytkownik może w każdej chwili usunąć Konto, korzystając z przycisku „Usuń konto" dostępnego w panelu użytkownika. Usunięcie konta nie usuwa automatycznie danych o dokonanych wcześniej transakcjach (wymaganych do celów księgowych).</li>
+                  </ol>
+
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 3. Dostawa i Prawo Odstąpienia od Umowy</h2>
                   <ol className="list-decimal pl-6 space-y-2">
-                    <li>Produkt cyfrowy wysyłany jest automatycznie na adres e-mail podany w zamówieniu lub pobierany automatycznie ze strony internetowej.</li>
+                    <li>Produkt cyfrowy wysyłany jest automatycznie na adres e-mail podany w zamówieniu.</li>
                     <li>
-                      <strong>Ważne:</strong> Zgodnie z art. 38 ustawy o prawach konsumenta, prawo do odstąpienia od umowy (zwrotu) nie przysługuje w odniesieniu do treści cyfrowych niedostarczanych na nośniku materialnym, jeżeli spełnianie świadczenia rozpoczęło się za wyraźną zgodą Konsumenta przed upływem terminu do odstąpienia od umowy.
+                      <strong>Ważne:</strong> Zgodnie z art. 38 ustawy o prawach konsumenta, prawo do odstąpienia od umowy (zwrotu) <strong>nie przysługuje</strong> w odniesieniu do treści cyfrowych, jeżeli spełnianie świadczenia rozpoczęło się za wyraźną zgodą Konsumenta przed upływem terminu do odstąpienia od umowy.
                     </li>
                     <li>Kupując plik i pobierając go, Klient wyraża zgodę na utratę prawa do odstąpienia od umowy.</li>
                   </ol>
@@ -78,20 +87,13 @@ const LegalPage = () => {
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 4. Licencja i Prawa Autorskie</h2>
                   <ol className="list-decimal pl-6 space-y-2">
                     <li>Klient otrzymuje licencję niewyłączną na korzystanie z produktu wyłącznie na użytek własny (domowy).</li>
-                    <li>Zabronione jest rozpowszechnianie plików, ich odsprzedaż, modyfikowanie oraz udostępnianie osobom trzecim (np. na grupach w social mediach) bez zgody właściciela tj. spółki Carsi Sp z o.o.</li>
+                    <li>Zabronione jest rozpowszechnianie plików, ich odsprzedaż oraz udostępnianie osobom trzecim.</li>
                   </ol>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 5. Wyłączenie odpowiedzialności (Klauzula Bezpieczeństwa)</h2>
                   <ol className="list-decimal pl-6 space-y-2">
-                    <li>
-                      <strong>Charakter treści:</strong> Wszelkie materiały w Serwisie mają charakter wyłącznie edukacyjny i rozrywkowy. Nie zastępują porady psychologicznej, pedagogicznej ani medycznej.
-                    </li>
-                    <li>
-                      <strong>Odpowiedzialność Rodzica:</strong> Zabawy proponowane przez Polę i Leona wymagają nadzoru osoby dorosłej. Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku zabawy dzieci.
-                    </li>
-                    <li>
-                      <strong>Kwestie techniczne:</strong> Sprzedawca nie odpowiada za blokowanie wiadomości e-mail przez filtry antyspamowe Klienta ani za brak odpowiedniego oprogramowania do odczytu plików (PDF) na urządzeniu Klienta.
-                    </li>
+                    <li>Wszelkie materiały w Serwisie mają charakter wyłącznie edukacyjny. Nie zastępują porady psychologicznej ani medycznej.</li>
+                    <li>Zabawy proponowane przez Polę i Leona wymagają nadzoru osoby dorosłej. Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku zabawy dzieci bez opieki.</li>
                   </ol>
                 </article>
               </div>
@@ -108,21 +110,21 @@ const LegalPage = () => {
                   </p>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">II. Cel i zakres przetwarzania</h2>
-                  <p>Przetwarzamy Twoje dane wyłącznie w celu:</p>
-                  <ol className="list-decimal pl-6 space-y-2">
-                    <li>Realizacji zamówienia i dostarczenia produktu cyfrowego (podstawa: wykonanie umowy).</li>
-                    <li>Kontaktu mailowego w sprawie Twoich zapytań (podstawa: uzasadniony interes).</li>
-                    <li>Wysyłki Newslettera - tylko jeśli wyraziłeś na to dobrowolną zgodę.</li>
-                  </ol>
+                  <p>Przetwarzamy Twoje dane w celu: realizacji zamówienia, obsługi Konta Użytkownika, kontaktu mailowego oraz wysyłki Newslettera (za Twoją zgodą).</p>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">III. Odbiorcy danych</h2>
-                  <p>
-                    Twoje dane mogą być przekazywane zaufanym partnerom technologicznym: operatorom płatności (w celu opłacenia zamówienia), firmie hostingowej oraz biuru księgowemu. Nie sprzedajemy Twoich danych nikomu.
-                  </p>
+                  <p>Twoje dane mogą być przekazywane zaufanym podmiotom przetwarzającym, z którymi współpracujemy:</p>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li><strong>Dostawcy usług IT i hostingu:</strong> w tym dostawca bazy danych i systemu autentykacji (Supabase).</li>
+                    <li><strong>Operatorzy płatności:</strong> w celu realizacji transakcji zakupowych.</li>
+                    <li><strong>Dostawcy usług mailingowych:</strong> (np. MailerLite/Resend) – wyłącznie w celu wysyłki maili transakcyjnych (potwierdzenie konta) oraz Newslettera.</li>
+                    <li><strong>Biuro księgowe:</strong> w celu realizacji obowiązków podatkowych.</li>
+                  </ol>
+                  <p>Nie sprzedajemy Twoich danych podmiotom trzecim.</p>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">IV. Twoje Prawa</h2>
                   <p>
-                    Przysługuje Ci prawo dostępu do swoich danych, ich sprostowania, usunięcia ("prawo do bycia zapomnianym") oraz ograniczenia przetwarzania.
+                    Przysługuje Ci prawo dostępu do swoich danych, ich sprostowania, usunięcia oraz cofnięcia zgód marketingowych w Panelu Użytkownika.
                   </p>
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">V. Bezpieczeństwo</h2>
@@ -130,10 +132,15 @@ const LegalPage = () => {
                     Strona używa szyfrowania SSL. Administrator nie ponosi jednak odpowiedzialności za skutki kradzieży danych wynikające z zaniedbań Użytkownika (np. udostępnienie hasła osobom trzecim).
                   </p>
 
-                  <h2 className="text-xl md:text-2xl mt-8 mb-4">VI. Pliki Cookies</h2>
-                  <p>
-                    Strona korzysta z plików cookies niezbędnych do działania sklepu (koszyk) oraz w celach statystycznych (analiza ruchu na stronie). Możesz zarządzać ustawieniami cookies w swojej przeglądarce internetowej.
-                  </p>
+                  <h2 className="text-xl md:text-2xl mt-8 mb-4">VI. Pliki Cookies i technologie śledzące</h2>
+                  <p>Nasza strona wykorzystuje pliki cookies (ciasteczka) w celu zapewnienia poprawnego działania serwisu oraz w celach analitycznych i marketingowych.</p>
+                  <p>Stosujemy następujące rodzaje plików cookies:</p>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li><strong>Niezbędne:</strong> Są kluczowe dla funkcjonowania strony (np. utrzymanie sesji logowania). Tych plików nie można wyłączyć.</li>
+                    <li><strong>Analityczne (Opcjonalne):</strong> Pomagają nam zrozumieć, jak Użytkownicy korzystają ze strony, co pozwala nam ulepszać jej zawartość.</li>
+                    <li><strong>Marketingowe (Opcjonalne):</strong> Pozwalają na dopasowanie treści marketingowych do Twoich zainteresowań.</li>
+                  </ol>
+                  <p>Podczas pierwszej wizyty na stronie wyświetlany jest baner, który pozwala Użytkownikowi na zarządzanie plikami cookies.</p>
                 </article>
               </div>
             </TabsContent>

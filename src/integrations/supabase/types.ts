@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcement_bar: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          message: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          message: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          message?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       discovered_countries: {
         Row: {
           country_slug: string
@@ -86,6 +110,27 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          email: string
+          id: string
+          is_active: boolean | null
+          subscribed_at: string | null
+        }
+        Insert: {
+          email: string
+          id?: string
+          is_active?: boolean | null
+          subscribed_at?: string | null
+        }
+        Update: {
+          email?: string
+          id?: string
+          is_active?: boolean | null
+          subscribed_at?: string | null
+        }
+        Relationships: []
+      }
       owned_ebooks: {
         Row: {
           country_slug: string
@@ -116,8 +161,12 @@ export type Database = {
           created_at: string
           display_name: string | null
           email: string
+          full_name: string | null
           id: string
           language: string | null
+          marketing_consent: boolean | null
+          newsletter_consent: boolean | null
+          terms_accepted_at: string | null
           updated_at: string
           user_id: string
         }
@@ -126,8 +175,12 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           email: string
+          full_name?: string | null
           id?: string
           language?: string | null
+          marketing_consent?: boolean | null
+          newsletter_consent?: boolean | null
+          terms_accepted_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -136,8 +189,12 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           email?: string
+          full_name?: string | null
           id?: string
           language?: string | null
+          marketing_consent?: boolean | null
+          newsletter_consent?: boolean | null
+          terms_accepted_at?: string | null
           updated_at?: string
           user_id?: string
         }
