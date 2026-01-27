@@ -6,8 +6,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { Ebook } from '@/hooks/useCountryEbooks';
 import { useAuth } from '@/hooks/useAuth';
 import { useAudioPlayer } from '@/components/audio/AudioPlayerContext';
+import { usePdfViewer } from '@/components/pdf/PdfViewerContext';
 import { Link } from 'react-router-dom';
-
 interface EbookCardProps {
   ebook: Ebook;
   isOwned: boolean;
@@ -18,6 +18,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const { play } = useAudioPlayer();
+  const { openPdf } = usePdfViewer();
   const [downloading, setDownloading] = useState<string | null>(null);
   const [acquiring, setAcquiring] = useState(false);
   const [addingToLibrary, setAddingToLibrary] = useState(false);
@@ -129,8 +130,20 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
           title: 'Odtwarzanie rozpoczęte!',
           description: 'Użyj odtwarzacza na dole strony.',
         });
+      } else if (fileType === 'pdf') {
+        // For PDF, use the inline viewer
+        openPdf({
+          id: ebook.id,
+          title: ebook.title,
+          url: response.data.downloadUrl,
+          coverUrl: ebook.cover_image_url || undefined,
+        });
+        toast({
+          title: 'Otwieranie PDF',
+          description: 'Bajka otwarta w przeglądarce.',
+        });
       } else {
-        // Open download in new tab for PDF/EPUB
+        // Open download in new tab for EPUB
         window.open(response.data.downloadUrl, '_blank');
         toast({
           title: 'Pobieranie rozpoczęte!',
