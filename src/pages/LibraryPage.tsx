@@ -115,20 +115,33 @@ export default function LibraryPage() {
                   </Button>
                 </div>
               ) : (
-              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-                  {discoveredCountryData.map((country) => (
-                    <Link
-                      key={country.slug}
-                      to={`/kraj/${country.slug}`}
-                      className="group flex flex-col items-center p-3 rounded-xl bg-card hover:bg-accent transition-colors"
-                    >
-                      <span className="text-4xl mb-2">{country.flagEmoji}</span>
-                      <span className="text-xs text-center font-medium text-foreground group-hover:text-accent-foreground">
-                        {country.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                <>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mb-6">
+                    {discoveredCountryData.map((country) => (
+                      <Link
+                        key={country.slug}
+                        to={`/kraj/${country.slug}`}
+                        className="group flex flex-col items-center p-3 rounded-xl bg-card hover:bg-accent transition-colors"
+                      >
+                        <span className="text-4xl mb-2">{country.flagEmoji}</span>
+                        <span className="text-xs text-center font-medium text-foreground group-hover:text-accent-foreground">
+                          {country.name}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="p-6 rounded-2xl bg-dreamy-mint/30 border border-dreamy-mint text-center">
+                    <p className="text-foreground/80 font-body mb-4">
+                      🌍 Świetnie! Odkryłeś już {discoveredCountries.length} {discoveredCountries.length === 1 ? 'kraj' : 'krajów'}! Poznaj kolejne kultury i tradycje.
+                    </p>
+                    <Button asChild variant="outline" className="font-display">
+                      <Link to="/mapa">
+                        Odkryj więcej krajów
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </div>
+                </>
               )}
             </div>
           </section>

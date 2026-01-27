@@ -44,6 +44,8 @@ export function useLibrary() {
         .select('*')
         .eq('user_id', user.id);
 
+      let countriesFromOwned: string[] = [];
+
       if (ownedError) {
         console.error('Error fetching owned ebooks:', ownedError);
       } else if (ownedData && ownedData.length > 0) {
@@ -65,26 +67,26 @@ export function useLibrary() {
           setOwnedEbooks(enrichedOwnedEbooks);
         }
 
-        // Extract unique countries
-        const uniqueCountries = [...new Set(ownedData.map(o => o.country_slug))];
-        setDiscoveredCountries(uniqueCountries);
+        // Extract unique countries from owned ebooks
+        countriesFromOwned = [...new Set(ownedData.map(o => o.country_slug))];
       }
 
-      // Also fetch discovered countries
+      // Fetch discovered countries from dedicated table
       const { data: discoveredData, error: discoveredError } = await supabase
         .from('discovered_countries')
         .select('country_slug')
         .eq('user_id', user.id);
 
+      let countriesFromDiscovered: string[] = [];
       if (discoveredError) {
         console.error('Error fetching discovered countries:', discoveredError);
       } else if (discoveredData) {
-        const allCountries = [
-          ...discoveredCountries,
-          ...discoveredData.map(d => d.country_slug),
-        ];
-        setDiscoveredCountries([...new Set(allCountries)]);
+        countriesFromDiscovered = discoveredData.map(d => d.country_slug);
       }
+
+      // Merge all countries from both sources
+      const allCountries = [...new Set([...countriesFromOwned, ...countriesFromDiscovered])];
+      setDiscoveredCountries(allCountries);
 
       setLoading(false);
     };
