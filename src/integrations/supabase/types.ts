@@ -38,6 +38,7 @@ export type Database = {
       ebooks: {
         Row: {
           age_group: string | null
+          audio_url: string | null
           country_slug: string
           cover_image_url: string | null
           created_at: string
@@ -53,6 +54,7 @@ export type Database = {
         }
         Insert: {
           age_group?: string | null
+          audio_url?: string | null
           country_slug: string
           cover_image_url?: string | null
           created_at?: string
@@ -68,6 +70,7 @@ export type Database = {
         }
         Update: {
           age_group?: string | null
+          audio_url?: string | null
           country_slug?: string
           cover_image_url?: string | null
           created_at?: string

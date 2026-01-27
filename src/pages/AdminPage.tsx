@@ -25,6 +25,7 @@ interface Ebook {
   cover_image_url: string | null;
   pdf_url: string | null;
   epub_url: string | null;
+  audio_url: string | null;
   price: number | null;
   is_published: boolean | null;
   created_at: string;
@@ -52,6 +53,7 @@ export default function AdminPage() {
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [epubFile, setEpubFile] = useState<File | null>(null);
+  const [audioFile, setAudioFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (isAdmin) {
@@ -84,6 +86,7 @@ export default function AdminPage() {
     setCoverFile(null);
     setPdfFile(null);
     setEpubFile(null);
+    setAudioFile(null);
     setIsEditing(false);
     setEditingId(null);
   };
@@ -129,6 +132,7 @@ export default function AdminPage() {
       let coverUrl = null;
       let pdfUrl = null;
       let epubUrl = null;
+      let audioUrl = null;
 
       if (coverFile) {
         coverUrl = await uploadFile(coverFile, 'covers');
@@ -138,6 +142,9 @@ export default function AdminPage() {
       }
       if (epubFile) {
         epubUrl = await uploadFile(epubFile, 'epub');
+      }
+      if (audioFile) {
+        audioUrl = await uploadFile(audioFile, 'audio');
       }
 
       const ebookData = {
@@ -151,6 +158,7 @@ export default function AdminPage() {
         ...(coverUrl && { cover_image_url: coverUrl }),
         ...(pdfUrl && { pdf_url: pdfUrl }),
         ...(epubUrl && { epub_url: epubUrl }),
+        ...(audioUrl && { audio_url: audioUrl }),
       };
 
       if (editingId) {
@@ -366,6 +374,16 @@ export default function AdminPage() {
                         onChange={(e) => setEpubFile(e.target.files?.[0] || null)}
                       />
                     </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="audio">Audiobook (MP3)</Label>
+                      <Input
+                        id="audio"
+                        type="file"
+                        accept=".mp3,audio/*"
+                        onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+                      />
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-3 pt-4">
@@ -438,7 +456,7 @@ export default function AdminPage() {
                             {countries.find(c => c.slug === ebook.country_slug)?.flagEmoji}{' '}
                             {countries.find(c => c.slug === ebook.country_slug)?.name}
                           </p>
-                          <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center gap-2 mt-1 flex-wrap">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${
                               ebook.is_published 
                                 ? 'bg-green-100 text-green-700' 
@@ -446,6 +464,21 @@ export default function AdminPage() {
                             }`}>
                               {ebook.is_published ? 'Opublikowana' : 'Szkic'}
                             </span>
+                            {ebook.pdf_url && (
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                                PDF
+                              </span>
+                            )}
+                            {ebook.epub_url && (
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+                                EPUB
+                              </span>
+                            )}
+                            {ebook.audio_url && (
+                              <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">
+                                🎧 Audio
+                              </span>
+                            )}
                             {ebook.price && ebook.price > 0 && (
                               <span className="text-xs text-muted-foreground">
                                 {ebook.price} PLN
