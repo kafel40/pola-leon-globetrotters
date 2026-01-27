@@ -31,7 +31,7 @@ export function CTASection() {
               size="lg"
               variant="secondary"
               asChild
-              className="font-display text-lg px-8 py-6 rounded-2xl"
+              className="font-display text-lg px-8 py-6 rounded-2xl w-full sm:w-64"
             >
               <Link to="/mapa">
                 <BookOpen className="h-5 w-5 mr-2" />
@@ -40,9 +40,9 @@ export function CTASection() {
             </Button>
             <Button
               size="lg"
-              variant="outline"
+              variant="secondary"
               asChild
-              className="font-body px-8 py-6 rounded-2xl border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="font-display text-lg px-8 py-6 rounded-2xl w-full sm:w-64"
             >
               <Link to="/rejestracja">
                 Załóż konto za darmo

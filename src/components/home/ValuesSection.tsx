@@ -44,10 +44,10 @@ export function ValuesSection() {
           {values.map((value, index) => (
             <div
               key={value.title}
-              className="group p-6 rounded-3xl bg-card shadow-dreamy border border-border/50 hover:shadow-card transition-all duration-300"
+              className="group p-6 rounded-3xl bg-card shadow-dreamy border border-border/50 hover:shadow-card transition-all duration-300 text-center"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className={`w-14 h-14 rounded-2xl ${value.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+              <div className={`w-14 h-14 rounded-2xl ${value.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform mx-auto`}>
                 <value.icon className="h-7 w-7 text-foreground/80" />
               </div>
               <h3 className="font-display text-xl font-bold text-foreground mb-2">
