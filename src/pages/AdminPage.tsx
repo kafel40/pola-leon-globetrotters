@@ -105,14 +105,23 @@ export default function AdminPage() {
     const fileExt = file.name.split('.').pop();
     const fileName = `${folder}/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
 
+    console.log(`Uploading file to: ${fileName}`);
+    
     const { error } = await supabase.storage
       .from('ebooks')
       .upload(fileName, file);
 
     if (error) {
       console.error('Upload error:', error);
-      return null;
+      toast({ 
+        title: 'Błąd uploadu', 
+        description: `Nie udało się przesłać pliku ${file.name}: ${error.message}`, 
+        variant: 'destructive' 
+      });
+      throw new Error(`Upload failed: ${error.message}`);
     }
+
+    console.log(`File uploaded successfully: ${fileName}`);
 
     // For covers, return public URL (allowed by storage policy)
     // For pdf/epub, return just the path - access is controlled via edge function
@@ -161,27 +170,44 @@ export default function AdminPage() {
         ...(audioUrl && { audio_url: audioUrl }),
       };
 
+      console.log('Saving ebook data:', ebookData);
+      
       if (editingId) {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('ebooks')
           .update(ebookData)
-          .eq('id', editingId);
+          .eq('id', editingId)
+          .select();
 
-        if (error) throw error;
+        if (error) {
+          console.error('Update error:', error);
+          throw error;
+        }
+        console.log('Updated ebook:', data);
         toast({ title: 'Sukces', description: 'Bajka została zaktualizowana' });
       } else {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('ebooks')
-          .insert(ebookData);
+          .insert(ebookData)
+          .select();
 
-        if (error) throw error;
+        if (error) {
+          console.error('Insert error:', error);
+          throw error;
+        }
+        console.log('Inserted ebook:', data);
         toast({ title: 'Sukces', description: 'Bajka została dodana' });
       }
 
       resetForm();
       fetchEbooks();
     } catch (error: any) {
-      toast({ title: 'Błąd', description: error.message, variant: 'destructive' });
+      console.error('Save error:', error);
+      toast({ 
+        title: 'Błąd zapisu', 
+        description: `Nie udało się zapisać bajki: ${error.message}`, 
+        variant: 'destructive' 
+      });
     } finally {
       setSaving(false);
     }
