@@ -1,15 +1,11 @@
 import { useState } from 'react';
-import { FileText, BookOpen, Headphones, Download, Loader2 } from 'lucide-react';
+import { FileText, BookOpen, Headphones, ShoppingCart, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Ebook } from '@/hooks/useCountryEbooks';
 import { useAuth } from '@/hooks/useAuth';
 import { Link } from 'react-router-dom';
-
-// Configuration flag for monetization
-// Set to true when you want to enable paid content
-const MONETIZATION_ENABLED = false;
 
 interface EbookCardProps {
   ebook: Ebook;
@@ -28,10 +24,11 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   const hasAudio = !!ebook.audio_url;
   const hasAnyFile = hasPdf || hasEpub || hasAudio;
 
-  // Determine if content is paid
-  const isPaid = MONETIZATION_ENABLED && (ebook.price || 0) > 0;
+  // Price-based logic: if price > 0, it's paid content
+  const price = ebook.price || 0;
+  const isPaid = price > 0;
   
-  // User can access if: free content, already owned, or monetization disabled
+  // User can access if: free content (price = 0) OR already owned
   const canAccess = !isPaid || isOwned;
 
   const handleDownload = async (fileType: 'pdf' | 'epub' | 'audio') => {
@@ -149,7 +146,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
           {/* Price or Free badge */}
           {isPaid && !isOwned ? (
             <div className="mb-3">
-              <span className="text-lg font-bold text-primary">{ebook.price} PLN</span>
+              <span className="text-lg font-bold text-primary">{price.toFixed(2)} PLN</span>
             </div>
           ) : (
             <div className="mb-3">
@@ -216,8 +213,8 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
             </div>
           ) : (
             <Button size="sm" onClick={handleBuy}>
-              <Download className="mr-2 h-4 w-4" />
-              Kup za {ebook.price} PLN
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Kup za {price.toFixed(2)} PLN
             </Button>
           )}
         </div>
