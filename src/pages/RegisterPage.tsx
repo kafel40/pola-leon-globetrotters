@@ -4,14 +4,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 
 const registerSchema = z.object({
   email: z.string().trim().email({ message: 'Nieprawidłowy adres email' }),
   password: z.string().min(6, { message: 'Hasło musi mieć minimum 6 znaków' }),
   confirmPassword: z.string(),
+  termsAccepted: z.literal(true, {
+    errorMap: () => ({ message: 'Musisz zaakceptować regulamin' }),
+  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: 'Hasła nie są identyczne',
   path: ['confirmPassword'],
@@ -21,7 +26,15 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [newsletterConsent, setNewsletterConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [errors, setErrors] = useState<{ 
+    email?: string; 
+    password?: string; 
+    confirmPassword?: string;
+    termsAccepted?: string;
+  }>({});
   const [isLoading, setIsLoading] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -30,9 +43,9 @@ export default function RegisterPage() {
     e.preventDefault();
     setErrors({});
 
-    const result = registerSchema.safeParse({ email, password, confirmPassword });
+    const result = registerSchema.safeParse({ email, password, confirmPassword, termsAccepted });
     if (!result.success) {
-      const fieldErrors: { email?: string; password?: string; confirmPassword?: string } = {};
+      const fieldErrors: typeof errors = {};
       result.error.errors.forEach((err) => {
         const field = err.path[0] as keyof typeof fieldErrors;
         fieldErrors[field] = err.message;
@@ -44,6 +57,21 @@ export default function RegisterPage() {
     setIsLoading(true);
     try {
       await signUp(email, password);
+      
+      // Update profile with consents after signup
+      // This will be handled by the trigger, but we need to update consents
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase
+          .from('profiles')
+          .update({
+            newsletter_consent: newsletterConsent,
+            marketing_consent: marketingConsent,
+            terms_accepted_at: new Date().toISOString(),
+          })
+          .eq('user_id', user.id);
+      }
+      
       navigate('/logowanie');
     } catch {
       // Error is handled in useAuth
@@ -126,6 +154,61 @@ export default function RegisterPage() {
                   {errors.confirmPassword && (
                     <p className="text-sm text-destructive">{errors.confirmPassword}</p>
                   )}
+                </div>
+
+                {/* Consents */}
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="terms"
+                      checked={termsAccepted}
+                      onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                      disabled={isLoading}
+                      className="mt-0.5"
+                    />
+                    <div className="space-y-1">
+                      <Label htmlFor="terms" className="font-body text-sm leading-relaxed cursor-pointer">
+                        Akceptuję{' '}
+                        <Link to="/prawne?tab=regulamin" className="text-primary hover:underline" target="_blank">
+                          Regulamin
+                        </Link>
+                        {' '}i{' '}
+                        <Link to="/prawne?tab=polityka" className="text-primary hover:underline" target="_blank">
+                          Politykę Prywatności
+                        </Link>
+                        {' '}*
+                      </Label>
+                      {errors.termsAccepted && (
+                        <p className="text-sm text-destructive">{errors.termsAccepted}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="newsletter"
+                      checked={newsletterConsent}
+                      onCheckedChange={(checked) => setNewsletterConsent(checked === true)}
+                      disabled={isLoading}
+                      className="mt-0.5"
+                    />
+                    <Label htmlFor="newsletter" className="font-body text-sm leading-relaxed cursor-pointer">
+                      Chcę zapisać się do newslettera i otrzymywać informacje o nowych bajkach
+                    </Label>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="marketing"
+                      checked={marketingConsent}
+                      onCheckedChange={(checked) => setMarketingConsent(checked === true)}
+                      disabled={isLoading}
+                      className="mt-0.5"
+                    />
+                    <Label htmlFor="marketing" className="font-body text-sm leading-relaxed cursor-pointer">
+                      Wyrażam zgodę na komunikację marketingową
+                    </Label>
+                  </div>
                 </div>
 
                 <Button 

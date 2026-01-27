@@ -18,6 +18,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LibraryPage from "./pages/LibraryPage";
 import AdminPage from "./pages/AdminPage";
 import LegalPage from "./pages/LegalPage";
+import AccountPage from "./pages/AccountPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
                 <Route path="/biblioteka" element={<LibraryPage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/prawne" element={<LegalPage />} />
+                <Route path="/konto" element={<AccountPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
