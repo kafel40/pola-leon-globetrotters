@@ -3,6 +3,7 @@ import { ArrowLeft, MapPin, Clock, Check, Lightbulb, BookOpen } from 'lucide-rea
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { getCountryBySlug, getContinentById } from '@/data/countries';
+import { EbooksList } from '@/components/country/EbooksList';
 
 export default function CountryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -122,24 +123,9 @@ export default function CountryPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="max-w-2xl mx-auto mt-12 p-8 rounded-3xl bg-primary text-primary-foreground text-center">
-            <h3 className="font-display text-2xl font-bold mb-4">
-              {isAvailable ? 'Chcesz poznać całą historię?' : 'Ta historia już wkrótce!'}
-            </h3>
-            <p className="font-body opacity-90 mb-6">
-              {isAvailable
-                ? `Kup bajkę o przygodzie Poli i Leona w tym pięknym kraju.`
-                : `Pracujemy nad bajką z ${country.name}. Zostaw nam swój email, a powiadomimy Cię!`}
-            </p>
-            <Button
-              size="lg"
-              variant="secondary"
-              className="font-display"
-              disabled={!isAvailable}
-            >
-              {isAvailable ? 'Kup bajkę' : 'Powiadom mnie'}
-            </Button>
+          {/* Ebooks section */}
+          <div className="max-w-4xl mx-auto mt-12">
+            <EbooksList countrySlug={country.slug} countryName={country.name} />
           </div>
         </div>
       </section>
