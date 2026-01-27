@@ -49,7 +49,7 @@ export default function AdminPage() {
   const [description, setDescription] = useState('');
   const [ageGroup, setAgeGroup] = useState('2-6');
   const [price, setPrice] = useState('0');
-  const [isPublished, setIsPublished] = useState(false);
+  const [isPublished, setIsPublished] = useState(true);
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [epubFile, setEpubFile] = useState<File | null>(null);
@@ -82,7 +82,7 @@ export default function AdminPage() {
     setDescription('');
     setAgeGroup('2-6');
     setPrice('0');
-    setIsPublished(false);
+    setIsPublished(true);
     setCoverFile(null);
     setPdfFile(null);
     setEpubFile(null);
