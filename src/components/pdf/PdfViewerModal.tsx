@@ -12,9 +12,23 @@ export function PdfViewerModal() {
 
   if (!currentPdf || !isOpen) return null;
 
-  const handleDownload = () => {
-    // Open in new tab for download
-    window.open(currentPdf.url, '_blank');
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(currentPdf.url);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `${currentPdf.title}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // Fallback to opening in new tab
+      window.open(currentPdf.url, '_blank');
+    }
   };
 
   const handleOpenExternal = () => {
