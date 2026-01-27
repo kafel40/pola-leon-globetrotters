@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { FileText, BookOpen, Headphones, ShoppingCart, Loader2 } from 'lucide-react';
+import { FileText, BookOpen, Headphones, ShoppingCart, Loader2, Library } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Ebook } from '@/hooks/useCountryEbooks';
 import { useAuth } from '@/hooks/useAuth';
+import { useAudioPlayer } from '@/components/audio/AudioPlayerContext';
 import { Link } from 'react-router-dom';
 
 interface EbookCardProps {
@@ -16,8 +17,10 @@ interface EbookCardProps {
 export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { play } = useAudioPlayer();
   const [downloading, setDownloading] = useState<string | null>(null);
   const [acquiring, setAcquiring] = useState(false);
+  const [addingToLibrary, setAddingToLibrary] = useState(false);
 
   const hasPdf = !!ebook.pdf_url;
   const hasEpub = !!ebook.epub_url;
@@ -30,6 +33,42 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   
   // User can access if: free content (price = 0) OR already owned
   const canAccess = !isPaid || isOwned;
+
+  const handleAddToLibrary = async () => {
+    if (!user) {
+      toast({
+        title: 'Wymagane logowanie',
+        description: 'Zaloguj się, aby dodać bajkę do biblioteki.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (isOwned) {
+      toast({
+        title: 'Już w bibliotece',
+        description: 'Ta bajka jest już w Twojej bibliotece.',
+      });
+      return;
+    }
+
+    setAddingToLibrary(true);
+    const acquired = await onAcquire(ebook);
+    setAddingToLibrary(false);
+
+    if (acquired) {
+      toast({
+        title: 'Dodano do biblioteki!',
+        description: 'Bajka została dodana do Twojej biblioteki.',
+      });
+    } else {
+      toast({
+        title: 'Błąd',
+        description: 'Nie udało się dodać bajki do biblioteki.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleDownload = async (fileType: 'pdf' | 'epub' | 'audio') => {
     if (!user) {
@@ -78,15 +117,26 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
         throw new Error(response.error?.message || 'Failed to get download URL');
       }
 
-      // Open download in new tab
-      window.open(response.data.downloadUrl, '_blank');
-      
-      toast({
-        title: fileType === 'audio' ? 'Odtwarzanie rozpoczęte!' : 'Pobieranie rozpoczęte!',
-        description: fileType === 'audio' 
-          ? 'Audiobook został otwarty w nowej karcie.' 
-          : 'Plik zostanie pobrany.',
-      });
+      // For audio, use the audio player instead of opening new tab
+      if (fileType === 'audio') {
+        play({
+          id: ebook.id,
+          title: ebook.title,
+          url: response.data.downloadUrl,
+          coverUrl: ebook.cover_image_url || undefined,
+        });
+        toast({
+          title: 'Odtwarzanie rozpoczęte!',
+          description: 'Użyj odtwarzacza na dole strony.',
+        });
+      } else {
+        // Open download in new tab for PDF/EPUB
+        window.open(response.data.downloadUrl, '_blank');
+        toast({
+          title: 'Pobieranie rozpoczęte!',
+          description: 'Plik zostanie pobrany.',
+        });
+      }
     } catch (error: any) {
       console.error('Download error:', error);
       toast({
@@ -163,6 +213,23 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
             </Button>
           ) : canAccess ? (
             <div className="flex flex-wrap gap-2">
+              {/* Add to library button - only show if not owned */}
+              {!isOwned && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={handleAddToLibrary}
+                  disabled={addingToLibrary || acquiring}
+                >
+                  {addingToLibrary ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Library className="mr-2 h-4 w-4" />
+                  )}
+                  Dodaj do biblioteki
+                </Button>
+              )}
+
               {hasPdf && (
                 <Button
                   size="sm"
@@ -175,7 +242,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
                   ) : (
                     <FileText className="mr-2 h-4 w-4" />
                   )}
-                  Pobierz PDF
+                  PDF
                 </Button>
               )}
               
@@ -191,7 +258,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
                   ) : (
                     <BookOpen className="mr-2 h-4 w-4" />
                   )}
-                  Pobierz EPUB
+                  EPUB
                 </Button>
               )}
               
