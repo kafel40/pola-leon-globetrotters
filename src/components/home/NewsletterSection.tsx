@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Loader2, Check } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
@@ -27,28 +26,31 @@ export function NewsletterSection() {
 
     setIsLoading(true);
     try {
-      const { error: dbError } = await supabase
-        .from('newsletter_subscribers')
-        .insert({ email: email.trim().toLowerCase() });
-
-      if (dbError) {
-        if (dbError.code === '23505') {
-          // Unique constraint violation - already subscribed
-          toast({
-            title: 'Już jesteś zapisany!',
-            description: 'Ten adres email jest już na naszej liście.',
-          });
-        } else {
-          throw dbError;
+      // Call Edge Function for newsletter subscription (handles MailerLite sync)
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/subscribe-newsletter`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ email: email.trim().toLowerCase() }),
         }
-      } else {
-        setIsSuccess(true);
-        setEmail('');
-        toast({
-          title: 'Zapisano!',
-          description: 'Dziękujemy za zapisanie się do newslettera.',
-        });
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Błąd zapisywania');
       }
+
+      setIsSuccess(true);
+      setEmail('');
+      toast({
+        title: 'Zapisano!',
+        description: 'Dziękujemy za zapisanie się do newslettera.',
+      });
     } catch (err) {
       console.error('Newsletter subscription error:', err);
       toast({

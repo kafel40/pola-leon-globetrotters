@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { ForgotPasswordModal } from '@/components/auth/ForgotPasswordModal';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -88,6 +89,7 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password" className="font-body">Hasło</Label>
+                    <ForgotPasswordModal />
                   </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />

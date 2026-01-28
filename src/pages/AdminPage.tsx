@@ -10,10 +10,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Trash2, Edit, Upload, BookOpen } from 'lucide-react';
+import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone } from 'lucide-react';
 import { countries } from '@/data/countries';
 import { Link, Navigate } from 'react-router-dom';
+import { AdminKPISection } from '@/components/admin/AdminKPISection';
+import { AdminUsersTable } from '@/components/admin/AdminUsersTable';
+import { AdminAnnouncementSection } from '@/components/admin/AdminAnnouncementSection';
 
 interface Ebook {
   id: string;
@@ -277,12 +281,43 @@ export default function AdminPage() {
             <h1 className="font-display text-3xl font-bold text-foreground mb-2">
               Panel Administratora
             </h1>
-            <p className="text-muted-foreground">Zarządzaj bajkami Poli i Leona</p>
+            <p className="text-muted-foreground">Zarządzaj serwisem Poli i Leona</p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Form */}
-            <Card>
+          <Tabs defaultValue="dashboard" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2">
+                <LayoutDashboard className="h-4 w-4" />
+                <span className="hidden sm:inline">Dashboard</span>
+              </TabsTrigger>
+              <TabsTrigger value="ebooks" className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                <span className="hidden sm:inline">Bajki</span>
+              </TabsTrigger>
+              <TabsTrigger value="users" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                <span className="hidden sm:inline">Użytkownicy</span>
+              </TabsTrigger>
+              <TabsTrigger value="announcement" className="flex items-center gap-2">
+                <Megaphone className="h-4 w-4" />
+                <span className="hidden sm:inline">Ogłoszenia</span>
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Dashboard Tab */}
+            <TabsContent value="dashboard">
+              <AdminKPISection />
+              <div className="grid lg:grid-cols-2 gap-6">
+                <AdminUsersTable />
+                <AdminAnnouncementSection />
+              </div>
+            </TabsContent>
+
+            {/* Ebooks Tab */}
+            <TabsContent value="ebooks">
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Form */}
+                <Card>
               <CardHeader>
                 <CardTitle className="font-display flex items-center gap-2">
                   {isEditing ? <Edit className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
@@ -535,6 +570,18 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        {/* Users Tab */}
+        <TabsContent value="users">
+          <AdminUsersTable />
+        </TabsContent>
+
+        {/* Announcement Tab */}
+        <TabsContent value="announcement">
+          <AdminAnnouncementSection />
+        </TabsContent>
+      </Tabs>
         </div>
       </section>
     </Layout>
