@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Mail, Lock, Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 import { z } from 'zod';
 
 const registerSchema = z.object({
@@ -226,6 +227,17 @@ export default function RegisterPage() {
                   )}
                 </Button>
               </form>
+
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">lub</span>
+                </div>
+              </div>
+
+              <GoogleSignInButton />
 
               <div className="mt-6 text-center text-sm text-muted-foreground font-body">
                 Masz już konto?{' '}
