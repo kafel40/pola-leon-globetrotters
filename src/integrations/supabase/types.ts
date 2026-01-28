@@ -21,6 +21,7 @@ export type Database = {
           id: string
           is_active: boolean | null
           message: string
+          text_color: string | null
           updated_at: string | null
         }
         Insert: {
@@ -29,6 +30,7 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           message: string
+          text_color?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -37,9 +39,99 @@ export type Database = {
           id?: string
           is_active?: boolean | null
           message?: string
+          text_color?: string | null
           updated_at?: string | null
         }
         Relationships: []
+      }
+      blog_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author_id: string | null
+          category_id: string | null
+          content: string
+          cover_image_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          is_published: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          published_at: string | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category_id?: string | null
+          content: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          published_at?: string | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          og_image_url?: string | null
+          published_at?: string | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       discovered_countries: {
         Row: {
@@ -158,14 +250,46 @@ export type Database = {
         }
         Relationships: []
       }
+      page_visits: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          referrer: string | null
+          user_agent: string | null
+          user_id: string | null
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          referrer?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           created_at: string
+          deleted_at: string | null
           display_name: string | null
           email: string
           full_name: string | null
           id: string
+          is_deleted: boolean | null
           language: string | null
           marketing_consent: boolean | null
           newsletter_consent: boolean | null
@@ -176,10 +300,12 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          deleted_at?: string | null
           display_name?: string | null
           email: string
           full_name?: string | null
           id?: string
+          is_deleted?: boolean | null
           language?: string | null
           marketing_consent?: boolean | null
           newsletter_consent?: boolean | null
@@ -190,10 +316,12 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          deleted_at?: string | null
           display_name?: string | null
           email?: string
           full_name?: string | null
           id?: string
+          is_deleted?: boolean | null
           language?: string | null
           marketing_consent?: boolean | null
           newsletter_consent?: boolean | null
@@ -229,6 +357,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_restore_user: { Args: { _user_id: string }; Returns: boolean }
+      admin_soft_delete_user: { Args: { _user_id: string }; Returns: boolean }
       complete_ebook_purchase: {
         Args: { _ebook_id: string; _payment_verified?: boolean }
         Returns: boolean

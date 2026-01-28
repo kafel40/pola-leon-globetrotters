@@ -8,6 +8,7 @@ import { AudioPlayerProvider } from "@/components/audio/AudioPlayerContext";
 import { AudioPlayerWidget } from "@/components/audio/AudioPlayerWidget";
 import { PdfViewerProvider } from "@/components/pdf/PdfViewerContext";
 import { PdfViewerModal } from "@/components/pdf/PdfViewerModal";
+import { PageTracker } from "@/components/analytics/PageTracker";
 import Index from "./pages/Index";
 import MapPage from "./pages/MapPage";
 import CountryPage from "./pages/CountryPage";
@@ -20,6 +21,8 @@ import AdminPage from "./pages/AdminPage";
 import LegalPage from "./pages/LegalPage";
 import AccountPage from "./pages/AccountPage";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +36,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <PageTracker />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/mapa" element={<MapPage />} />
@@ -46,6 +50,8 @@ const App = () => (
                 <Route path="/prawne" element={<LegalPage />} />
                 <Route path="/konto" element={<AccountPage />} />
                 <Route path="/update-password" element={<UpdatePasswordPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

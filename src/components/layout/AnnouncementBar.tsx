@@ -6,6 +6,7 @@ interface Announcement {
   id: string;
   message: string;
   bg_color: string | null;
+  text_color: string | null;
 }
 
 export function AnnouncementBar() {
@@ -25,7 +26,7 @@ export function AnnouncementBar() {
     const fetchAnnouncement = async () => {
       const { data, error } = await supabase
         .from('announcement_bar')
-        .select('id, message, bg_color')
+        .select('id, message, bg_color, text_color')
         .eq('is_active', true)
         .order('created_at', { ascending: false })
         .limit(1)
@@ -58,11 +59,12 @@ export function AnnouncementBar() {
   }
 
   const bgColor = announcement.bg_color || 'hsl(var(--primary))';
+  const textColor = announcement.text_color || '#FFFFFF';
 
   return (
     <div 
-      className="py-2 px-4 relative text-white"
-      style={{ backgroundColor: bgColor, minHeight: '36px' }}
+      className="py-2 px-4 relative"
+      style={{ backgroundColor: bgColor, color: textColor, minHeight: '36px' }}
     >
       <div 
         ref={containerRef}

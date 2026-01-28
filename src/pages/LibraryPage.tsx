@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Globe, ArrowRight, Lock, Loader2, FileText, Headphones } from 'lucide-react';
@@ -28,6 +29,10 @@ export default function LibraryPage() {
   if (!user) {
     return (
       <Layout>
+        <PageHead 
+          title="Biblioteka"
+          description="Twoja biblioteka bajek Pola i Leon. Zaloguj się, aby uzyskać dostęp do zakupionych ebooków i audiobooków."
+        />
         <section className="py-16 md:py-24 bg-hero min-h-[calc(100vh-200px)] flex items-center">
           <div className="container">
             <div className="max-w-md mx-auto text-center">
@@ -60,6 +65,10 @@ export default function LibraryPage() {
 
   return (
     <Layout>
+      <PageHead 
+        title="Moja biblioteka"
+        description="Twoja biblioteka bajek Pola i Leon. Odkryte kraje, zakupione ebooki i audiobooki w jednym miejscu."
+      />
       <section className="py-12 md:py-16 bg-hero">
         <div className="container">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">

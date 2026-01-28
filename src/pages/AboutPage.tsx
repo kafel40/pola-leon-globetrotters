@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Lightbulb, GraduationCap, BookOpen, ArrowRight } from 'lucide-react';
@@ -33,6 +34,10 @@ const teamMembers = [
 export default function AboutPage() {
   return (
     <Layout>
+      <PageHead 
+        title="O nas"
+        description="Poznaj zespół Pola i Leon - trzy kobiety połączone pasją do rozwoju dziecka. Olga, Natalia i Iza tworzą bajki edukacyjne z sercem i profesjonalizmem."
+      />
       {/* Hero */}
       <section className="relative py-16 md:py-24 bg-hero overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

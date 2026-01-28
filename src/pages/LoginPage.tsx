@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,6 +53,10 @@ export default function LoginPage() {
 
   return (
     <Layout>
+      <PageHead 
+        title="Logowanie"
+        description="Zaloguj się do swojego konta Pola i Leon. Dostęp do bajek edukacyjnych, biblioteki i mapy odkryć."
+      />
       <section className="py-16 md:py-24 bg-hero min-h-[calc(100vh-200px)] flex items-center">
         <div className="container">
           <div className="max-w-md mx-auto">
