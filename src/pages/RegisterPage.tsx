@@ -9,6 +9,7 @@ import { Mail, Lock, Loader2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
+import { AppleSignInButton } from '@/components/auth/AppleSignInButton';
 import { z } from 'zod';
 
 const registerSchema = z.object({
@@ -237,7 +238,10 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <GoogleSignInButton />
+              <div className="space-y-3">
+                <GoogleSignInButton />
+                <AppleSignInButton />
+              </div>
 
               <div className="mt-6 text-center text-sm text-muted-foreground font-body">
                 Masz już konto?{' '}
