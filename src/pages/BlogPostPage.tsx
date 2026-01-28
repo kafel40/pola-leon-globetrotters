@@ -132,6 +132,20 @@ export default function BlogPostPage() {
             <span className="font-body">Wróć do bloga</span>
           </Link>
 
+          {/* Hero Cover Image - above title for dramatic effect */}
+          {post.cover_image_url && (
+            <div className="relative rounded-2xl overflow-hidden mb-8 -mx-4 md:-mx-8 lg:-mx-16">
+              <div className="aspect-[21/9] md:aspect-[3/1]">
+                <img
+                  src={post.cover_image_url}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+            </div>
+          )}
+
           {/* Header */}
           <header className="mb-8">
             <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -160,17 +174,6 @@ export default function BlogPostPage() {
               </p>
             )}
           </header>
-
-          {/* Cover image */}
-          {post.cover_image_url && (
-            <div className="relative rounded-2xl overflow-hidden mb-10">
-              <img
-                src={post.cover_image_url}
-                alt={post.title}
-                className="w-full h-auto max-h-[500px] object-cover"
-              />
-            </div>
-          )}
 
           {/* Content - sanitized for XSS protection */}
           <div 

@@ -1,4 +1,6 @@
 import { Star, Heart, Lightbulb, Zap } from 'lucide-react';
+import polaImage from '@/assets/characters/pola.png';
+import leonImage from '@/assets/characters/leon.png';
 
 export function CharactersSection() {
   return (
@@ -19,8 +21,12 @@ export function CharactersSection() {
             <div className="absolute inset-0 bg-dreamy-lavender rounded-3xl transform rotate-2 group-hover:rotate-1 transition-transform" />
             <div className="relative bg-card rounded-3xl p-8 shadow-card border border-border/50">
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-20 h-20 rounded-2xl bg-dreamy-lavender flex items-center justify-center">
-                  <span className="font-display text-4xl">👧</span>
+                <div className="flex-shrink-0 w-20 h-20 rounded-full overflow-hidden bg-dreamy-lavender ring-4 ring-dreamy-lavender/50">
+                  <img 
+                    src={polaImage} 
+                    alt="Pola - 4-letnia bohaterka bajek" 
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Pola</h3>
@@ -49,8 +55,12 @@ export function CharactersSection() {
             <div className="absolute inset-0 bg-dreamy-mint rounded-3xl transform -rotate-2 group-hover:-rotate-1 transition-transform" />
             <div className="relative bg-card rounded-3xl p-8 shadow-card border border-border/50">
               <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-20 h-20 rounded-2xl bg-dreamy-mint flex items-center justify-center">
-                  <span className="font-display text-4xl">👦</span>
+                <div className="flex-shrink-0 w-20 h-20 rounded-full overflow-hidden bg-dreamy-mint ring-4 ring-dreamy-mint/50">
+                  <img 
+                    src={leonImage} 
+                    alt="Leon - 2-letni bohater bajek" 
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Leon</h3>

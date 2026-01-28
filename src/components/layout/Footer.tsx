@@ -56,6 +56,9 @@ export function Footer() {
               <Link to="/o-nas" className="text-muted-foreground hover:text-foreground transition-colors">
                 O Poli i Leonie
               </Link>
+              <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                Blog podróżniczy
+              </Link>
               <Link to="/biblioteka" className="text-muted-foreground hover:text-foreground transition-colors">
                 Moja biblioteka
               </Link>
