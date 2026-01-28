@@ -2,7 +2,7 @@ import { Layout } from '@/components/layout/Layout';
 import { PageHead } from '@/components/seo/PageHead';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Lightbulb, GraduationCap, BookOpen, ArrowRight } from 'lucide-react';
+import { Sparkles, Lightbulb, GraduationCap, BookOpen, ArrowRight, Compass } from 'lucide-react';
 
 const teamMembers = [
   {
@@ -161,6 +161,31 @@ export default function AboutPage() {
                 <GraduationCap className="h-5 w-5 text-foreground/70" />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-dreamy-mint shadow-md mb-4">
+              <Compass className="h-8 w-8 text-foreground/80" />
+            </div>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+              Blog podróżniczy
+            </h2>
+            <p className="text-muted-foreground font-body leading-relaxed">
+              Odkrywaj świat razem z nami! Na naszym blogu znajdziesz inspiracje podróżnicze, 
+              ciekawostki geograficzne i pomysły na wspólne odkrywanie globu z dziećmi. 
+              Dzielimy się wiedzą, która czyni każdą podróż niezapomnianą przygodą.
+            </p>
+            <Button size="lg" asChild className="font-display">
+              <Link to="/blog">
+                Czytaj blog
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
