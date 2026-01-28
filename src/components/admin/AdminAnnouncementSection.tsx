@@ -13,6 +13,7 @@ interface AnnouncementData {
   message: string;
   is_active: boolean;
   bg_color: string;
+  text_color: string;
 }
 
 export function AdminAnnouncementSection() {
@@ -22,6 +23,7 @@ export function AdminAnnouncementSection() {
   const [message, setMessage] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [bgColor, setBgColor] = useState('#7C3AED');
+  const [textColor, setTextColor] = useState('#FFFFFF');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export function AdminAnnouncementSection() {
         setMessage(data.message);
         setIsActive(data.is_active || false);
         setBgColor(data.bg_color || '#7C3AED');
+        setTextColor(data.text_color || '#FFFFFF');
       }
     } catch (error) {
       console.error('Error fetching announcement:', error);
@@ -72,6 +75,7 @@ export function AdminAnnouncementSection() {
             message: message.trim(),
             is_active: isActive,
             bg_color: bgColor,
+            text_color: textColor,
             updated_at: new Date().toISOString(),
           })
           .eq('id', announcement.id);
@@ -85,6 +89,7 @@ export function AdminAnnouncementSection() {
             message: message.trim(),
             is_active: isActive,
             bg_color: bgColor,
+            text_color: textColor,
           });
 
         if (error) throw error;
@@ -142,8 +147,8 @@ export function AdminAnnouncementSection() {
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="space-y-2 flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
             <Label htmlFor="bg-color" className="font-body">
               Kolor tła
             </Label>
@@ -165,16 +170,38 @@ export function AdminAnnouncementSection() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 pt-6">
-            <Switch
-              id="is-active"
-              checked={isActive}
-              onCheckedChange={setIsActive}
-            />
-            <Label htmlFor="is-active" className="font-body">
-              {isActive ? 'Włączony' : 'Wyłączony'}
+          <div className="space-y-2">
+            <Label htmlFor="text-color" className="font-body">
+              Kolor tekstu
             </Label>
+            <div className="flex gap-2">
+              <Input
+                id="text-color"
+                type="color"
+                value={textColor}
+                onChange={(e) => setTextColor(e.target.value)}
+                className="w-16 h-10 p-1 cursor-pointer"
+              />
+              <Input
+                type="text"
+                value={textColor}
+                onChange={(e) => setTextColor(e.target.value)}
+                placeholder="#FFFFFF"
+                className="flex-1 font-mono"
+              />
+            </div>
           </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Switch
+            id="is-active"
+            checked={isActive}
+            onCheckedChange={setIsActive}
+          />
+          <Label htmlFor="is-active" className="font-body">
+            {isActive ? 'Włączony' : 'Wyłączony'}
+          </Label>
         </div>
 
         {/* Preview */}
@@ -182,8 +209,8 @@ export function AdminAnnouncementSection() {
           <div className="space-y-2">
             <Label className="font-body text-sm text-muted-foreground">Podgląd:</Label>
             <div
-              className="py-2 px-4 text-center text-sm text-white rounded-lg overflow-hidden"
-              style={{ backgroundColor: bgColor }}
+              className="py-2 px-4 text-center text-sm rounded-lg overflow-hidden"
+              style={{ backgroundColor: bgColor, color: textColor }}
             >
               <p className="truncate">{message}</p>
             </div>

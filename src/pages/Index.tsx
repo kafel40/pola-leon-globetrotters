@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { HeroSection } from '@/components/home/HeroSection';
 import { CharactersSection } from '@/components/home/CharactersSection';
 import { ValuesSection } from '@/components/home/ValuesSection';
@@ -9,6 +10,10 @@ import { NewsletterSection } from '@/components/home/NewsletterSection';
 const Index = () => {
   return (
     <Layout>
+      <PageHead 
+        title="Pola i Leon - Bajki edukacyjne dla dzieci"
+        description="Bajki edukacyjne dla dzieci 2-6 lat. Poznaj świat z Polą i Leonem - przygody, geografia, kultura i emocje w każdej historii. Odkrywaj nowe kraje!"
+      />
       <HeroSection />
       <CharactersSection />
       <ValuesSection />

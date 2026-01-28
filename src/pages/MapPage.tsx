@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { WorldMap } from '@/components/map/WorldMap';
 import { CountryCard } from '@/components/country/CountryCard';
 import { countries } from '@/data/countries';
@@ -9,6 +10,10 @@ export default function MapPage() {
 
   return (
     <Layout>
+      <PageHead 
+        title="Mapa świata"
+        description="Interaktywna mapa świata Poli i Leona. Odkrywaj kraje i kontynenty z bajkami edukacyjnymi dla dzieci. Kliknij na kraj, aby poznać przygodę!"
+      />
       <section className="py-12 md:py-16 bg-hero">
         <div className="container">
           <div className="text-center mb-8">

@@ -12,12 +12,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone } from 'lucide-react';
+import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText } from 'lucide-react';
 import { countries } from '@/data/countries';
 import { Link, Navigate } from 'react-router-dom';
 import { AdminKPISection } from '@/components/admin/AdminKPISection';
 import { AdminUsersTable } from '@/components/admin/AdminUsersTable';
 import { AdminAnnouncementSection } from '@/components/admin/AdminAnnouncementSection';
+import { AdminVisitsChart } from '@/components/admin/AdminVisitsChart';
+import { AdminBlogSection } from '@/components/admin/AdminBlogSection';
 
 interface Ebook {
   id: string;
@@ -285,7 +287,7 @@ export default function AdminPage() {
           </div>
 
           <Tabs defaultValue="dashboard" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex">
+            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -293,6 +295,10 @@ export default function AdminPage() {
               <TabsTrigger value="ebooks" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 <span className="hidden sm:inline">Bajki</span>
+              </TabsTrigger>
+              <TabsTrigger value="blog" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                <span className="hidden sm:inline">Blog</span>
               </TabsTrigger>
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
@@ -307,10 +313,15 @@ export default function AdminPage() {
             {/* Dashboard Tab */}
             <TabsContent value="dashboard">
               <AdminKPISection />
-              <div className="grid lg:grid-cols-2 gap-6">
-                <AdminUsersTable />
+              <div className="grid lg:grid-cols-2 gap-6 mb-6">
+                <AdminVisitsChart />
                 <AdminAnnouncementSection />
               </div>
+            </TabsContent>
+
+            {/* Blog Tab */}
+            <TabsContent value="blog">
+              <AdminBlogSection />
             </TabsContent>
 
             {/* Ebooks Tab */}

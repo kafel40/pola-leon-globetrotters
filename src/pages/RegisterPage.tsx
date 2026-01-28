@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
+import { PageHead } from '@/components/seo/PageHead';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -84,6 +85,10 @@ export default function RegisterPage() {
 
   return (
     <Layout>
+      <PageHead 
+        title="Rejestracja"
+        description="Załóż konto Pola i Leon. Dołącz do przygody i odkrywaj świat z bajkami edukacyjnymi dla dzieci 2-6 lat."
+      />
       <section className="py-16 md:py-24 bg-hero min-h-[calc(100vh-200px)] flex items-center">
         <div className="container">
           <div className="max-w-md mx-auto">
