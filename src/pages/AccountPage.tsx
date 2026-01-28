@@ -29,6 +29,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { ChangePasswordSection } from '@/components/account/ChangePasswordSection';
 
 interface ProfileData {
   full_name: string | null;
@@ -263,6 +264,9 @@ export default function AccountPage() {
                 </div>
               </div>
             </div>
+
+            {/* Security Section */}
+            <ChangePasswordSection />
 
             {/* Save Button */}
             <Button
