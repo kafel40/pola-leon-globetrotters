@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { PageHead } from '@/components/seo/PageHead';
@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { useToast } from '@/hooks/use-toast';
+import DOMPurify from 'dompurify';
 
 interface BlogPost {
   id: string;
@@ -171,7 +172,7 @@ export default function BlogPostPage() {
             </div>
           )}
 
-          {/* Content */}
+          {/* Content - sanitized for XSS protection */}
           <div 
             className="prose prose-lg max-w-none font-body
               prose-headings:font-display prose-headings:text-foreground
@@ -181,7 +182,12 @@ export default function BlogPostPage() {
               prose-img:rounded-xl
               prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
             "
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ 
+              __html: DOMPurify.sanitize(post.content, {
+                ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'em', 'a', 'img', 'blockquote', 'ul', 'ol', 'li', 'br', 'span', 'div', 'code', 'pre'],
+                ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'target', 'rel']
+              })
+            }}
           />
 
           {/* Tags */}
