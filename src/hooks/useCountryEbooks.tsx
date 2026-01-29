@@ -13,6 +13,7 @@ export interface Ebook {
   pdf_url: string | null;
   epub_url: string | null;
   audio_url: string | null;
+  coloring_page_url: string | null;
   price: number | null;
   is_published: boolean | null;
 }

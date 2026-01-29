@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText } from 'lucide-react';
+import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText, Palette } from 'lucide-react';
 import { countries } from '@/data/countries';
 import { Link, Navigate } from 'react-router-dom';
 import { AdminKPISection } from '@/components/admin/AdminKPISection';
@@ -32,6 +32,7 @@ interface Ebook {
   pdf_url: string | null;
   epub_url: string | null;
   audio_url: string | null;
+  coloring_page_url: string | null;
   price: number | null;
   is_published: boolean | null;
   created_at: string;
@@ -60,6 +61,7 @@ export default function AdminPage() {
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [epubFile, setEpubFile] = useState<File | null>(null);
   const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [coloringFile, setColoringFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (isAdmin) {
@@ -93,6 +95,7 @@ export default function AdminPage() {
     setPdfFile(null);
     setEpubFile(null);
     setAudioFile(null);
+    setColoringFile(null);
     setIsEditing(false);
     setEditingId(null);
   };
@@ -148,6 +151,7 @@ export default function AdminPage() {
       let pdfUrl = null;
       let epubUrl = null;
       let audioUrl = null;
+      let coloringUrl = null;
 
       if (coverFile) {
         coverUrl = await uploadFile(coverFile, 'covers');
@@ -160,6 +164,9 @@ export default function AdminPage() {
       }
       if (audioFile) {
         audioUrl = await uploadFile(audioFile, 'audio');
+      }
+      if (coloringFile) {
+        coloringUrl = await uploadFile(coloringFile, 'coloring');
       }
 
       const ebookData = {
@@ -174,6 +181,7 @@ export default function AdminPage() {
         ...(pdfUrl && { pdf_url: pdfUrl }),
         ...(epubUrl && { epub_url: epubUrl }),
         ...(audioUrl && { audio_url: audioUrl }),
+        ...(coloringUrl && { coloring_page_url: coloringUrl }),
       };
 
       console.log('Saving ebook data:', ebookData);
@@ -454,6 +462,19 @@ export default function AdminPage() {
                         type="file"
                         accept=".mp3,audio/*"
                         onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="coloring" className="flex items-center gap-2">
+                        <Palette className="h-4 w-4" />
+                        Kolorowanka (PDF/Obraz)
+                      </Label>
+                      <Input
+                        id="coloring"
+                        type="file"
+                        accept=".pdf,image/*"
+                        onChange={(e) => setColoringFile(e.target.files?.[0] || null)}
                       />
                     </div>
                   </div>

@@ -57,7 +57,10 @@ export function Footer() {
                 O Poli i Leonie
               </Link>
               <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                Blog podróżniczy
+                Blog rodzinny
+              </Link>
+              <Link to="/kontakt" className="text-muted-foreground hover:text-foreground transition-colors">
+                Kontakt
               </Link>
               <Link to="/biblioteka" className="text-muted-foreground hover:text-foreground transition-colors">
                 Moja biblioteka

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, Globe, BookOpen, Users, Map, ChevronDown, LogOut } from 'lucide-react';
+import { Menu, Globe, BookOpen, Users, Map, ChevronDown, LogOut, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import {
@@ -22,6 +22,7 @@ export function Header() {
   const navLinks = [
     { href: '/mapa', label: 'Mapa świata', icon: Map },
     { href: '/o-nas', label: 'O nas', icon: Users },
+    { href: '/kontakt', label: 'Kontakt', icon: Mail },
   ];
 
   const handleSignOut = async () => {

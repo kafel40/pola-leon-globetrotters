@@ -65,9 +65,9 @@ Deno.serve(async (req) => {
       )
     }
 
-    if (!fileType || !['pdf', 'epub', 'audio'].includes(fileType)) {
+    if (!fileType || !['pdf', 'epub', 'audio', 'coloring'].includes(fileType)) {
       return new Response(
-        JSON.stringify({ error: 'Invalid fileType. Must be "pdf", "epub" or "audio"' }),
+        JSON.stringify({ error: 'Invalid fileType. Must be "pdf", "epub", "audio" or "coloring"' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -101,7 +101,7 @@ Deno.serve(async (req) => {
     // Get the ebook details using safe parameterized queries
     let ebookQuery = supabaseAdmin
       .from('ebooks')
-      .select('id, slug, pdf_url, epub_url, audio_url, is_published')
+      .select('id, slug, pdf_url, epub_url, audio_url, coloring_page_url, is_published')
 
     // Use separate .eq() calls instead of .or() with string interpolation to prevent SQL injection
     if (isUuid) {
@@ -145,7 +145,21 @@ Deno.serve(async (req) => {
     }
 
     // Get the file URL based on type
-    const fileUrl = fileType === 'pdf' ? ebook.pdf_url : fileType === 'epub' ? ebook.epub_url : ebook.audio_url
+    let fileUrl: string | null = null
+    switch (fileType) {
+      case 'pdf':
+        fileUrl = ebook.pdf_url
+        break
+      case 'epub':
+        fileUrl = ebook.epub_url
+        break
+      case 'audio':
+        fileUrl = ebook.audio_url
+        break
+      case 'coloring':
+        fileUrl = ebook.coloring_page_url
+        break
+    }
     
     if (!fileUrl) {
       return new Response(

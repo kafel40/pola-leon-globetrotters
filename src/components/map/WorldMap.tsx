@@ -6,66 +6,78 @@ interface CountryPathProps {
   country: Country;
   d: string;
   onHover: (country: Country | null) => void;
+  isHovered: boolean;
 }
 
-function CountryPath({ country, d, onHover }: CountryPathProps) {
+function CountryPath({ country, d, onHover, isHovered }: CountryPathProps) {
   const isAvailable = country.status === 'available';
   
   return (
     <Link to={`/kraj/${country.slug}`}>
       <path
         d={d}
-        className={`transition-all duration-200 cursor-pointer ${
+        className={`transition-all duration-300 cursor-pointer ${
           isAvailable
-            ? 'fill-dreamy-mint hover:fill-dreamy-peach stroke-foreground/30'
-            : 'fill-muted hover:fill-muted/80 stroke-foreground/20'
+            ? isHovered
+              ? 'fill-dreamy-peach stroke-primary'
+              : 'fill-dreamy-mint stroke-foreground/30'
+            : isHovered
+              ? 'fill-muted/90 stroke-foreground/40'
+              : 'fill-muted stroke-foreground/20'
         }`}
-        strokeWidth="0.5"
+        strokeWidth={isHovered ? '1.5' : '0.8'}
         strokeLinejoin="round"
+        strokeLinecap="round"
         onMouseEnter={() => onHover(country)}
         onMouseLeave={() => onHover(null)}
+        style={{
+          filter: isHovered ? 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))' : 'none',
+          transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+          transformOrigin: 'center',
+          transformBox: 'fill-box',
+        }}
       />
     </Link>
   );
 }
 
-// Realistic simplified SVG paths for countries (based on actual geographical shapes)
+// More detailed and realistic SVG paths for countries
 const countryPaths: Record<string, string> = {
-  // EUROPE
-  poland: 'M525,128 L532,125 L540,127 L545,132 L544,138 L538,143 L530,145 L522,142 L518,136 L520,130 Z',
-  france: 'M470,145 L478,140 L488,142 L495,148 L493,158 L485,165 L475,168 L465,162 L462,152 L468,146 Z',
-  italy: 'M498,152 L502,150 L508,155 L510,165 L506,175 L500,182 L495,178 L493,168 L496,158 Z M502,185 L508,182 L512,188 L506,194 L500,190 Z',
-  spain: 'M445,155 L458,150 L472,152 L478,160 L475,172 L462,180 L448,178 L440,168 L442,158 Z',
-  germany: 'M488,125 L498,122 L510,125 L515,132 L512,142 L502,148 L490,145 L484,138 L486,128 Z',
-  uk: 'M458,115 L465,110 L472,112 L475,120 L472,130 L465,135 L458,132 L455,125 L457,118 Z M460,105 L468,102 L470,108 L462,110 Z',
-  greece: 'M528,168 L536,165 L542,170 L540,180 L534,186 L526,183 L522,175 L525,170 Z M530,188 L538,186 L535,192 L528,190 Z',
-  norway: 'M490,80 L502,75 L512,80 L518,95 L512,115 L500,120 L492,110 L488,95 L490,85 Z',
+  // EUROPE - more detailed shapes
+  poland: 'M520,125 L528,122 L536,123 L542,126 L546,130 L548,136 L546,142 L540,147 L532,150 L524,148 L518,144 L514,138 L514,132 L517,127 Z',
+  france: 'M465,140 L472,136 L482,137 L492,140 L500,145 L502,154 L498,164 L490,172 L478,176 L466,173 L458,165 L456,155 L460,145 Z',
+  italy: 'M500,148 L506,145 L512,148 L516,156 L514,166 L510,176 L504,186 L498,192 L492,188 L490,176 L492,164 L496,154 Z M504,195 L512,192 L518,198 L514,206 L506,204 L502,198 Z',
+  spain: 'M438,152 L452,147 L468,148 L480,154 L484,164 L480,176 L468,186 L452,188 L438,184 L430,172 L432,160 Z M486,180 L492,178 L496,184 L490,188 Z',
+  germany: 'M484,118 L496,115 L508,118 L518,124 L520,134 L516,144 L504,150 L490,148 L480,140 L478,130 L482,122 Z',
+  uk: 'M454,108 L462,104 L472,106 L478,114 L476,126 L470,136 L460,140 L452,136 L448,126 L450,116 Z M456,98 L466,94 L470,100 L464,106 L456,104 Z',
+  greece: 'M524,165 L534,161 L544,166 L546,176 L540,186 L530,190 L522,186 L518,176 L520,168 Z M528,193 L538,190 L540,198 L532,202 L526,196 Z',
+  norway: 'M488,70 L502,64 L516,72 L524,88 L520,110 L508,122 L496,118 L488,104 L484,88 L486,76 Z',
   
-  // ASIA
-  japan: 'M835,135 L842,132 L848,138 L846,150 L840,158 L832,155 L828,145 L830,138 Z M842,160 L848,158 L850,168 L844,172 L838,168 Z',
-  china: 'M720,120 L760,115 L790,125 L810,145 L805,170 L780,185 L745,180 L715,160 L710,140 L718,125 Z',
-  india: 'M680,175 L705,165 L720,180 L715,210 L700,235 L680,245 L665,230 L660,200 L670,180 Z',
-  thailand: 'M738,210 L748,205 L755,215 L752,235 L745,250 L738,255 L732,245 L735,225 L740,215 Z',
+  // ASIA - more detailed
+  japan: 'M832,128 L842,124 L852,130 L854,142 L848,156 L838,164 L828,160 L822,148 L824,136 Z M838,166 L848,162 L854,172 L848,182 L840,178 L836,170 Z',
+  china: 'M710,110 L755,105 L795,118 L820,140 L815,170 L790,190 L750,188 L715,168 L700,145 L705,125 Z',
+  india: 'M670,168 L700,158 L722,175 L718,210 L702,240 L680,252 L660,238 L652,205 L662,178 Z',
+  thailand: 'M732,205 L744,198 L754,210 L752,234 L746,252 L736,260 L726,250 L728,228 L734,212 Z',
   
-  // AFRICA
-  egypt: 'M540,190 L560,185 L575,195 L572,215 L558,225 L542,220 L535,205 L538,192 Z',
-  kenya: 'M568,275 L582,270 L590,280 L588,295 L580,305 L568,302 L562,290 L565,278 Z',
-  morocco: 'M440,185 L458,180 L470,188 L468,205 L455,215 L442,212 L435,200 L438,188 Z',
-  'south-africa': 'M530,345 L560,340 L578,355 L575,380 L555,395 L530,390 L518,370 L522,350 Z',
+  // AFRICA - more detailed
+  egypt: 'M535,186 L558,180 L578,192 L576,216 L560,230 L540,225 L528,208 L532,190 Z',
+  kenya: 'M562,272 L580,266 L594,278 L592,298 L582,312 L566,308 L556,294 L560,278 Z',
+  morocco: 'M434,182 L456,176 L470,186 L468,206 L454,220 L436,216 L426,202 L430,186 Z',
+  'south-africa': 'M525,340 L560,334 L582,352 L580,382 L558,400 L528,396 L512,374 L518,352 Z',
   
-  // NORTH AMERICA
-  usa: 'M120,145 L200,135 L260,145 L280,160 L275,185 L240,195 L180,200 L130,190 L110,170 L115,150 Z M265,175 L285,170 L295,180 L290,195 L275,200 L265,190 Z',
-  canada: 'M100,70 L200,60 L280,75 L310,100 L295,130 L240,140 L160,145 L100,130 L80,100 L95,75 Z',
-  mexico: 'M140,200 L180,195 L210,210 L220,240 L200,265 L165,270 L140,250 L130,220 L135,205 Z',
+  // NORTH AMERICA - more detailed
+  usa: 'M115,138 L195,125 L260,138 L285,158 L282,188 L248,202 L185,210 L130,200 L105,175 L108,150 Z M268,175 L292,168 L305,182 L298,200 L278,208 L265,195 Z',
+  canada: 'M95,60 L195,48 L285,65 L320,95 L305,130 L248,145 L165,152 L100,138 L72,105 L88,68 Z',
+  mexico: 'M135,198 L175,190 L210,208 L225,242 L205,272 L165,280 L135,260 L122,225 L128,205 Z',
   
-  // SOUTH AMERICA  
-  brazil: 'M260,275 L310,265 L345,285 L360,330 L340,375 L295,390 L260,370 L245,325 L250,285 Z',
-  argentina: 'M270,385 L300,380 L315,410 L310,455 L290,480 L270,475 L260,440 L265,400 Z',
-  peru: 'M230,295 L260,288 L275,310 L268,345 L245,360 L225,345 L220,315 L228,298 Z',
+  // SOUTH AMERICA - more detailed
+  brazil: 'M255,272 L310,260 L350,282 L368,332 L348,382 L298,400 L258,378 L240,328 L248,285 Z',
+  argentina: 'M265,390 L302,382 L320,418 L316,465 L294,495 L268,490 L255,452 L260,410 Z',
+  peru: 'M225,292 L258,284 L278,310 L272,350 L246,368 L222,352 L214,318 L222,296 Z',
   
-  // OCEANIA
-  australia: 'M770,330 L830,320 L870,340 L880,380 L860,410 L810,420 L770,400 L755,365 L760,340 Z',
-  'new-zealand': 'M895,385 L908,380 L915,395 L910,415 L898,425 L888,415 L885,400 L890,388 Z',
+  // OCEANIA - more detailed
+  australia: 'M762,325 L828,312 L875,335 L890,380 L872,418 L818,432 L768,412 L748,368 L752,340 Z',
+  'new-zealand': 'M892,382 L908,375 L918,394 L914,418 L900,432 L886,422 L880,402 L886,386 Z',
 };
 
 export function WorldMap() {
@@ -75,13 +87,16 @@ export function WorldMap() {
     <div className="relative w-full">
       {/* Tooltip */}
       {hoveredCountry && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-4 py-2 bg-card rounded-xl shadow-card border border-border">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{hoveredCountry.flagEmoji}</span>
+        <div 
+          className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-5 py-3 bg-card rounded-2xl shadow-lg border border-border/50 animate-fade-in-up"
+          style={{ animationDuration: '0.2s' }}
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">{hoveredCountry.flagEmoji}</span>
             <div>
-              <p className="font-display font-bold text-foreground">{hoveredCountry.name}</p>
-              <p className="text-xs text-muted-foreground font-body">
-                {hoveredCountry.status === 'available' ? 'Dostępne' : 'Wkrótce'}
+              <p className="font-display font-bold text-foreground text-lg">{hoveredCountry.name}</p>
+              <p className={`text-sm font-body ${hoveredCountry.status === 'available' ? 'text-dreamy-mint' : 'text-muted-foreground'}`}>
+                {hoveredCountry.status === 'available' ? '✓ Dostępne' : '⏳ Wkrótce'}
               </p>
             </div>
           </div>
@@ -93,48 +108,84 @@ export function WorldMap() {
         viewBox="0 0 1000 500"
         className="w-full h-auto"
         style={{ maxHeight: '70vh' }}
+        preserveAspectRatio="xMidYMid meet"
       >
-        {/* Background ocean */}
-        <rect width="1000" height="500" className="fill-dreamy-blue/20" />
-        
-        {/* Ocean texture */}
+        {/* Background ocean with gradient */}
         <defs>
-          <pattern id="waves" patternUnits="userSpaceOnUse" width="40" height="40">
+          <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(210 40% 92%)" />
+            <stop offset="50%" stopColor="hsl(200 35% 88%)" />
+            <stop offset="100%" stopColor="hsl(210 45% 85%)" />
+          </linearGradient>
+          
+          {/* Wave pattern */}
+          <pattern id="waves" patternUnits="userSpaceOnUse" width="60" height="30" patternTransform="rotate(5)">
             <path
-              d="M 0 20 Q 10 15, 20 20 T 40 20"
+              d="M 0 15 Q 15 10, 30 15 T 60 15"
               fill="none"
-              className="stroke-dreamy-blue/15"
+              stroke="hsl(200 30% 85%)"
               strokeWidth="0.5"
-            />
-            <path
-              d="M 0 30 Q 10 25, 20 30 T 40 30"
-              fill="none"
-              className="stroke-dreamy-blue/10"
-              strokeWidth="0.5"
+              opacity="0.5"
             />
           </pattern>
           
-          {/* Land base - continents outline */}
-          <filter id="land-shadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="1" dy="1" stdDeviation="2" floodOpacity="0.1"/>
+          {/* Shadow filter for continents */}
+          <filter id="landShadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="2" dy="2" stdDeviation="4" floodColor="hsl(220 25% 20%)" floodOpacity="0.08"/>
+          </filter>
+
+          {/* Glow effect for hovered countries */}
+          <filter id="hoverGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
           </filter>
         </defs>
+        
+        {/* Ocean background */}
+        <rect width="1000" height="500" fill="url(#oceanGradient)" />
         <rect width="1000" height="500" fill="url(#waves)" />
         
-        {/* Continent base shapes (subtle land mass background) */}
-        <g className="fill-muted/30" filter="url(#land-shadow)">
+        {/* Continent base shapes with smooth edges */}
+        <g filter="url(#landShadow)">
           {/* Europe */}
-          <path d="M430,90 Q520,85 560,120 Q580,150 550,190 Q500,200 440,180 Q420,150 430,90" />
+          <path 
+            d="M425,85 Q470,75 520,80 Q565,90 580,130 Q590,165 560,200 Q520,210 470,195 Q430,175 420,140 Q415,105 425,85" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
           {/* Asia */}
-          <path d="M560,80 Q750,70 850,150 Q860,200 820,250 Q700,280 620,240 Q560,180 560,80" />
+          <path 
+            d="M555,70 Q700,55 840,100 Q880,150 870,220 Q850,270 780,290 Q680,300 600,260 Q540,200 545,130 Q550,90 555,70" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
           {/* Africa */}
-          <path d="M430,200 Q540,180 600,240 Q610,320 570,400 Q500,420 450,380 Q420,300 430,200" />
+          <path 
+            d="M420,195 Q500,175 580,200 Q620,250 610,330 Q590,400 540,420 Q470,430 430,390 Q395,330 405,260 Q415,215 420,195" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
           {/* North America */}
-          <path d="M60,60 Q200,40 320,100 Q340,180 280,230 Q180,250 80,200 Q40,140 60,60" />
+          <path 
+            d="M55,50 Q180,30 320,65 Q360,110 350,170 Q330,230 260,260 Q160,280 80,240 Q35,180 40,110 Q50,65 55,50" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
           {/* South America */}
-          <path d="M200,250 Q300,240 370,300 Q380,400 320,480 Q260,500 220,450 Q190,350 200,250" />
-          {/* Australia */}
-          <path d="M740,300 Q860,290 900,360 Q910,420 850,450 Q760,460 720,400 Q710,340 740,300" />
+          <path 
+            d="M195,245 Q290,230 370,280 Q395,350 380,430 Q350,500 280,520 Q210,510 180,450 Q160,380 170,310 Q185,260 195,245" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
+          {/* Oceania */}
+          <path 
+            d="M730,295 Q850,280 910,340 Q930,400 900,450 Q840,480 760,470 Q700,440 690,380 Q695,320 730,295" 
+            className="fill-muted/40"
+            strokeLinejoin="round"
+          />
         </g>
 
         {/* Country paths */}
@@ -148,28 +199,43 @@ export function WorldMap() {
               country={country}
               d={path}
               onHover={setHoveredCountry}
+              isHovered={hoveredCountry?.id === country.id}
             />
           );
         })}
 
-        {/* Continent labels */}
-        <text x="490" y="105" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">EUROPA</text>
-        <text x="720" y="140" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">AZJA</text>
-        <text x="520" y="280" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">AFRYKA</text>
-        <text x="190" y="120" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">AMERYKA PN.</text>
-        <text x="290" y="330" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">AMERYKA PD.</text>
-        <text x="820" y="380" className="fill-foreground/50 text-[10px] font-display font-semibold" textAnchor="middle">OCEANIA</text>
+        {/* Continent labels with better styling */}
+        <g className="pointer-events-none">
+          <text x="490" y="100" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">EUROPA</text>
+          <text x="720" y="135" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">AZJA</text>
+          <text x="520" y="285" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">AFRYKA</text>
+          <text x="190" y="115" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">AMERYKA PN.</text>
+          <text x="295" y="335" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">AMERYKA PD.</text>
+          <text x="820" y="385" className="fill-foreground/60 text-[11px] font-display font-bold" textAnchor="middle" letterSpacing="0.05em">OCEANIA</text>
+        </g>
+
+        {/* Decorative elements - compass rose */}
+        <g transform="translate(920, 450)" className="opacity-40">
+          <circle cx="0" cy="0" r="20" fill="none" className="stroke-foreground/20" strokeWidth="1"/>
+          <line x1="0" y1="-18" x2="0" y2="18" className="stroke-foreground/30" strokeWidth="1"/>
+          <line x1="-18" y1="0" x2="18" y2="0" className="stroke-foreground/30" strokeWidth="1"/>
+          <text x="0" y="-22" className="fill-foreground/40 text-[8px] font-display" textAnchor="middle">N</text>
+        </g>
       </svg>
 
       {/* Legend */}
-      <div className="flex items-center justify-center gap-6 mt-6">
+      <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mt-6 px-4">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-dreamy-mint border border-foreground/20" />
+          <div className="w-5 h-5 rounded-lg bg-dreamy-mint border-2 border-foreground/20 shadow-sm" />
           <span className="text-sm font-body text-muted-foreground">Dostępne kraje</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-muted border border-foreground/20" />
+          <div className="w-5 h-5 rounded-lg bg-muted border-2 border-foreground/15 shadow-sm" />
           <span className="text-sm font-body text-muted-foreground">Wkrótce</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-lg bg-dreamy-peach border-2 border-primary/30 shadow-sm" />
+          <span className="text-sm font-body text-muted-foreground">Wybrane</span>
         </div>
       </div>
     </div>
