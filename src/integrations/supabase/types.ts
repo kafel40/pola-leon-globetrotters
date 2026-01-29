@@ -133,6 +133,36 @@ export type Database = {
           },
         ]
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          newsletter_consent: boolean | null
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          newsletter_consent?: boolean | null
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          newsletter_consent?: boolean | null
+          subject?: string
+        }
+        Relationships: []
+      }
       discovered_countries: {
         Row: {
           country_slug: string
@@ -158,6 +188,7 @@ export type Database = {
         Row: {
           age_group: string | null
           audio_url: string | null
+          coloring_page_url: string | null
           country_slug: string
           cover_image_url: string | null
           created_at: string
@@ -174,6 +205,7 @@ export type Database = {
         Insert: {
           age_group?: string | null
           audio_url?: string | null
+          coloring_page_url?: string | null
           country_slug: string
           cover_image_url?: string | null
           created_at?: string
@@ -190,6 +222,7 @@ export type Database = {
         Update: {
           age_group?: string | null
           audio_url?: string | null
+          coloring_page_url?: string | null
           country_slug?: string
           cover_image_url?: string | null
           created_at?: string

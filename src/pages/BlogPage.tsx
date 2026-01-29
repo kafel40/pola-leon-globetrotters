@@ -134,8 +134,8 @@ export default function BlogPage() {
   return (
     <Layout>
       <PageHead 
-        title="Blog podróżniczy"
-        description="Odkrywaj świat z Polą i Leonem. Ciekawostki geograficzne, porady podróżnicze dla rodzin z dziećmi i inspiracje z różnych zakątków globu."
+        title="Blog rodzinny"
+        description="Odkrywaj świat razem z rodziną. Porady dla rodziców, inspiracje wychowawcze i rodzinne przygody z Polą i Leonem."
       />
 
       {/* Hero */}
@@ -150,17 +150,17 @@ export default function BlogPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card shadow-dreamy border border-border/50">
               <Compass className="h-4 w-4 text-accent-foreground" />
               <span className="text-sm font-body font-medium text-muted-foreground">
-                Blog podróżniczy
+                Blog rodzinny
               </span>
             </div>
             
             <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Podróże, kultura i <span className="text-gradient">ciekawostki ze świata</span>
+              Rodzina, wychowanie i <span className="text-gradient">wspólne przygody</span>
             </h1>
             
             <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto">
-              Poznaj świat razem z nami! Znajdziesz tu inspiracje podróżnicze, 
-              ciekawostki geograficzne i pomysły na wspólne odkrywanie globu z dziećmi.
+              Witaj na blogu rodzinnym! Znajdziesz tu porady dla rodziców, 
+              inspiracje wychowawcze i pomysły na wspólne spędzanie czasu z dziećmi.
             </p>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default function BlogPage() {
               <p className="text-muted-foreground font-body">
                 {searchQuery || selectedCategory || selectedTag 
                   ? 'Nie znaleziono artykułów spełniających kryteria wyszukiwania.'
-                  : 'Wkrótce pojawią się tu nowe artykuły podróżnicze!'}
+                  : 'Wkrótce pojawią się tu nowe artykuły rodzinne!'}
               </p>
               {(searchQuery || selectedCategory || selectedTag) && (
                 <Button 

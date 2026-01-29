@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, BookOpen, Headphones, ShoppingCart, Loader2, Library } from 'lucide-react';
+import { FileText, BookOpen, Headphones, ShoppingCart, Loader2, Library, Palette } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -26,6 +26,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   const hasPdf = !!ebook.pdf_url;
   const hasEpub = !!ebook.epub_url;
   const hasAudio = !!ebook.audio_url;
+  const hasColoring = !!ebook.coloring_page_url;
   const hasAnyFile = hasPdf || hasEpub || hasAudio;
 
   // Price-based logic: if price > 0, it's paid content
@@ -71,7 +72,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
     }
   };
 
-  const handleDownload = async (fileType: 'pdf' | 'epub' | 'audio') => {
+  const handleDownload = async (fileType: 'pdf' | 'epub' | 'audio' | 'coloring') => {
     if (!user) {
       toast({
         title: 'Wymagane logowanie',
@@ -141,6 +142,13 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
         toast({
           title: 'Otwieranie PDF',
           description: 'Bajka otwarta w przeglądarce.',
+        });
+      } else if (fileType === 'coloring') {
+        // Open coloring page in new tab for download
+        window.open(response.data.downloadUrl, '_blank');
+        toast({
+          title: 'Pobieranie kolorowanki',
+          description: 'Kolorowanka zostanie pobrana.',
         });
       } else {
         // Open download in new tab for EPUB
@@ -288,6 +296,23 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
                     <Headphones className="mr-2 h-4 w-4" />
                   )}
                   Posłuchaj
+                </Button>
+              )}
+
+              {hasColoring && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => handleDownload('coloring')}
+                  disabled={downloading !== null || acquiring}
+                  className="bg-dreamy-lavender/50 hover:bg-dreamy-lavender"
+                >
+                  {downloading === 'coloring' ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Palette className="mr-2 h-4 w-4" />
+                  )}
+                  Kolorowanka
                 </Button>
               )}
             </div>

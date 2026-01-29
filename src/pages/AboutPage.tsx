@@ -173,12 +173,12 @@ export default function AboutPage() {
               <Compass className="h-8 w-8 text-foreground/80" />
             </div>
             <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
-              Blog podróżniczy
+              Blog rodzinny
             </h2>
             <p className="text-muted-foreground font-body leading-relaxed">
-              Odkrywaj świat razem z nami! Na naszym blogu znajdziesz inspiracje podróżnicze, 
-              ciekawostki geograficzne i pomysły na wspólne odkrywanie globu z dziećmi. 
-              Dzielimy się wiedzą, która czyni każdą podróż niezapomnianą przygodą.
+              Odkrywaj radość rodzicielstwa razem z nami! Na naszym blogu znajdziesz porady wychowawcze, 
+              inspiracje na wspólne aktywności i pomysły na budowanie silnych więzi rodzinnych. 
+              Dzielimy się wiedzą, która pomaga tworzyć piękne wspomnienia.
             </p>
             <Button size="lg" asChild className="font-display">
               <Link to="/blog">
