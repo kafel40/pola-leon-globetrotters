@@ -40,7 +40,10 @@ export default function AboutPage() {
         title="O nas"
         description="Poznaj zespół Pola i Leon - trzy kobiety połączone pasją do rozwoju dziecka. Olga, Natalia i Iza tworzą bajki edukacyjne z sercem i profesjonalizmem."
       />
-      {/* Hero */}
+      {/* Characters Section - Main Heroes */}
+      <CharactersSection />
+
+      {/* Hero - Team intro */}
       <section className="relative py-16 md:py-24 bg-hero overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-20 -right-20 w-72 h-72 bg-dreamy-lavender rounded-full opacity-40 blur-3xl" />
@@ -49,10 +52,10 @@ export default function AboutPage() {
 
         <div className="container relative">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
               Poznaj zespół{' '}
               <span className="text-gradient">połączony pasją do rozwoju dziecka</span>
-            </h1>
+            </h2>
             <p className="text-lg md:text-xl text-muted-foreground font-body leading-relaxed">
               Trzy kobiety, trzy różne perspektywy, jeden wspólny cel - 
               wspierać rozwój dzieci z sercem i profesjonalizmem.
@@ -60,9 +63,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* Characters Section */}
-      <CharactersSection />
 
       {/* Team Cards */}
       <section className="py-16 md:py-24 bg-background">
