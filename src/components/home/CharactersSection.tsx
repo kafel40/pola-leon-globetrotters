@@ -32,7 +32,7 @@ export function CharactersSection() {
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Pola</h3>
                   <p className="text-sm text-accent-foreground font-body mb-3">4 lata</p>
                   <p className="text-muted-foreground font-body leading-relaxed">
-                    Starsza, spokojna i bardzo ciekawa świata. Pola uwielbia zadawać pytania i pełni rolę przewodnika dla Leona. Zawsze chętnie tłumaczy bratu nowe rzeczy.
+                    Starsza, spokojna i bardzo ciekawa świata. Pola uwielbia zadawać pytania i pełni rolę przewodniczki dla Leona. Zawsze chętnie tłumaczy bratu nowe rzeczy.
                   </p>
                 </div>
               </div>
