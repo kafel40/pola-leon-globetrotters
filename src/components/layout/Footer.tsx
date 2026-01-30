@@ -59,9 +59,6 @@ export function Footer() {
               <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                 Blog rodzinny
               </Link>
-              <Link to="/kontakt" className="text-muted-foreground hover:text-foreground transition-colors">
-                Kontakt
-              </Link>
               <Link to="/biblioteka" className="text-muted-foreground hover:text-foreground transition-colors">
                 Moja biblioteka
               </Link>
@@ -80,8 +77,11 @@ export function Footer() {
               </Link>
             </nav>
             
-            <h4 className="font-display font-bold text-foreground pt-4">Informacje prawne</h4>
+            <h4 className="font-display font-bold text-foreground pt-4">Stacja informacja</h4>
             <nav className="flex flex-col gap-2 text-sm font-body">
+              <Link to="/kontakt" className="text-muted-foreground hover:text-foreground transition-colors">
+                Kontakt
+              </Link>
               <Link to="/prawne?tab=regulamin" className="text-muted-foreground hover:text-foreground transition-colors">
                 Regulamin
               </Link>
