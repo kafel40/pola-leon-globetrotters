@@ -1,8 +1,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Allowed origins for CORS - restrict to Lovable domains + local dev.
-// NOTE: Preview can run under both *.lovable.app and *.lovableproject.com.
+// Allowed origins for CORS - restrict to production domain, Lovable domains + local dev.
 const allowedOriginPatterns: RegExp[] = [
+  /^https:\/\/polaileon\.pl$/i,
+  /^https:\/\/www\.polaileon\.pl$/i,
   /^https:\/\/[a-z0-9-]+\.lovable\.app$/i,
   /^https:\/\/[a-z0-9-]+\.lovableproject\.com$/i,
   /^http:\/\/localhost:(5173|8080)$/i,
@@ -12,8 +13,8 @@ function getCorsHeaders(req: Request) {
   const origin = req.headers.get('origin') || ''
 
   const isAllowed = allowedOriginPatterns.some((re) => re.test(origin))
-  // Fallback to the published domain if the request origin isn't in our allow-list.
-  const allowedOrigin = isAllowed ? origin : 'https://pola-leon-globetrotters.lovable.app'
+  // Fallback to the production domain if the request origin isn't in our allow-list.
+  const allowedOrigin = isAllowed ? origin : 'https://polaileon.pl'
   
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
