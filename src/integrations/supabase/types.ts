@@ -20,6 +20,7 @@ export type Database = {
           created_at: string | null
           id: string
           is_active: boolean | null
+          link_url: string | null
           message: string
           text_color: string | null
           updated_at: string | null
@@ -29,6 +30,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_active?: boolean | null
+          link_url?: string | null
           message: string
           text_color?: string | null
           updated_at?: string | null
@@ -38,6 +40,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           is_active?: boolean | null
+          link_url?: string | null
           message?: string
           text_color?: string | null
           updated_at?: string | null
@@ -273,6 +276,7 @@ export type Database = {
           country_slug: string
           ebook_id: string
           id: string
+          price_at_purchase: number | null
           purchased_at: string
           user_id: string
         }
@@ -280,6 +284,7 @@ export type Database = {
           country_slug: string
           ebook_id: string
           id?: string
+          price_at_purchase?: number | null
           purchased_at?: string
           user_id: string
         }
@@ -287,6 +292,7 @@ export type Database = {
           country_slug?: string
           ebook_id?: string
           id?: string
+          price_at_purchase?: number | null
           purchased_at?: string
           user_id?: string
         }

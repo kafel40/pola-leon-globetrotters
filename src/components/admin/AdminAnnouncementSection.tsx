@@ -14,6 +14,7 @@ interface AnnouncementData {
   is_active: boolean;
   bg_color: string;
   text_color: string;
+  link_url: string | null;
 }
 
 export function AdminAnnouncementSection() {
@@ -24,6 +25,7 @@ export function AdminAnnouncementSection() {
   const [isActive, setIsActive] = useState(false);
   const [bgColor, setBgColor] = useState('#7C3AED');
   const [textColor, setTextColor] = useState('#FFFFFF');
+  const [linkUrl, setLinkUrl] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -47,6 +49,7 @@ export function AdminAnnouncementSection() {
         setIsActive(data.is_active || false);
         setBgColor(data.bg_color || '#7C3AED');
         setTextColor(data.text_color || '#FFFFFF');
+        setLinkUrl(data.link_url || '');
       }
     } catch (error) {
       console.error('Error fetching announcement:', error);
@@ -76,6 +79,7 @@ export function AdminAnnouncementSection() {
             is_active: isActive,
             bg_color: bgColor,
             text_color: textColor,
+            link_url: linkUrl.trim() || null,
             updated_at: new Date().toISOString(),
           })
           .eq('id', announcement.id);
@@ -90,6 +94,7 @@ export function AdminAnnouncementSection() {
             is_active: isActive,
             bg_color: bgColor,
             text_color: textColor,
+            link_url: linkUrl.trim() || null,
           });
 
         if (error) throw error;
@@ -191,6 +196,22 @@ export function AdminAnnouncementSection() {
               />
             </div>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="link-url" className="font-body">
+            Link URL (opcjonalny)
+          </Label>
+          <Input
+            id="link-url"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            placeholder="np. /mapa lub https://example.com"
+            className="font-body"
+          />
+          <p className="text-xs text-muted-foreground">
+            Jeśli podasz URL, kliknięcie w pasek przeniesie użytkownika pod ten adres.
+          </p>
         </div>
 
         <div className="flex items-center gap-3">

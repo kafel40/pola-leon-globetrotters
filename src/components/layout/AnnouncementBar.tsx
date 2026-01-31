@@ -7,6 +7,7 @@ interface Announcement {
   message: string;
   bg_color: string | null;
   text_color: string | null;
+  link_url: string | null;
 }
 
 export function AnnouncementBar() {
@@ -26,7 +27,7 @@ export function AnnouncementBar() {
     const fetchAnnouncement = async () => {
       const { data, error } = await supabase
         .from('announcement_bar')
-        .select('id, message, bg_color, text_color')
+        .select('id, message, bg_color, text_color, link_url')
         .eq('is_active', true)
         .order('created_at', { ascending: false })
         .limit(1)
@@ -61,6 +62,15 @@ export function AnnouncementBar() {
   const bgColor = announcement.bg_color || 'hsl(var(--primary))';
   const textColor = announcement.text_color || '#FFFFFF';
 
+  const content = (
+    <p 
+      ref={textRef}
+      className="text-sm font-body text-center pr-8"
+    >
+      {announcement.message}
+    </p>
+  );
+
   return (
     <div 
       className="py-2 px-4 relative"
@@ -71,12 +81,18 @@ export function AnnouncementBar() {
         className="container flex items-center justify-center overflow-hidden"
       >
         <div className={`${needsMarquee ? 'animate-marquee whitespace-nowrap' : ''}`}>
-          <p 
-            ref={textRef}
-            className="text-sm font-body text-center pr-8"
-          >
-            {announcement.message}
-          </p>
+          {announcement.link_url ? (
+            <a 
+              href={announcement.link_url}
+              target={announcement.link_url.startsWith('http') ? '_blank' : '_self'}
+              rel={announcement.link_url.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="hover:underline"
+            >
+              {content}
+            </a>
+          ) : (
+            content
+          )}
         </div>
         <button
           onClick={handleDismiss}

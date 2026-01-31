@@ -8,6 +8,7 @@ import { AudioPlayerProvider } from "@/components/audio/AudioPlayerContext";
 import { AudioPlayerWidget } from "@/components/audio/AudioPlayerWidget";
 import { PdfViewerProvider } from "@/components/pdf/PdfViewerContext";
 import { PdfViewerModal } from "@/components/pdf/PdfViewerModal";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { PageTracker } from "@/components/analytics/PageTracker";
 import Index from "./pages/Index";
 import MapPage from "./pages/MapPage";
@@ -38,6 +39,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <PageTracker />
               <Routes>
                 <Route path="/" element={<Index />} />

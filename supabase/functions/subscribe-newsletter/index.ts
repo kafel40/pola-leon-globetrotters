@@ -107,7 +107,7 @@ const handler = async (req: Request): Promise<Response> => {
     const confirmationUrl = `${baseUrl}/potwierdz-newsletter?token=${confirmationToken}`;
 
     const emailResponse = await resend.emails.send({
-      from: "Pola i Leon <newsletter@polaileon.pl>",
+      from: "Pola i Leon <kontakt@polaileon.pl>",
       to: [normalizedEmail],
       subject: "Potwierdź swoją subskrypcję newslettera Pola i Leon",
       html: `

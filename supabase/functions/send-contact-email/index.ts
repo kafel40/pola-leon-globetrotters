@@ -52,7 +52,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send notification email to admin
     const emailResponse = await resend.emails.send({
       from: "Pola i Leon <kontakt@polaileon.pl>",
-      to: ["kontakt@polaileon.pl"], // Admin email
+      to: ["m.kachlicki@gmail.com"], // Admin email
       reply_to: email,
       subject: `[Kontakt] ${subject}`,
       html: `
