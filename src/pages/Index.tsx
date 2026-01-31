@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <Layout>
       <PageHead 
-        title="Pola i Leon - Bajki edukacyjne dla dzieci"
+        title="Pola i Leon. Twoje bajki i przygody dla dzieci - Odkrywaj świat z nami"
         description="Bajki edukacyjne dla dzieci 2-6 lat. Poznaj świat z Polą i Leonem - przygody, geografia, kultura i emocje w każdej historii. Odkrywaj nowe kraje!"
       />
       <HeroSection />

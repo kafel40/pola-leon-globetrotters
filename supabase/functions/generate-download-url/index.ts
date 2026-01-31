@@ -173,14 +173,26 @@ Deno.serve(async (req) => {
     let filePath: string
     if (fileUrl.includes('/storage/v1/object/public/ebooks/')) {
       filePath = fileUrl.split('/storage/v1/object/public/ebooks/')[1]
+    } else if (fileUrl.includes('/storage/v1/object/sign/ebooks/')) {
+      filePath = fileUrl.split('/storage/v1/object/sign/ebooks/')[1].split('?')[0]
     } else if (fileUrl.startsWith('http')) {
       // Try to extract path from other URL formats
-      const urlParts = new URL(fileUrl)
-      filePath = urlParts.pathname.replace(/^\/storage\/v1\/object\/(public|sign)\/ebooks\//, '')
+      try {
+        const urlParts = new URL(fileUrl)
+        filePath = urlParts.pathname.replace(/^\/storage\/v1\/object\/(public|sign)\/ebooks\//, '')
+      } catch {
+        // If URL parsing fails, use the raw value
+        filePath = fileUrl
+      }
     } else {
-      // Assume it's already a path
+      // Assume it's already a path (e.g., "pdf/filename.pdf")
       filePath = fileUrl
     }
+
+    // Clean up any URL-encoded characters and query params
+    filePath = decodeURIComponent(filePath.split('?')[0])
+
+    console.log('Generating signed URL for path:', filePath)
 
     // Generate a signed URL (valid for 1 hour)
     const { data: signedUrl, error: signedUrlError } = await supabaseAdmin
@@ -189,9 +201,9 @@ Deno.serve(async (req) => {
       .createSignedUrl(filePath, 3600) // 1 hour expiry
 
     if (signedUrlError || !signedUrl) {
-      console.error('Error generating signed URL:', signedUrlError)
+      console.error('Error generating signed URL:', signedUrlError, 'for path:', filePath)
       return new Response(
-        JSON.stringify({ error: 'Failed to generate download URL' }),
+        JSON.stringify({ error: 'Failed to generate download URL', details: signedUrlError?.message }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }

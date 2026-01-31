@@ -16,7 +16,19 @@ export function PageHead({
   canonicalUrl
 }: PageHeadProps) {
   const siteName = 'Pola i Leon';
-  const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+  
+  // Prevent duplicate site name in title
+  // If title already contains the site name, use it as is
+  // Otherwise, only append site name if title is different
+  let fullTitle: string;
+  if (title.toLowerCase().includes('pola i leon')) {
+    // Title already has site name, use cleaned version
+    fullTitle = title;
+  } else {
+    // Append site name for other pages
+    fullTitle = `${title} | ${siteName}`;
+  }
+  
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
   useEffect(() => {

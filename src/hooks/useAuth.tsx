@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+import { User, Session, AuthError } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
@@ -13,6 +13,35 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Helper function to translate Supabase auth errors to Polish
+function translateAuthError(error: AuthError): string {
+  const errorMessages: Record<string, string> = {
+    'Invalid login credentials': 'Błędne hasło lub adres e-mail. Spróbuj ponownie.',
+    'Email not confirmed': 'Adres e-mail nie został potwierdzony. Sprawdź swoją skrzynkę.',
+    'User already registered': 'Użytkownik o tym adresie e-mail już istnieje.',
+    'Password should be at least 6 characters': 'Hasło musi mieć minimum 6 znaków.',
+    'Signup requires a valid password': 'Podaj prawidłowe hasło.',
+    'Unable to validate email address: invalid format': 'Nieprawidłowy format adresu e-mail.',
+    'User not found': 'Użytkownik nie został znaleziony.',
+    'Email rate limit exceeded': 'Zbyt wiele prób. Spróbuj ponownie za chwilę.',
+    'For security purposes, you can only request this once every 60 seconds': 'Ze względów bezpieczeństwa możesz wysłać żądanie raz na 60 sekund.',
+    'New password should be different from the old password': 'Nowe hasło musi być inne niż poprzednie.',
+    'Auth session missing!': 'Sesja wygasła. Zaloguj się ponownie.',
+    'JWT expired': 'Sesja wygasła. Zaloguj się ponownie.',
+  };
+
+  // Check for partial matches
+  const errorMessage = error.message;
+  for (const [key, value] of Object.entries(errorMessages)) {
+    if (errorMessage.toLowerCase().includes(key.toLowerCase())) {
+      return value;
+    }
+  }
+
+  // Default fallback for unknown errors
+  return 'Wystąpił błąd. Spróbuj ponownie później.';
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -51,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) {
       toast({
         title: 'Błąd rejestracji',
-        description: error.message,
+        description: translateAuthError(error),
         variant: 'destructive',
       });
       throw error;
@@ -59,7 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     toast({
       title: 'Konto utworzone!',
-      description: 'Możesz się teraz zalogować.',
+      description: 'Sprawdź swoją skrzynkę e-mail, aby potwierdzić rejestrację.',
     });
   };
 
@@ -72,7 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) {
       toast({
         title: 'Błąd logowania',
-        description: error.message,
+        description: translateAuthError(error),
         variant: 'destructive',
       });
       throw error;
@@ -90,7 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) {
       toast({
         title: 'Błąd wylogowania',
-        description: error.message,
+        description: translateAuthError(error),
         variant: 'destructive',
       });
       throw error;
