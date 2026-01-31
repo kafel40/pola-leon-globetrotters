@@ -89,7 +89,7 @@ export function PdfViewerModal() {
 
         {/* PDF Viewer */}
         <div className="flex-1 min-h-0 bg-muted/30 rounded-b-2xl overflow-hidden">
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@4.9.155/build/pdf.worker.min.mjs">
             <Viewer
               fileUrl={currentPdf.url}
               plugins={[defaultLayoutPluginInstance]}
