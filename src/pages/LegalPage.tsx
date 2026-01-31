@@ -77,7 +77,7 @@ const LegalPage = () => {
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 3. Dostawa i Prawo Odstąpienia od Umowy</h2>
                   <ol className="list-decimal pl-6 space-y-2">
-                    <li>Produkt cyfrowy wysyłany jest automatycznie na adres e-mail podany w zamówieniu.</li>
+                    <li>Dostęp do produktów cyfrowych odbywa się wyłącznie poprzez Konto Użytkownika w Serwisie. Produkty są dostępne do bezpośredniego pobrania. Usługodawca nie wysyła plików drogą mailową.</li>
                     <li>
                       <strong>Ważne:</strong> Zgodnie z art. 38 ustawy o prawach konsumenta, prawo do odstąpienia od umowy (zwrotu) <strong>nie przysługuje</strong> w odniesieniu do treści cyfrowych, jeżeli spełnianie świadczenia rozpoczęło się za wyraźną zgodą Konsumenta przed upływem terminu do odstąpienia od umowy.
                     </li>
@@ -92,7 +92,7 @@ const LegalPage = () => {
 
                   <h2 className="text-xl md:text-2xl mt-8 mb-4">§ 5. Wyłączenie odpowiedzialności (Klauzula Bezpieczeństwa)</h2>
                   <ol className="list-decimal pl-6 space-y-2">
-                    <li>Wszelkie materiały w Serwisie mają charakter wyłącznie edukacyjny. Nie zastępują porady psychologicznej ani medycznej.</li>
+                    <li>Wszelkie materiały w Serwisie mają charakter wyłącznie informacyjny. Nie zastępują porady psychologicznej ani medycznej.</li>
                     <li>Zabawy proponowane przez Polę i Leona wymagają nadzoru osoby dorosłej. Sprzedawca nie ponosi odpowiedzialności za szkody powstałe w wyniku zabawy dzieci bez opieki.</li>
                   </ol>
                 </article>

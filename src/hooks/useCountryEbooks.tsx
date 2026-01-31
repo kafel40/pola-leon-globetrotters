@@ -75,13 +75,14 @@ export function useCountryEbooks(countrySlug: string) {
     // Check if already owned
     if (isOwned(ebook.id)) return true;
 
-    // Insert ownership record
+    // Insert ownership record with price at time of acquisition
     const { error } = await supabase
       .from('owned_ebooks')
       .insert({
         user_id: user.id,
         ebook_id: ebook.id,
         country_slug: ebook.country_slug,
+        price_at_purchase: ebook.price || 0,
       });
 
     if (error) {

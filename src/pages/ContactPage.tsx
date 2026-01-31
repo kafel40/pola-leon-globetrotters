@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { PageHead } from '@/components/seo/PageHead';
 import { Button } from '@/components/ui/button';
@@ -7,9 +8,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Mail, Heart, Send } from 'lucide-react';
+import { Loader2, Mail, Heart, Send, Home } from 'lucide-react';
 import { z } from 'zod';
 
 const contactSchema = z.object({
@@ -18,6 +20,13 @@ const contactSchema = z.object({
   subject: z.string().trim().min(1, 'Temat jest wymagany').max(200, 'Temat może mieć maksymalnie 200 znaków'),
   message: z.string().trim().min(10, 'Wiadomość musi mieć minimum 10 znaków').max(2000, 'Wiadomość może mieć maksymalnie 2000 znaków'),
 });
+
+const subjectOptions = [
+  { value: 'opinia', label: 'Opinia' },
+  { value: 'sugestia', label: 'Sugestia' },
+  { value: 'problem', label: 'Problem techniczny' },
+  { value: 'inny', label: 'Inny temat' },
+];
 
 export default function ContactPage() {
   const [name, setName] = useState('');
@@ -131,12 +140,12 @@ export default function ContactPage() {
             </div>
             
             <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Napisz do nas <span className="text-gradient">— chętnie pomożemy!</span>
+              Napisz do nas <span className="text-gradient">- chętnie pomożemy!</span>
             </h1>
             
             <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto">
               Chętnie rozwiążemy Twoje problemy lub wysłuchamy sugestii. Jeśli chcesz nam 
-              coś podpowiedzieć lub podzielić się swoją opinią — napisz do nas! 
+              coś podpowiedzieć lub podzielić się swoją opinią - napisz do nas! 
               Każda wiadomość pomaga nam tworzyć lepsze miejsce dla rodzin.
             </p>
           </div>
@@ -159,9 +168,17 @@ export default function ContactPage() {
                   <p className="text-muted-foreground font-body">
                     Odpowiemy najszybciej jak to możliwe. Sprawdź swoją skrzynkę pocztową.
                   </p>
-                  <Button onClick={() => setSent(false)}>
-                    Wyślij kolejną wiadomość
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button onClick={() => setSent(false)}>
+                      Wyślij kolejną wiadomość
+                    </Button>
+                    <Button variant="outline" asChild>
+                      <Link to="/">
+                        <Home className="mr-2 h-4 w-4" />
+                        Powrót do strony głównej
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ) : (
@@ -201,14 +218,18 @@ export default function ContactPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="subject">Temat *</Label>
-                      <Input
-                        id="subject"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                        placeholder="O czym chcesz napisać?"
-                        required
-                        maxLength={200}
-                      />
+                      <Select value={subject} onValueChange={setSubject} required>
+                        <SelectTrigger id="subject">
+                          <SelectValue placeholder="Wybierz temat wiadomości" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {subjectOptions.map((option) => (
+                            <SelectItem key={option.value} value={option.label}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -251,6 +272,15 @@ export default function ContactPage() {
                         </>
                       )}
                     </Button>
+
+                    <div className="flex justify-center pt-2">
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link to="/">
+                          <Home className="mr-2 h-4 w-4" />
+                          Powrót do strony głównej
+                        </Link>
+                      </Button>
+                    </div>
 
                     <p className="text-xs text-muted-foreground text-center pt-2">
                       Wysyłając wiadomość, akceptujesz naszą{' '}

@@ -30,6 +30,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ChangePasswordSection } from '@/components/account/ChangePasswordSection';
+import { OrderHistorySection } from '@/components/account/OrderHistorySection';
 
 interface ProfileData {
   full_name: string | null;
@@ -222,6 +223,9 @@ export default function AccountPage() {
                 </div>
               </div>
             </div>
+
+            {/* Order History Section */}
+            <OrderHistorySection />
 
             {/* Consents Section */}
             <div className="bg-card rounded-3xl shadow-card border border-border/50 p-6 md:p-8 mb-6">
