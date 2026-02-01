@@ -57,12 +57,12 @@ function findCountryByGeoName(geoName: string): Country | undefined {
 // Color palette - calm, educational, book-like
 const colors = {
   ocean: 'hsl(200, 30%, 92%)',
-  landDefault: 'hsl(45, 25%, 88%)',
-  landHover: 'hsl(45, 35%, 82%)',
-  available: 'hsl(160, 30%, 80%)',
-  availableHover: 'hsl(160, 45%, 70%)',
-  comingSoon: 'hsl(210, 20%, 85%)',
-  comingSoonHover: 'hsl(210, 30%, 78%)',
+  landDefault: 'hsl(220, 10%, 82%)',        // Gray for other countries
+  landHover: 'hsl(220, 12%, 76%)',          // Slightly darker gray on hover
+  available: 'hsl(160, 35%, 75%)',          // Green for available
+  availableHover: 'hsl(160, 45%, 65%)',     // Darker green on hover
+  comingSoon: 'hsl(45, 55%, 80%)',          // Pastel gold for coming soon
+  comingSoonHover: 'hsl(45, 60%, 72%)',     // Darker gold on hover
   selected: 'hsl(25, 70%, 82%)',
   border: 'hsl(220, 15%, 70%)',
   borderHover: 'hsl(220, 25%, 55%)',
