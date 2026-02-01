@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layout/Layout';
 import { PageHead } from '@/components/seo/PageHead';
-import { WorldMap } from '@/components/map/WorldMap';
+import { WorldMapLeaflet } from '@/components/map/WorldMapLeaflet';
 import { CountryCard } from '@/components/country/CountryCard';
 import { countries } from '@/data/countries';
 
@@ -14,19 +14,19 @@ export default function MapPage() {
         title="Mapa świata"
         description="Interaktywna mapa świata Poli i Leona. Odkrywaj kraje i kontynenty z bajkami edukacyjnymi dla dzieci. Kliknij na kraj, aby poznać przygodę!"
       />
-      <section className="py-12 md:py-16 bg-hero">
+      <section className="py-8 md:py-12 bg-hero">
         <div className="container">
-          <div className="text-center mb-8">
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Mapa świata Poli i Leona
+          <div className="text-center mb-6">
+            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Magiczny Globus Poli i Leona
             </h1>
             <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-              Kliknij na kraj, aby poznać przygodę rodzeństwa w tym miejscu!
+              Kliknij na kraj, aby odkryć przygodę rodzeństwa w tym magicznym miejscu!
             </p>
           </div>
 
-          <div className="bg-card rounded-3xl shadow-card border border-border/50 p-4 md:p-8">
-            <WorldMap />
+          <div className="bg-card rounded-3xl shadow-card border border-border/50 p-2 md:p-4 overflow-hidden">
+            <WorldMapLeaflet />
           </div>
         </div>
       </section>
