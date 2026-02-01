@@ -26,6 +26,8 @@ export function CharactersSection() {
                     src={polaImage} 
                     alt="Pola - 4-letnia bohaterka bajek" 
                     className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="flex-1">
@@ -60,6 +62,8 @@ export function CharactersSection() {
                     src={leonImage} 
                     alt="Leon - 2-letni bohater bajek" 
                     className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="flex-1">

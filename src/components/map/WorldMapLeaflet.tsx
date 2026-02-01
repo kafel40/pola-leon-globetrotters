@@ -20,34 +20,41 @@ const codeToSlug: Record<string, string> = {
   'KOR': 'south-korea', 'VNM': 'vietnam',
 };
 
+// Map of country admin names to ISO codes (for countries where ISO_A3 is -99)
+const adminNameToCode: Record<string, string> = {
+  'France': 'FRA',
+  'Norway': 'NOR',
+  'Belarus': 'BLR',
+  'Kosovo': 'XKX',
+  'Northern Cyprus': 'XNC',
+  'Somaliland': 'SOL',
+};
+
 function getCountryCode(feature: Feature): string | undefined {
   const props = feature.properties || {};
-  // Natural Earth 110m uses different property names - handle them all
-  // Also handle special cases like France (-99 for ISO_A3)
-  let code = props.ISO_A3 || props.ADM0_A3 || props.ISO_A3_EH || props.SOV_A3;
   
-  // Handle special cases where ISO_A3 is -99 (disputed or special regions)
-  if (code === '-99') {
-    // Use ADM0_A3 as fallback
+  // First try standard ISO codes
+  let code = props.ISO_A3;
+  
+  // If ISO_A3 is missing or -99, try ADM0_A3
+  if (!code || code === '-99') {
     code = props.ADM0_A3;
   }
   
-  // Normalize France (sometimes shown as different codes)
-  if (code === 'FRA' || props.ADMIN === 'France' || props.NAME === 'France') {
-    return 'FRA';
+  // If still -99 or missing, try to map by ADMIN name
+  if (!code || code === '-99') {
+    const adminName = props.ADMIN || props.NAME;
+    if (adminName && adminNameToCode[adminName]) {
+      return adminNameToCode[adminName];
+    }
   }
   
-  // Normalize Norway
-  if (code === 'NOR' || props.ADMIN === 'Norway' || props.NAME === 'Norway') {
-    return 'NOR';
+  // If code is valid, return it
+  if (code && code !== '-99') {
+    return code;
   }
   
-  // Normalize Belarus
-  if (code === 'BLR' || props.ADMIN === 'Belarus' || props.NAME === 'Belarus') {
-    return 'BLR';
-  }
-  
-  return code;
+  return undefined;
 }
 
 function getCountryName(feature: Feature): string {
