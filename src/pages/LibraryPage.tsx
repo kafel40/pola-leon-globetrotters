@@ -6,10 +6,15 @@ import { BookOpen, Globe, ArrowRight, Lock, Loader2, FileText, Headphones } from
 import { useLibrary } from '@/hooks/useLibrary';
 import { useAuth } from '@/hooks/useAuth';
 import { countries } from '@/data/countries';
+import { useCountryStatuses } from '@/hooks/useCountryStatuses';
 
 export default function LibraryPage() {
   const { user, loading: authLoading } = useAuth();
   const { ownedEbooks, discoveredCountries, loading } = useLibrary();
+  const { countryStatuses } = useCountryStatuses();
+  
+  // Count available countries from database
+  const availableCountriesCount = countryStatuses.filter(cs => cs.status === 'available').length;
 
   // Show loading while checking auth
   if (authLoading) {
@@ -141,7 +146,7 @@ export default function LibraryPage() {
                   </div>
                   <div className="p-6 rounded-2xl bg-dreamy-mint/30 border border-dreamy-mint text-center">
                     <p className="text-foreground/80 font-body mb-4">
-                      🌍 Świetnie! Odkryłeś już {discoveredCountries.length} {discoveredCountries.length === 1 ? 'kraj' : 'krajów'}! Poznaj kolejne kultury i tradycje.
+                      🌍 Świetnie! Odkryłeś już {discoveredCountries.length} z {availableCountriesCount > 0 ? availableCountriesCount : '?'} dostępnych {availableCountriesCount === 1 ? 'kraju' : 'krajów'}! Poznaj kolejne kultury i tradycje.
                     </p>
                     <Button asChild variant="outline" className="font-display">
                       <Link to="/mapa">

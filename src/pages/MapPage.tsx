@@ -84,7 +84,7 @@ export default function MapPage() {
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {countriesWithDbStatus.available.map((country) => (
-                    <CountryCard key={country.id} country={country} />
+                    <CountryCard key={country.id} country={country} dbStatus="available" />
                   ))}
                 </div>
               </div>
@@ -99,7 +99,7 @@ export default function MapPage() {
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {countriesWithDbStatus.comingSoon.map((country) => (
-                    <CountryCard key={country.id} country={country} />
+                    <CountryCard key={country.id} country={country} dbStatus="coming_soon" />
                   ))}
                 </div>
               </div>
@@ -114,7 +114,7 @@ export default function MapPage() {
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {countriesWithDbStatus.soon.map((country) => (
-                    <CountryCard key={country.id} country={country} />
+                    <CountryCard key={country.id} country={country} dbStatus="soon" />
                   ))}
                 </div>
               </div>
