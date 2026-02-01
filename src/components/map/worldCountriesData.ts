@@ -687,6 +687,17 @@ export const worldCountriesData: Record<string, WorldCountryData> = {
       'Kokosy rosną na każdej wyspie.',
     ]
   },
+  // ============ ADDITIONAL ISLANDS ============
+  'CPV': {
+    code: 'CPV', name: 'Zielony Przylądek', nameEn: 'Cape Verde', flag: '🇨🇻', icon: '🏝️',
+    curiosities: [
+      'Zielony Przylądek to 10 pięknych wysp na Atlantyku!',
+      'Na wyspach mówi się po portugalsku.',
+      'Muzyka morna pochodzi właśnie stąd.',
+      'Wyspy mają wulkany i rajskie plaże.',
+      'Żółwie morskie składają jaja na tutejszych plażach.',
+    ]
+  },
 };
 
 // Helper function to get country data by code
