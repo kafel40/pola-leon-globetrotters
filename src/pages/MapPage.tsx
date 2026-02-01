@@ -109,14 +109,17 @@ export default function MapPage() {
           {countriesWithDbStatus.soon.length > 0 && (
             <section className="py-12 md:py-16 bg-accent/20">
               <div className="container">
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  Niebawem ({countriesWithDbStatus.soon.length})
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {countriesWithDbStatus.soon.map((country) => (
-                    <CountryCard key={country.id} country={country} dbStatus="soon" />
-                  ))}
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+                    Niebawem
+                  </h2>
+                  <span className="text-lg font-body text-muted-foreground">
+                    {countriesWithDbStatus.soon.length} {countriesWithDbStatus.soon.length === 1 ? 'kraj' : 'krajów'}
+                  </span>
                 </div>
+                <p className="text-muted-foreground font-body">
+                  Kolejne kraje do odkrycia już wkrótce w przygodach Poli i Leona!
+                </p>
               </div>
             </section>
           )}
