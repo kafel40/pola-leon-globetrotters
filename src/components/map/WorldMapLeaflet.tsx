@@ -1,10 +1,10 @@
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { MapContainer, GeoJSON, useMap } from 'react-leaflet';
-import { Link } from 'react-router-dom';
 import type { LatLngBoundsExpression, Layer, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
-import type { Feature, FeatureCollection, GeoJsonObject } from 'geojson';
+import type { Feature, FeatureCollection } from 'geojson';
 import { countries, type Country } from '@/data/countries';
 import { useCountryStatuses, type CountryStatusType } from '@/hooks/useCountryStatuses';
+import { CountryFactCard } from './CountryFactCard';
 import { Loader2 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
@@ -22,8 +22,37 @@ const codeToSlug: Record<string, string> = {
 
 function getCountryCode(feature: Feature): string | undefined {
   const props = feature.properties || {};
-  // Natural Earth 110m uses ISO_A3 or ADM0_A3 for country codes
-  return props.ISO_A3 || props.ADM0_A3 || props.ISO_A3_EH || props.SOV_A3;
+  // Natural Earth 110m uses different property names - handle them all
+  // Also handle special cases like France (-99 for ISO_A3)
+  let code = props.ISO_A3 || props.ADM0_A3 || props.ISO_A3_EH || props.SOV_A3;
+  
+  // Handle special cases where ISO_A3 is -99 (disputed or special regions)
+  if (code === '-99') {
+    // Use ADM0_A3 as fallback
+    code = props.ADM0_A3;
+  }
+  
+  // Normalize France (sometimes shown as different codes)
+  if (code === 'FRA' || props.ADMIN === 'France' || props.NAME === 'France') {
+    return 'FRA';
+  }
+  
+  // Normalize Norway
+  if (code === 'NOR' || props.ADMIN === 'Norway' || props.NAME === 'Norway') {
+    return 'NOR';
+  }
+  
+  // Normalize Belarus
+  if (code === 'BLR' || props.ADMIN === 'Belarus' || props.NAME === 'Belarus') {
+    return 'BLR';
+  }
+  
+  return code;
+}
+
+function getCountryName(feature: Feature): string {
+  const props = feature.properties || {};
+  return props.ADMIN || props.NAME || props.name || 'Unknown';
 }
 
 function findCountryByCode(code: string): Country | undefined {
@@ -49,69 +78,12 @@ const colors = {
 
 const maxBounds: LatLngBoundsExpression = [[-85, -180], [85, 180]];
 
-interface CountryInfoPanelProps {
-  country: Country | null;
-  status: CountryStatusType | null;
-  onClose: () => void;
+interface SelectedCountryInfo {
+  code: string;
+  name: string;
 }
 
-function CountryInfoPanel({ country, status, onClose }: CountryInfoPanelProps) {
-  if (!country) return null;
-  
-  const isAvailable = status === 'available';
-  
-  return (
-    <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 z-[1000] animate-fade-in">
-      <div className="bg-card/95 backdrop-blur-md rounded-2xl shadow-lg border border-border/50 p-5">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex items-center gap-3">
-            <span className="text-4xl">{country.flagEmoji}</span>
-            <div>
-              <h3 className="font-display font-bold text-lg text-foreground">{country.name}</h3>
-              <p className={`text-sm font-body ${isAvailable ? 'text-green-600' : 'text-muted-foreground'}`}>
-                {isAvailable ? '✓ Dostępne' : status === 'coming_soon' ? '⏳ Wkrótce' : status === 'soon' ? '🔜 Niebawem' : ''}
-              </p>
-            </div>
-          </div>
-          <button 
-            onClick={onClose}
-            className="text-muted-foreground hover:text-foreground transition-colors p-1"
-            aria-label="Zamknij"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        
-        <p className="text-sm text-muted-foreground font-body mb-3 line-clamp-2">
-          {country.descriptionForParents}
-        </p>
-        
-        <div className="bg-accent/50 rounded-xl p-3 mb-4">
-          <p className="text-xs font-body text-accent-foreground">
-            💡 {country.geographyFunFact}
-          </p>
-        </div>
-        
-        {isAvailable ? (
-          <Link 
-            to={`/kraj/${country.slug}`}
-            className="block w-full text-center bg-primary text-primary-foreground font-display font-bold py-3 rounded-xl hover:opacity-90 transition-opacity"
-          >
-            Odkryj przygodę →
-          </Link>
-        ) : (
-          <div className="block w-full text-center bg-muted text-muted-foreground font-display py-3 rounded-xl">
-            Wkrótce dostępne
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ZoomToCountry({ selectedCountry, geoData }: { selectedCountry: Country | null; geoData: FeatureCollection | null }) {
+function ZoomToCountry({ selectedCountry, geoData }: { selectedCountry: SelectedCountryInfo | null; geoData: FeatureCollection | null }) {
   const map = useMap();
   
   useEffect(() => {
@@ -119,7 +91,7 @@ function ZoomToCountry({ selectedCountry, geoData }: { selectedCountry: Country 
     
     const feature = geoData.features.find((f: Feature) => {
       const code = getCountryCode(f);
-      return code && findCountryByCode(code)?.id === selectedCountry.id;
+      return code === selectedCountry.code;
     });
     
     if (feature) {
@@ -141,7 +113,8 @@ interface WorldMapLeafletProps {
 
 export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   const [hoveredCountryCode, setHoveredCountryCode] = useState<string | null>(null);
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [hoveredCountryName, setHoveredCountryName] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<SelectedCountryInfo | null>(null);
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
   const [loading, setLoading] = useState(true);
   const mapRef = useRef<LeafletMap | null>(null);
@@ -169,9 +142,15 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
     return map;
   }, [countryStatuses]);
 
-  const handleCountrySelect = useCallback((country: Country | null) => {
-    setSelectedCountry(country);
-    onCountrySelect?.(country);
+  const handleCountrySelect = useCallback((code: string | null, name: string | null) => {
+    if (code && name) {
+      setSelectedCountry({ code, name });
+      const country = findCountryByCode(code);
+      onCountrySelect?.(country || null);
+    } else {
+      setSelectedCountry(null);
+      onCountrySelect?.(null);
+    }
   }, [onCountrySelect]);
 
   const getCountryStyle = useCallback((feature: Feature | undefined) => {
@@ -179,10 +158,9 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
     
     const countryCode = getCountryCode(feature);
     const status = countryCode ? statusByCode.get(countryCode) : undefined;
-    const country = countryCode ? findCountryByCode(countryCode) : undefined;
     
     const isHovered = hoveredCountryCode === countryCode;
-    const isSelected = selectedCountry && country?.id === selectedCountry.id;
+    const isSelected = selectedCountry?.code === countryCode;
     
     let fillColor = colors.landDefault;
     let fillOpacity = 0.7;
@@ -217,37 +195,56 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
 
   const onEachFeature = useCallback((feature: Feature, layer: Layer) => {
     const countryCode = getCountryCode(feature);
-    const country = countryCode ? findCountryByCode(countryCode) : undefined;
+    const countryName = getCountryName(feature);
     
     layer.on({
       mouseover: (e: LeafletMouseEvent) => {
-        if (countryCode) setHoveredCountryCode(countryCode);
+        if (countryCode) {
+          setHoveredCountryCode(countryCode);
+          setHoveredCountryName(countryName);
+        }
         e.target.setStyle({ weight: 1.5, color: colors.borderHover, fillOpacity: 0.9 });
         e.target.bringToFront();
       },
       mouseout: (e: LeafletMouseEvent) => {
         setHoveredCountryCode(null);
+        setHoveredCountryName(null);
         geoJsonRef.current?.resetStyle(e.target);
       },
       click: () => {
-        if (country) handleCountrySelect(selectedCountry?.id === country.id ? null : country);
+        if (countryCode) {
+          // Toggle selection
+          if (selectedCountry?.code === countryCode) {
+            handleCountrySelect(null, null);
+          } else {
+            handleCountrySelect(countryCode, countryName);
+          }
+        }
       },
     });
     
     layer.on('touchstart', () => {
-      if (countryCode) setHoveredCountryCode(countryCode);
+      if (countryCode) {
+        setHoveredCountryCode(countryCode);
+        setHoveredCountryName(countryName);
+      }
     });
   }, [selectedCountry, handleCountrySelect]);
 
-  const hoveredCountry = useMemo(() => {
+  // Get hovered country details for tooltip
+  const hoveredCountryData = useMemo(() => {
     if (!hoveredCountryCode) return null;
-    return findCountryByCode(hoveredCountryCode);
-  }, [hoveredCountryCode]);
+    const country = findCountryByCode(hoveredCountryCode);
+    return {
+      code: hoveredCountryCode,
+      name: hoveredCountryName || 'Unknown',
+      flag: country?.flagEmoji || '🌍',
+      countryDetails: country,
+    };
+  }, [hoveredCountryCode, hoveredCountryName]);
 
   const hoveredStatus = hoveredCountryCode ? statusByCode.get(hoveredCountryCode) : null;
-  const selectedStatus = selectedCountry 
-    ? statusByCode.get(Object.entries(codeToSlug).find(([, slug]) => slug === selectedCountry.id)?.[0] || '')
-    : null;
+  const selectedStatus = selectedCountry?.code ? statusByCode.get(selectedCountry.code) : null;
 
   const isLoading = loading || statusesLoading;
 
@@ -272,14 +269,17 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
 
   return (
     <div className="relative w-full h-[500px] md:h-[600px] lg:h-[650px] rounded-2xl overflow-hidden">
-      {hoveredCountry && !selectedCountry && (
+      {/* Hover tooltip */}
+      {hoveredCountryData && !selectedCountry && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] px-4 py-2 bg-card/95 backdrop-blur-md rounded-xl shadow-lg border border-border/50 pointer-events-none animate-fade-in">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">{hoveredCountry.flagEmoji}</span>
+            <span className="text-2xl">{hoveredCountryData.flag}</span>
             <div>
-              <p className="font-display font-bold text-foreground">{hoveredCountry.name}</p>
+              <p className="font-display font-bold text-foreground">
+                {hoveredCountryData.countryDetails?.name || hoveredCountryData.name}
+              </p>
               <p className={`text-xs font-body ${hoveredStatus === 'available' ? 'text-green-600' : 'text-muted-foreground'}`}>
-                {hoveredStatus === 'available' ? '✓ Kliknij, aby odkryć' : hoveredStatus === 'coming_soon' ? '⏳ Wkrótce' : hoveredStatus === 'soon' ? '🔜 Niebawem' : ''}
+                {hoveredStatus === 'available' ? '✓ Kliknij, aby odkryć' : hoveredStatus === 'coming_soon' ? '⏳ Wkrótce' : hoveredStatus === 'soon' ? '🔜 Niebawem' : 'Kliknij po ciekawostki'}
               </p>
             </div>
           </div>
@@ -313,8 +313,17 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
         <ZoomToCountry selectedCountry={selectedCountry} geoData={geoData} />
       </MapContainer>
       
-      <CountryInfoPanel country={selectedCountry} status={selectedStatus} onClose={() => handleCountrySelect(null)} />
+      {/* Country Fact Card - shows for ANY clicked country */}
+      {selectedCountry && (
+        <CountryFactCard
+          countryCode={selectedCountry.code}
+          countryName={selectedCountry.name}
+          status={selectedStatus || null}
+          onClose={() => handleCountrySelect(null, null)}
+        />
+      )}
       
+      {/* Legend */}
       <div className="absolute bottom-4 left-4 z-[1000] hidden md:flex flex-col gap-2 bg-card/90 backdrop-blur-md rounded-xl p-3 shadow-md border border-border/50">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 rounded" style={{ backgroundColor: colors.available }} />
