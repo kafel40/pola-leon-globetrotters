@@ -106,23 +106,21 @@ export default function MapPage() {
             </section>
           )}
 
-          {countriesWithDbStatus.soon.length > 0 && (
-            <section className="py-12 md:py-16 bg-accent/20">
-              <div className="container">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground">
-                    Niebawem
+          {(() => {
+            const soonCount = countryStatuses.filter(cs => cs.status === 'soon').length;
+            return soonCount > 0 && (
+              <section className="py-12 md:py-16 bg-accent/20">
+                <div className="container">
+                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                    Niebawem ({soonCount})
                   </h2>
-                  <span className="text-lg font-body text-muted-foreground">
-                    {countriesWithDbStatus.soon.length} {countriesWithDbStatus.soon.length === 1 ? 'kraj' : 'krajów'}
-                  </span>
+                  <p className="text-muted-foreground font-body">
+                    Kolejne kraje do odkrycia już wkrótce w przygodach Poli i Leona!
+                  </p>
                 </div>
-                <p className="text-muted-foreground font-body">
-                  Kolejne kraje do odkrycia już wkrótce w przygodach Poli i Leona!
-                </p>
-              </div>
-            </section>
-          )}
+              </section>
+            );
+          })()}
         </>
       )}
     </Layout>
