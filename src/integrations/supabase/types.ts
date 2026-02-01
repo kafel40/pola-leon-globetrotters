@@ -166,6 +166,33 @@ export type Database = {
         }
         Relationships: []
       }
+      country_statuses: {
+        Row: {
+          country_code: string
+          country_name: string
+          created_at: string
+          id: string
+          status: Database["public"]["Enums"]["country_status"]
+          updated_at: string
+        }
+        Insert: {
+          country_code: string
+          country_name: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["country_status"]
+          updated_at?: string
+        }
+        Update: {
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["country_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       discovered_countries: {
         Row: {
           country_slug: string
@@ -415,6 +442,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      country_status: "available" | "coming_soon" | "soon" | "none"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -543,6 +571,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      country_status: ["available", "coming_soon", "soon", "none"],
     },
   },
 } as const
