@@ -5,6 +5,7 @@ import type { Feature, FeatureCollection } from 'geojson';
 import { countries, type Country } from '@/data/countries';
 import { useCountryStatuses, type CountryStatusType } from '@/hooks/useCountryStatuses';
 import { CountryFactCard } from './CountryFactCard';
+import { SmallIslandsOverlay } from './SmallIslandsOverlay';
 import { Loader2 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
@@ -25,6 +26,11 @@ const adminNameToCode: Record<string, string> = {
   'France': 'FRA',
   'Norway': 'NOR',
   'Belarus': 'BLR',
+  'Saudi Arabia': 'SAU',
+  'United Arab Emirates': 'ARE',
+  'Oman': 'OMN',
+  'Cabo Verde': 'CPV',
+  'Cape Verde': 'CPV',
   'Kosovo': 'XKX',
   'Northern Cyprus': 'XNC',
   'Somaliland': 'SOL',
@@ -32,28 +38,28 @@ const adminNameToCode: Record<string, string> = {
 
 function getCountryCode(feature: Feature): string | undefined {
   const props = feature.properties || {};
-  
-  // First try standard ISO codes
-  let code = props.ISO_A3;
-  
-  // If ISO_A3 is missing or -99, try ADM0_A3
-  if (!code || code === '-99') {
-    code = props.ADM0_A3;
+
+  // NaturalEarth/other GeoJSON exports use different fields depending on source.
+  // Try a set of common ISO3-like properties (and normalize to upper-case).
+  const candidates = [
+    props.ADM0_A3,
+    props.ISO_A3,
+    props.SOV_A3,
+    props.A3,
+    props.ISO3,
+    props.WB_A3,
+  ];
+
+  for (const raw of candidates) {
+    if (typeof raw === 'string' && raw && raw !== '-99') return raw.toUpperCase();
   }
-  
-  // If still -99 or missing, try to map by ADMIN name
-  if (!code || code === '-99') {
-    const adminName = props.ADMIN || props.NAME;
-    if (adminName && adminNameToCode[adminName]) {
-      return adminNameToCode[adminName];
-    }
+
+  // Fallback by ADMIN name (for entries where codes are missing/-99)
+  const adminName = props.ADMIN || props.NAME;
+  if (typeof adminName === 'string' && adminNameToCode[adminName]) {
+    return adminNameToCode[adminName];
   }
-  
-  // If code is valid, return it
-  if (code && code !== '-99') {
-    return code;
-  }
-  
+
   return undefined;
 }
 
@@ -128,6 +134,15 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   const geoJsonRef = useRef<any>(null);
   
   const { countryStatuses, loading: statusesLoading } = useCountryStatuses();
+
+  // IMPORTANT: react-leaflet GeoJSON doesn't always restyle features when only the style function
+  // dependencies change. A stable key based on statuses ensures colors refresh after admin changes.
+  const statusesKey = useMemo(() => {
+    if (!countryStatuses.length) return 'no-statuses';
+    return countryStatuses
+      .map((cs) => `${cs.country_code}:${cs.status}`)
+      .join('|');
+  }, [countryStatuses]);
   
   // Load GeoJSON from public folder
   useEffect(() => {
@@ -311,11 +326,35 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
         ref={mapRef}
       >
         <GeoJSON
-          key={`map-${countryStatuses.length}`}
+          key={`map-${statusesKey}`}
           data={geoData}
           style={getCountryStyle}
           onEachFeature={onEachFeature}
           ref={geoJsonRef}
+        />
+
+        <SmallIslandsOverlay
+          geoData={geoData}
+          getCountryCode={getCountryCode}
+          statusByCode={statusByCode}
+          colors={colors}
+          hoveredCountryCode={hoveredCountryCode}
+          selectedCountryCode={selectedCountry?.code ?? null}
+          onHover={(code, name) => {
+            setHoveredCountryCode(code);
+            setHoveredCountryName(name);
+          }}
+          onHoverEnd={() => {
+            setHoveredCountryCode(null);
+            setHoveredCountryName(null);
+          }}
+          onSelect={(code, name) => {
+            if (selectedCountry?.code === code) {
+              handleCountrySelect(null, null);
+            } else {
+              handleCountrySelect(code, name);
+            }
+          }}
         />
         <ZoomToCountry selectedCountry={selectedCountry} geoData={geoData} />
       </MapContainer>
