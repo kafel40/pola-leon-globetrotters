@@ -21,19 +21,54 @@ const codeToSlug: Record<string, string> = {
   'KOR': 'south-korea', 'VNM': 'vietnam',
 };
 
-// Map of country admin names to ISO codes (for countries where ISO_A3 is -99)
+// Map of country admin names to ISO codes (for countries where ISO_A3 is -99 or missing)
+// This is a comprehensive fallback for Natural Earth GeoJSON quirks
 const adminNameToCode: Record<string, string> = {
+  // Europe
   'France': 'FRA',
   'Norway': 'NOR',
   'Belarus': 'BLR',
+  'Kosovo': 'XKX',
+  'Northern Cyprus': 'XNC',
+  // Middle East
   'Saudi Arabia': 'SAU',
   'United Arab Emirates': 'ARE',
   'Oman': 'OMN',
+  'Yemen': 'YEM',
+  'Jordan': 'JOR',
+  'Israel': 'ISR',
+  'Palestine': 'PSE',
+  'Syria': 'SYR',
+  'Iraq': 'IRQ',
+  'Iran': 'IRN',
+  'Kuwait': 'KWT',
+  'Qatar': 'QAT',
+  'Bahrain': 'BHR',
+  'Lebanon': 'LBN',
+  // Africa
+  'Somaliland': 'SOL',
   'Cabo Verde': 'CPV',
   'Cape Verde': 'CPV',
-  'Kosovo': 'XKX',
-  'Northern Cyprus': 'XNC',
-  'Somaliland': 'SOL',
+  'Western Sahara': 'ESH',
+  'South Sudan': 'SSD',
+  // Asia
+  'Taiwan': 'TWN',
+  'North Korea': 'PRK',
+  'South Korea': 'KOR',
+  'Dem. Rep. Korea': 'PRK',
+  'Republic of Korea': 'KOR',
+};
+
+// Also map ADM0_A3 codes that differ from standard ISO3
+const adm0ToIso: Record<string, string> = {
+  'SAU': 'SAU',
+  'ARE': 'ARE', 
+  'OMN': 'OMN',
+  'FRA': 'FRA',
+  'NOR': 'NOR',
+  'FR1': 'FRA', // France alternate code in some GeoJSON
+  'BLR': 'BLR',
+  'RUS': 'RUS',
 };
 
 function getCountryCode(feature: Feature): string | undefined {
