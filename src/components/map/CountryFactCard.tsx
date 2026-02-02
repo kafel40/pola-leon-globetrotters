@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { X, Sparkles, MapPin } from 'lucide-react';
 import { getWorldCountryData, type WorldCountryData } from './worldCountriesData';
 import { countries } from '@/data/countries';
+import { getPolishName } from '@/lib/countryNames';
 import type { CountryStatusType } from '@/hooks/useCountryStatuses';
 
 // ISO code to slug mapping
@@ -33,8 +34,10 @@ export function CountryFactCard({ countryCode, countryName, status, onClose }: C
   
   const isAvailable = status === 'available';
   
-  // Fallback data if country not in our database
-  const displayName = worldData?.name || countryName;
+  // Use Polish name from our utility (always Polish!)
+  const polishName = getPolishName(countryCode);
+  const displayName = polishName !== countryCode ? polishName : (worldData?.name || countryName);
+  
   const flag = worldData?.flag || '🌍';
   const icon = worldData?.icon || '🗺️';
   const curiosities = worldData?.curiosities || [

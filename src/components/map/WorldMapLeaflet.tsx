@@ -6,6 +6,7 @@ import { countries, type Country } from '@/data/countries';
 import { useCountryStatuses, type CountryStatusType } from '@/hooks/useCountryStatuses';
 import { CountryFactCard } from './CountryFactCard';
 import { SmallIslandsOverlay } from './SmallIslandsOverlay';
+import { getPolishName } from '@/lib/countryNames';
 import { Loader2 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
@@ -21,76 +22,59 @@ const codeToSlug: Record<string, string> = {
   'KOR': 'south-korea', 'VNM': 'vietnam',
 };
 
-// Map of country admin names to ISO codes (for countries where ISO_A3 is -99 or missing)
-// This is a comprehensive fallback for Natural Earth GeoJSON quirks
+// Map of country admin names (English) to ISO codes for GeoJSON fallback
 const adminNameToCode: Record<string, string> = {
-  // Europe
-  'France': 'FRA',
-  'Norway': 'NOR',
-  'Belarus': 'BLR',
-  'Kosovo': 'XKX',
-  'Northern Cyprus': 'XNC',
-  // Middle East
-  'Saudi Arabia': 'SAU',
-  'United Arab Emirates': 'ARE',
-  'Oman': 'OMN',
-  'Yemen': 'YEM',
-  'Jordan': 'JOR',
-  'Israel': 'ISR',
-  'Palestine': 'PSE',
-  'Syria': 'SYR',
-  'Iraq': 'IRQ',
-  'Iran': 'IRN',
-  'Kuwait': 'KWT',
-  'Qatar': 'QAT',
-  'Bahrain': 'BHR',
-  'Lebanon': 'LBN',
-  // Africa
-  'Somaliland': 'SOL',
-  'Cabo Verde': 'CPV',
-  'Cape Verde': 'CPV',
-  'Western Sahara': 'ESH',
-  'South Sudan': 'SSD',
-  // Asia
-  'Taiwan': 'TWN',
-  'North Korea': 'PRK',
-  'South Korea': 'KOR',
-  'Dem. Rep. Korea': 'PRK',
-  'Republic of Korea': 'KOR',
+  'France': 'FRA', 'Norway': 'NOR', 'Belarus': 'BLR', 'Kosovo': 'XKX',
+  'Northern Cyprus': 'XNC', 'Saudi Arabia': 'SAU', 'United Arab Emirates': 'ARE',
+  'Oman': 'OMN', 'Yemen': 'YEM', 'Jordan': 'JOR', 'Israel': 'ISR',
+  'Palestine': 'PSE', 'Syria': 'SYR', 'Iraq': 'IRQ', 'Iran': 'IRN',
+  'Kuwait': 'KWT', 'Qatar': 'QAT', 'Bahrain': 'BHR', 'Lebanon': 'LBN',
+  'Somaliland': 'SOL', 'Cabo Verde': 'CPV', 'Cape Verde': 'CPV',
+  'Western Sahara': 'ESH', 'South Sudan': 'SSD', 'Taiwan': 'TWN',
+  'North Korea': 'PRK', 'South Korea': 'KOR', 'Dem. Rep. Korea': 'PRK',
+  'Republic of Korea': 'KOR', 'United States of America': 'USA',
+  'United Kingdom': 'GBR', 'Russia': 'RUS', 'South Africa': 'ZAF',
+  'New Zealand': 'NZL', 'Czech Republic': 'CZE', 'Czechia': 'CZE',
+  'Ivory Coast': 'CIV', "Côte d'Ivoire": 'CIV',
+  'Democratic Republic of the Congo': 'COD', 'Republic of the Congo': 'COG',
+  'Central African Republic': 'CAF', 'Equatorial Guinea': 'GNQ',
+  'Guinea-Bissau': 'GNB', 'Sierra Leone': 'SLE', 'Burkina Faso': 'BFA',
+  'Trinidad and Tobago': 'TTO', 'Dominican Republic': 'DOM',
+  'Papua New Guinea': 'PNG', 'East Timor': 'TLS', 'Timor-Leste': 'TLS',
+  'Bosnia and Herzegovina': 'BIH', 'Bosnia and Herz.': 'BIH',
+  'North Macedonia': 'MKD', 'The Gambia': 'GMB', 'Gambia': 'GMB',
+  'Solomon Islands': 'SLB', 'Marshall Islands': 'MHL', 'Eswatini': 'SWZ',
+  'Swaziland': 'SWZ', 'Myanmar': 'MMR', 'Burma': 'MMR',
+  'Brunei Darussalam': 'BRN', 'Brunei': 'BRN', 'Laos': 'LAO',
+  'Lao PDR': 'LAO', 'Vietnam': 'VNM', 'Viet Nam': 'VNM',
 };
 
-// Also map ADM0_A3 codes that differ from standard ISO3
-const adm0ToIso: Record<string, string> = {
-  'SAU': 'SAU',
-  'ARE': 'ARE', 
-  'OMN': 'OMN',
-  'FRA': 'FRA',
-  'NOR': 'NOR',
-  'FR1': 'FRA', // France alternate code in some GeoJSON
-  'BLR': 'BLR',
-  'RUS': 'RUS',
-};
-
-function getCountryCode(feature: Feature): string | undefined {
+/**
+ * Extract country code from GeoJSON feature properties.
+ * Tries multiple fields and fallbacks to ensure maximum coverage.
+ */
+export function getCountryCode(feature: Feature): string | undefined {
   const props = feature.properties || {};
 
-  // NaturalEarth/other GeoJSON exports use different fields depending on source.
-  // Try a set of common ISO3-like properties (and normalize to upper-case).
+  // Try various ISO3 property names (normalized to uppercase)
   const candidates = [
-    props.ADM0_A3,
     props.ISO_A3,
+    props.ADM0_A3,
     props.SOV_A3,
     props.A3,
     props.ISO3,
     props.WB_A3,
+    props.GU_A3,
   ];
 
   for (const raw of candidates) {
-    if (typeof raw === 'string' && raw && raw !== '-99') return raw.toUpperCase();
+    if (typeof raw === 'string' && raw && raw !== '-99' && raw !== '-1') {
+      return raw.toUpperCase();
+    }
   }
 
-  // Fallback by ADMIN name (for entries where codes are missing/-99)
-  const adminName = props.ADMIN || props.NAME;
+  // Fallback by admin/country name
+  const adminName = props.ADMIN || props.NAME || props.name || props.SOVEREIGNT;
   if (typeof adminName === 'string' && adminNameToCode[adminName]) {
     return adminNameToCode[adminName];
   }
@@ -98,9 +82,16 @@ function getCountryCode(feature: Feature): string | undefined {
   return undefined;
 }
 
-function getCountryName(feature: Feature): string {
+/**
+ * Get country name in Polish from feature
+ */
+function getCountryNamePolish(feature: Feature): string {
+  const code = getCountryCode(feature);
+  if (code) {
+    return getPolishName(code);
+  }
   const props = feature.properties || {};
-  return props.ADMIN || props.NAME || props.name || 'Unknown';
+  return props.ADMIN || props.NAME || props.name || 'Nieznany';
 }
 
 function findCountryByCode(code: string): Country | undefined {
@@ -252,7 +243,7 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
 
   const onEachFeature = useCallback((feature: Feature, layer: Layer) => {
     const countryCode = getCountryCode(feature);
-    const countryName = getCountryName(feature);
+    const countryName = getCountryNamePolish(feature);
     
     layer.on({
       mouseover: (e: LeafletMouseEvent) => {
@@ -288,13 +279,14 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
     });
   }, [selectedCountry, handleCountrySelect]);
 
-  // Get hovered country details for tooltip
+  // Get hovered country details for tooltip (Polish names)
   const hoveredCountryData = useMemo(() => {
     if (!hoveredCountryCode) return null;
     const country = findCountryByCode(hoveredCountryCode);
+    const polishName = getPolishName(hoveredCountryCode);
     return {
       code: hoveredCountryCode,
-      name: hoveredCountryName || 'Unknown',
+      name: polishName || hoveredCountryName || 'Nieznany',
       flag: country?.flagEmoji || '🌍',
       countryDetails: country,
     };

@@ -1,6 +1,7 @@
 import { CircleMarker, Tooltip } from 'react-leaflet';
 import type { Feature, FeatureCollection } from 'geojson';
 import type { CountryStatusType } from '@/hooks/useCountryStatuses';
+import { getPolishName } from '@/lib/countryNames';
 
 type Colors = {
   landDefault: string;
@@ -16,9 +17,18 @@ type Colors = {
   borderHover: string;
 };
 
+// Small island nations that may be missing from simplified GeoJSON
+// All names will be resolved from our Polish names utility
 const SMALL_ISLANDS = [
-  // Zielony Przylądek (Cape Verde) — często znika w bardzo uproszczonych danych world-110m
-  { code: 'CPV', name: 'Zielony Przylądek', lat: 15.12, lng: -23.60 },
+  { code: 'CPV', lat: 15.12, lng: -23.60 },  // Republika Zielonego Przylądka
+  { code: 'MLT', lat: 35.90, lng: 14.50 },   // Malta
+  { code: 'SGP', lat: 1.35, lng: 103.82 },   // Singapur
+  { code: 'BHR', lat: 26.07, lng: 50.55 },   // Bahrajn
+  { code: 'MUS', lat: -20.35, lng: 57.55 },  // Mauritius
+  { code: 'SYC', lat: -4.68, lng: 55.49 },   // Seszele
+  { code: 'MDV', lat: 3.20, lng: 73.22 },    // Malediwy
+  { code: 'COM', lat: -11.88, lng: 43.87 },  // Komory
+  { code: 'STP', lat: 0.19, lng: 6.61 },     // Wyspy Św. Tomasza i Książęca
 ] as const;
 
 interface SmallIslandsOverlayProps {
@@ -59,6 +69,7 @@ export function SmallIslandsOverlay({
         const status = statusByCode.get(island.code);
         const isHovered = hoveredCountryCode === island.code;
         const isSelected = selectedCountryCode === island.code;
+        const polishName = getPolishName(island.code);
 
         let fillColor = colors.landDefault;
         let fillOpacity = 0.75;
@@ -93,13 +104,13 @@ export function SmallIslandsOverlay({
             radius={6}
             pathOptions={{ fillColor, fillOpacity, weight, color, opacity: 1 }}
             eventHandlers={{
-              mouseover: () => onHover(island.code, island.name),
+              mouseover: () => onHover(island.code, polishName),
               mouseout: () => onHoverEnd(),
-              click: () => onSelect(island.code, island.name),
+              click: () => onSelect(island.code, polishName),
             }}
           >
             <Tooltip direction="top" offset={[0, -6]} opacity={0.9}>
-              {island.name}
+              {polishName}
             </Tooltip>
           </CircleMarker>
         );
