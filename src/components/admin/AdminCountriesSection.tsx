@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useCountryStatuses, type CountryStatusType } from '@/hooks/useCountryStatuses';
 import { Loader2, ChevronDown, ChevronRight, Globe, Search, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { getPolishName } from '@/lib/countryNames';
 
 const STATUS_OPTIONS: { value: CountryStatusType; label: string; color: string }[] = [
   { value: 'available', label: 'Dostępne', color: 'bg-green-500' },
@@ -28,14 +29,24 @@ export function AdminCountriesSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [updatingCountry, setUpdatingCountry] = useState<string | null>(null);
 
+  // Sort by Polish name and filter
+  const sortedCountries = useMemo(() => {
+    return [...countryStatuses].sort((a, b) => {
+      const nameA = getPolishName(a.country_code);
+      const nameB = getPolishName(b.country_code);
+      return nameA.localeCompare(nameB, 'pl');
+    });
+  }, [countryStatuses]);
+
   const filteredCountries = useMemo(() => {
-    if (!searchQuery.trim()) return countryStatuses;
+    if (!searchQuery.trim()) return sortedCountries;
     const query = searchQuery.toLowerCase();
-    return countryStatuses.filter(country => 
-      country.country_name.toLowerCase().includes(query) ||
-      country.country_code.toLowerCase().includes(query)
-    );
-  }, [countryStatuses, searchQuery]);
+    return sortedCountries.filter(country => {
+      const polishName = getPolishName(country.country_code);
+      return polishName.toLowerCase().includes(query) ||
+        country.country_code.toLowerCase().includes(query);
+    });
+  }, [sortedCountries, searchQuery]);
 
   const handleStatusChange = async (countryCode: string, newStatus: CountryStatusType) => {
     setUpdatingCountry(countryCode);
@@ -115,7 +126,7 @@ export function AdminCountriesSection() {
                   <div className="flex items-center gap-3">
                     <MapPin className="h-4 w-4 text-muted-foreground" />
                     <div>
-                      <span className="font-medium">{country.country_name}</span>
+                      <span className="font-medium">{getPolishName(country.country_code)}</span>
                       <span className="text-xs text-muted-foreground ml-2">
                         ({country.country_code})
                       </span>

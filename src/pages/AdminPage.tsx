@@ -21,6 +21,7 @@ import { AdminAnnouncementSection } from '@/components/admin/AdminAnnouncementSe
 import { AdminVisitsChart } from '@/components/admin/AdminVisitsChart';
 import { AdminBlogSection } from '@/components/admin/AdminBlogSection';
 import { AdminCountriesSection } from '@/components/admin/AdminCountriesSection';
+import { AdminGeoJsonVerificationSection } from '@/components/admin/AdminGeoJsonVerificationSection';
 
 interface Ebook {
   id: string;
@@ -333,8 +334,9 @@ export default function AdminPage() {
             </TabsContent>
 
             {/* Countries Tab */}
-            <TabsContent value="countries">
+            <TabsContent value="countries" className="space-y-6">
               <AdminCountriesSection />
+              <AdminGeoJsonVerificationSection />
             </TabsContent>
 
             {/* Blog Tab */}
