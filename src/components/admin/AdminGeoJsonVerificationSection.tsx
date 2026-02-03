@@ -5,7 +5,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Badge } from '@/components/ui/badge';
 import { Loader2, ChevronDown, ChevronRight, Search, CheckCircle2, XCircle, MapPinned } from 'lucide-react';
 import { getPolishName } from '@/lib/countryNames';
-import { getCountryCode } from '@/components/map/WorldMapLeaflet';
+import { getCountryCode } from '@/lib/geoJsonUtils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Feature, FeatureCollection } from 'geojson';
 
