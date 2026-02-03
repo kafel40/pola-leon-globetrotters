@@ -1,5 +1,6 @@
 // Complete world countries data with curiosities for the map fact cards
 // Each country has: name, flag emoji, icon, and 3-5 child-friendly facts
+// ALL CURIOSITIES ARE UNIQUE - NO DUPLICATES ACROSS COUNTRIES
 
 export interface WorldCountryData {
   code: string;        // ISO Alpha-3 code
@@ -16,686 +17,686 @@ export const worldCountriesData: Record<string, WorldCountryData> = {
     code: 'POL', name: 'Polska', nameEn: 'Poland', flag: '🇵🇱', icon: '🦬',
     curiosities: [
       'W Polsce żyje największe stado żubrów na świecie!',
-      'Polska ma piękne góry Tatry i Morze Bałtyckie.',
+      'Kopalnia soli w Wieliczce ma podziemne kaplice wyrzeźbione w soli.',
       'Pierogi to jedno z najpopularniejszych polskich dań.',
-      'W Krakowie można zobaczyć legendarnego smoka wawelskiego!',
-      'Polacy świętują Boże Narodzenie z 12 potrawami wigilijnymi.',
+      'Smok Wawelski według legendy mieszkał w jaskini pod Wawelem.',
+      'Wigilia w Polsce obejmuje tradycyjnie 12 potraw.',
     ]
   },
   'FRA': {
     code: 'FRA', name: 'Francja', nameEn: 'France', flag: '🇫🇷', icon: '🗼',
     curiosities: [
-      'Wieża Eiffla ma ponad 130 lat i waży 10 000 ton!',
+      'Wieża Eiffla rośnie o 15 cm latem z powodu rozszerzania się metalu!',
       'Francja ma kształt przypominający sześciokąt.',
-      'Francuzi jedzą ponad 400 rodzajów sera!',
-      'Croissanty i bagietki to francuskie specjały.',
-      'W Paryżu znajduje się słynne muzeum Luwr.',
+      'Francuzi produkują ponad 1000 rodzajów sera.',
+      'Croissant został spopularyzowany we Francji, choć pochodzi z Austrii.',
+      'Luwr w Paryżu jest największym muzeum sztuki na świecie.',
     ]
   },
   'DEU': {
     code: 'DEU', name: 'Niemcy', nameEn: 'Germany', flag: '🇩🇪', icon: '🏰',
     curiosities: [
-      'W Niemczech jest ponad 20 000 zamków!',
-      'Niemcy są ojczyzną wielu bajek braci Grimm.',
-      'Berlin ma słynne zoo z pandami.',
-      'Niemieccy wynalazcy stworzyli pierwsze samochody.',
-      'Oktoberfest to największe święto ludowe na świecie.',
+      'W Niemczech jest ponad 20 000 średniowiecznych zamków!',
+      'Bracia Grimm spisali tu słynne baśnie jak Kopciuszek i Śpiąca Królewna.',
+      'Niemieccy inżynierowie skonstruowali pierwsze samochody na świecie.',
+      'Chleb niemiecki ma ponad 3000 różnych odmian.',
+      'Oktoberfest w Monachium odwiedza rocznie 6 milionów gości.',
     ]
   },
   'GBR': {
     code: 'GBR', name: 'Wielka Brytania', nameEn: 'United Kingdom', flag: '🇬🇧', icon: '👑',
     curiosities: [
-      'Big Ben to tak naprawdę nazwa dzwonu, nie wieży!',
-      'Królowa angielska ma dwa urodziny rocznie.',
-      'Brytyjczycy piją herbatę o 17:00.',
-      'W Londynie jest słynne muzeum figur woskowych.',
-      'Harry Potter został wymyślony w Szkocji.',
+      'Big Ben to tak naprawdę nazwa 13-tonowego dzwonu, nie wieży!',
+      'Monarcha brytyjski ma dwa oficjalne urodziny rocznie.',
+      'Tradycyjna herbatka o 17:00 nazywa się "afternoon tea".',
+      'Stonehenge ma ponad 5000 lat i nikt nie wie, kto je zbudował.',
+      'J.K. Rowling napisała Harry\'ego Pottera w kawiarniach Edynburga.',
     ]
   },
   'ITA': {
     code: 'ITA', name: 'Włochy', nameEn: 'Italy', flag: '🇮🇹', icon: '🍕',
     curiosities: [
-      'Włochy mają kształt buta!',
-      'Pizza została wynaleziona we Włoszech.',
-      'W Wenecji zamiast ulic są kanały.',
-      'Koloseum w Rzymie ma prawie 2000 lat.',
-      'Włochy mają ponad 1500 różnych rodzajów makaronu.',
+      'Włochy na mapie wyglądają jak but do konnej jazdy!',
+      'Pizza margherita powstała w Neapolu na cześć królowej.',
+      'Gondole w Wenecji muszą być malowane tylko na czarno.',
+      'Koloseum w Rzymie mogło pomieścić 50 000 widzów.',
+      'Włosi produkują ponad 300 kształtów makaronu.',
     ]
   },
   'ESP': {
     code: 'ESP', name: 'Hiszpania', nameEn: 'Spain', flag: '🇪🇸', icon: '💃',
     curiosities: [
-      'W Hiszpanii jest ponad 8000 kilometrów plaż!',
-      'Flamenco to słynny hiszpański taniec.',
-      'Churros z czekoladą to hiszpański przysmak.',
-      'Gaudi stworzył niesamowite budynki w Barcelonie.',
-      'Hiszpanie jedzą obiad około 14:00 i kolację o 21:00!',
+      'La Tomatina to święto, gdzie ludzie rzucają w siebie pomidorami!',
+      'Flamenco narodziło się w Andaluzji na południu Hiszpanii.',
+      'Sagrada Familia Gaudiego budowana jest już ponad 140 lat.',
+      'Hiszpańska sjesta to tradycyjna popołudniowa drzemka.',
+      'Kolacja w Hiszpanii jada się często po godzinie 21:00.',
     ]
   },
   'GRC': {
     code: 'GRC', name: 'Grecja', nameEn: 'Greece', flag: '🇬🇷', icon: '🏛️',
     curiosities: [
-      'Grecja ma ponad 6000 wysp!',
-      'Starożytni Grecy wymyślili Igrzyska Olimpijskie.',
-      'Greckie mity opowiadają o bogach z Góry Olimp.',
-      'Feta to słynny grecki ser.',
-      'W Grecji słońce świeci prawie 300 dni w roku.',
+      'Grecja składa się z ponad 6000 wysp, ale tylko 227 jest zamieszkanych!',
+      'Starożytni Grecy wymyślili demokrację i Igrzyska Olimpijskie.',
+      'Bogowie greccy według mitów mieszkali na szczycie Olimpu.',
+      'Grecka feta to ser chroniony prawem - tylko tu może być produkowany.',
+      'Grecki alfabet jest używany od ponad 2800 lat.',
     ]
   },
   'NOR': {
     code: 'NOR', name: 'Norwegia', nameEn: 'Norway', flag: '🇳🇴', icon: '🌌',
     curiosities: [
-      'W Norwegii latem słońce nie zachodzi przez całe tygodnie!',
-      'Norwegia ma piękne fiordy - zatoki między górami.',
-      'Wikingowie pochodzili z Norwegii.',
-      'Można tu zobaczyć magiczną zorzę polarną.',
-      'Trolle to legendarne stworzenia z norweskich baśni.',
+      'W Norwegii latem słońce nie zachodzi przez kilka tygodni!',
+      'Fiordy to zatoki powstałe z lodowców tysiące lat temu.',
+      'Wikingowie wypływali stąd w dalekie podróże ponad 1000 lat temu.',
+      'Zorza polarna tańczy tu na niebie zimowymi nocami.',
+      'Trolle to legendarne stworzenia z norweskich opowieści.',
     ]
   },
   'SWE': {
     code: 'SWE', name: 'Szwecja', nameEn: 'Sweden', flag: '🇸🇪', icon: '🦌',
     curiosities: [
-      'Szwecja jest ojczyzną IKEA i klocków LEGO!',
-      'Pippi Langstrumpf pochodzi ze Szwecji.',
-      'Szwedzi mają specjalną przerwę na kawę - fika.',
-      'W Szwecji jest lodowy hotel!',
-      'Łosie swobodnie chodzą po szwedzkich lasach.',
+      'Pippi Langstrumpf to najpopularniejsza szwedzka bohaterka dla dzieci!',
+      'Fika to szwedzka tradycja picia kawy z ciastkiem w gronie przyjaciół.',
+      'W Jukkasjärvi stoi hotel całkowicie zbudowany z lodu.',
+      'Łosie swobodnie spacerują po szwedzkich lasach.',
+      'Alfred Nobel, twórca nagrody Nobla, był Szwedem.',
     ]
   },
   'NLD': {
     code: 'NLD', name: 'Holandia', nameEn: 'Netherlands', flag: '🇳🇱', icon: '🌷',
     curiosities: [
-      'Holandia leży częściowo poniżej poziomu morza!',
-      'Tulipany są symbolem Holandii.',
-      'Holenderzy jeżdżą wszędzie na rowerach.',
-      'Słynne wiatraki pompują wodę z pól.',
-      'Amsterdam ma ponad 1200 mostów.',
+      'Jedna czwarta Holandii leży poniżej poziomu morza!',
+      'Wiosną kwitnie tu ponad 7 milionów tulipanów.',
+      'Holendrzy mają więcej rowerów niż mieszkańców.',
+      'Wiatraki pompowały wodę z pól, by odzyskać ziemię z morza.',
+      'Amsterdam ma 1281 mostów - więcej niż Wenecja.',
     ]
   },
   'BEL': {
     code: 'BEL', name: 'Belgia', nameEn: 'Belgium', flag: '🇧🇪', icon: '🍫',
     curiosities: [
-      'Belgia jest słynna z najlepszej czekolady!',
-      'Frytki belgijskie są prawdziwym przysmakiem.',
-      'W Belgii mówi się po francusku, holendersku i niemiecku.',
-      'Smerfy zostały wymyślone w Belgii!',
-      'Bruksela jest stolicą Unii Europejskiej.',
+      'Belgijska czekolada uważana jest za najlepszą na świecie!',
+      'Frytki belgijskie smaży się dwukrotnie dla chrupkości.',
+      'W Belgii mówi się oficjalnie trzema językami.',
+      'Smerfy zostały wymyślone przez belgijskiego rysownika.',
+      'Bruksela jest nieformalną stolicą Unii Europejskiej.',
     ]
   },
   'CHE': {
     code: 'CHE', name: 'Szwajcaria', nameEn: 'Switzerland', flag: '🇨🇭', icon: '🏔️',
     curiosities: [
-      'Szwajcaria ma najpiękniejsze góry Alpy!',
-      'Słynny szwajcarski ser ma duże dziury.',
-      'Szwajcarska czekolada jest pyszna.',
-      'Zegarki szwajcarskie są najdokładniejsze na świecie.',
-      'W Szwajcarii mówi się czterema językami.',
+      'Szwajcarskie Alpy mają szczyty sięgające ponad 4000 metrów!',
+      'Dziury w serze szwajcarskim powstają dzięki bakteriom.',
+      'Zegarki szwajcarskie słyną z precyzji od 500 lat.',
+      'W Szwajcarii oficjalnie używa się czterech języków.',
+      'Czerwony Krzyż został założony w Genewie.',
     ]
   },
   'AUT': {
     code: 'AUT', name: 'Austria', nameEn: 'Austria', flag: '🇦🇹', icon: '🎻',
     curiosities: [
-      'Mozart, słynny kompozytor, urodził się w Austrii.',
-      'Wiedeń słynie z pysznych tortów.',
-      'Austria ma piękne góry i jeziora.',
-      'W Wiedniu jest słynna opera.',
-      'Austryackie zamki wyglądają jak z bajki.',
+      'Wolfgang Amadeus Mozart skomponował pierwszą symfonię mając 8 lat!',
+      'Tort Sachera z Wiednia to słynny czekoladowy deser.',
+      'Austria leży w sercu Alp z przepięknymi dolinami.',
+      'Wiedeńska Opera to jeden z najsłynniejszych teatrów świata.',
+      'Habsburgowie rządzili tu przez ponad 600 lat.',
     ]
   },
   'PRT': {
     code: 'PRT', name: 'Portugalia', nameEn: 'Portugal', flag: '🇵🇹', icon: '⛵',
     curiosities: [
-      'Portugalia odkryła morskie szlaki do Indii i Brazylii!',
-      'Pastéis de nata to pyszne portugalskie ciastka.',
+      'Portugalscy żeglarze jako pierwsi opłynęli Afrykę do Indii!',
+      'Pastéis de nata to kremowe ciastka z XVI wieku.',
       'Portugalski to piąty najczęściej używany język świata.',
-      'W Lizbonie jeździ słynny żółty tramwaj.',
-      'Portugalia ma piękne plaże nad Atlantykiem.',
+      'Żółty tramwaj 28 w Lizbonie ma ponad 100 lat.',
+      'Surfowanie w Nazaré przyciąga fale wysokości budynku.',
     ]
   },
   'IRL': {
     code: 'IRL', name: 'Irlandia', nameEn: 'Ireland', flag: '🇮🇪', icon: '☘️',
     curiosities: [
-      'Irlandia nazywana jest Zieloną Wyspą.',
-      'Leprechaun to magiczny irlandzki skrzat.',
-      'Koniczynka to symbol szczęścia w Irlandii.',
-      'Dzień Świętego Patryka świętowany jest na zielono.',
-      'W Irlandii są setki starożytnych zamków.',
+      'Irlandia nazywana jest "Szmaragdową Wyspą" ze względu na zieleń!',
+      'Leprechaun to legendarny irlandzki skrzat strzegący złota.',
+      'Czterolistna koniczyna to symbol szczęścia.',
+      '17 marca Irlandczycy świętują Dzień Świętego Patryka.',
+      'Na wyspie znajduje się ponad 30 000 zamków i ruin.',
     ]
   },
   'DNK': {
     code: 'DNK', name: 'Dania', nameEn: 'Denmark', flag: '🇩🇰', icon: '🧜‍♀️',
     curiosities: [
-      'Klocki LEGO zostały wynalezione w Danii!',
-      'Mała Syrenka to słynny posąg w Kopenhadze.',
-      'Hans Christian Andersen pisał baśnie w Danii.',
-      'Dania jest jednym z najszczęśliwszych krajów świata.',
-      'Duńczycy jeżdżą wszędzie na rowerach.',
+      'Klocki LEGO wynaleziono w duńskim miasteczku Billund!',
+      'Posąg Małej Syrenki w Kopenhadze ma ponad 100 lat.',
+      'Hans Christian Andersen napisał tu Brzydkie Kaczątko.',
+      'Dania regularnie uznawana jest za najszczęśliwszy kraj świata.',
+      'Duńska flaga jest najstarszą flagą państwową w użyciu.',
     ]
   },
   'FIN': {
     code: 'FIN', name: 'Finlandia', nameEn: 'Finland', flag: '🇫🇮', icon: '🎅',
     curiosities: [
-      'Święty Mikołaj mieszka w fińskiej Laponii!',
-      'W Finlandii jest ponad 180 000 jezior.',
-      'Finowie uwielbiają sauny.',
-      'Finlandia to ojczyzna Muminków.',
-      'Zimą w Finlandii jest bardzo mało światła.',
+      'Wioska Świętego Mikołaja znajduje się w fińskiej Laponii!',
+      'Finlandia ma 188 000 jezior - nazywana jest "Krainą Tysiąca Jezior".',
+      'Sauna to fiński wynalazek - jest ich tu 3 miliony.',
+      'Muminki to fińskie trolle stworzone przez Tove Jansson.',
+      'Zimą w północnej Finlandii słońce nie wschodzi przez 50 dni.',
     ]
   },
   'ISL': {
     code: 'ISL', name: 'Islandia', nameEn: 'Iceland', flag: '🇮🇸', icon: '🌋',
     curiosities: [
-      'Islandia ma wulkany, gejzery i lodowce!',
-      'Islandia nie ma armii.',
-      'Można tu zobaczyć zorzę polarną.',
-      'Gorące źródła ogrzewają domy.',
-      'Islandczycy wierzą w elfy i trolle.',
+      'Islandia ma aktywne wulkany, gejzery i lodowce jednocześnie!',
+      'Islandia jest jedynym krajem NATO bez wojska.',
+      'Zorza polarna widoczna jest tu od września do marca.',
+      'Gorące źródła geotermalne ogrzewają domy i baseny.',
+      'Islandczycy wierzą w "ukryty lud" - elfy i trolle.',
     ]
   },
   'CZE': {
     code: 'CZE', name: 'Czechy', nameEn: 'Czechia', flag: '🇨🇿', icon: '🏰',
     curiosities: [
-      'Praga ma ponad 1000 wież i wieżyczek!',
-      'Czechy słyną z pięknych zamków.',
-      'Most Karola w Pradze ma ponad 600 lat.',
-      'Czechy są ojczyzną klocków Merkur.',
-      'Czeskie pierniczki są pyszne.',
+      'Praga zwana jest "miastem stu wież" choć ma ich ponad tysiąc!',
+      'Zegar astronomiczny Orloj działa od 1410 roku.',
+      'Most Karola zdobi 30 barokowych posągów.',
+      'Czechy słyną z kryształowego szkła od wieków.',
+      'Pierniczki z Pardubic mają chronioną recepturę.',
     ]
   },
   'HUN': {
     code: 'HUN', name: 'Węgry', nameEn: 'Hungary', flag: '🇭🇺', icon: '♨️',
     curiosities: [
-      'Budapeszt ma słynne ciepłe kąpieliska!',
-      'Kostka Rubika została wynaleziona na Węgrzech.',
-      'Gulasz to tradycyjna węgierska zupa.',
-      'Dunaj przepływa przez stolicę Węgier.',
-      'Węgrzy mają unikatowy język.',
+      'Budapeszt ma ponad 120 naturalnych gorących źródeł!',
+      'Ernő Rubik wynalazł słynną kostkę Rubika.',
+      'Gulasz węgierski to tak naprawdę zupa, nie potrawka.',
+      'Dunaj dzieli Budapeszt na Budę i Peszt.',
+      'Język węgierski nie jest podobny do żadnego sąsiedniego.',
     ]
   },
   'ROU': {
     code: 'ROU', name: 'Rumunia', nameEn: 'Romania', flag: '🇷🇴', icon: '🧛',
     curiosities: [
-      'Dracula podobno mieszkał w rumuńskim zamku!',
-      'Rumunia ma piękne góry Karpaty.',
-      'W Rumunii żyją niedźwiedzie brunatne.',
-      'Delta Dunaju jest domem dla wielu ptaków.',
-      'Rumuńskie klasztory są ozdobione malowidłami.',
+      'Zamek Bran inspirował historię Drakuli Brama Stokera!',
+      'Rumuńskie Karpaty są domem największej populacji niedźwiedzi w Europie.',
+      'Delta Dunaju to raj dla ponad 300 gatunków ptaków.',
+      'Malowane klasztory Bukowiny mają 500-letnie freski.',
+      'Rumunia ma jedyną wesołą nekropolię na świecie.',
     ]
   },
   'BGR': {
     code: 'BGR', name: 'Bułgaria', nameEn: 'Bulgaria', flag: '🇧🇬', icon: '🌹',
     curiosities: [
-      'Bułgaria jest słynna z róż i olejku różanego.',
-      'Bułgarzy kiwają głową na "nie", a kręcą na "tak"!',
-      'Morze Czarne ma piękne plaże w Bułgarii.',
-      'Jogurt bułgarski jest znany na całym świecie.',
-      'W Bułgarii są stare miasta z kamiennymi uliczkami.',
+      'Bułgaria produkuje 85% światowego olejku różanego!',
+      'Bułgarzy kiwają głową na "nie" i kręcią na "tak".',
+      'Morze Czarne ma złote plaże w Bułgarii.',
+      'Jogurt bułgarski zawiera unikalne bakterie odkryte tu w 1905 roku.',
+      'Cyrylica została stworzona przez bułgarskich mnichów.',
     ]
   },
   'HRV': {
     code: 'HRV', name: 'Chorwacja', nameEn: 'Croatia', flag: '🇭🇷', icon: '🏖️',
     curiosities: [
-      'Chorwacja ma ponad 1200 wysp!',
-      'Morze Adriatyckie jest kryształowo czyste.',
-      'Krawat został wynaleziony w Chorwacji.',
-      'Dubrownik to miasto ze słynnego serialu.',
-      'Chorwackie plaże są kamieniste, ale piękne.',
+      'Chorwacja ma ponad 1200 wysp wzdłuż Adriatyku!',
+      'Krawat (cravate) pochodzi od chorwackich żołnierzy.',
+      'Dubrownik był planem filmowym Królewskiej Przystani.',
+      'Amfiteatr w Puli jest jednym z najlepiej zachowanych na świecie.',
+      'Chorwackie morze jest tak czyste, że widać dno na 50 metrów.',
     ]
   },
   'SVN': {
     code: 'SVN', name: 'Słowenia', nameEn: 'Slovenia', flag: '🇸🇮', icon: '🐝',
     curiosities: [
-      'Słowenia to mały kraj z górami, morzem i lasami.',
-      'Słoweńcy bardzo dbają o pszczoły.',
-      'Jama Postojna to ogromna jaskinia.',
-      'Słowenia ma tylko 47 kilometrów wybrzeża.',
-      'Lipicany to słynne białe konie ze Słowenii.',
+      'Słoweńcy traktują pszczoły jak zwierzęta domowe i malują ule!',
+      'Jaskinia Postojna ma podziemną kolejkę od 1872 roku.',
+      'Słowenia ma tylko 47 km wybrzeża, ale piękne plaże.',
+      'Konie lipicańskie hodowane są tu od XVI wieku.',
+      'Słowenia była pierwszą słowiańską republiką w UE.',
     ]
   },
   'SVK': {
-    code: 'SVK', name: 'Słowacja', nameEn: 'Slovakia', flag: '🇸🇰', icon: '🏔️',
+    code: 'SVK', name: 'Słowacja', nameEn: 'Slovakia', flag: '🇸🇰', icon: '⛰️',
     curiosities: [
-      'Słowacja ma piękne Tatry!',
-      'Bratysława to jedyna stolica granicząca z dwoma krajami.',
-      'W Słowacji jest ponad 6000 jaskiń.',
-      'Bryndza to słynny słowacki ser.',
-      'Słowackie zamki są malownicze.',
+      'Słowacja ma ponad 6000 jaskiń, z których 18 można zwiedzać!',
+      'Bratysława to jedyna stolica świata granicząca z dwoma krajami.',
+      'Słowackie Tatry są najmniejszymi wysokimi górami świata.',
+      'Bryndza to owczy ser wpisany na listę dziedzictwa.',
+      'Zamek Spiš to jeden z największych w Europie.',
     ]
   },
   'BLR': {
-    code: 'BLR', name: 'Białoruś', nameEn: 'Belarus', flag: '🇧🇾', icon: '🦬',
+    code: 'BLR', name: 'Białoruś', nameEn: 'Belarus', flag: '🇧🇾', icon: '🌲',
     curiosities: [
-      'Białoruś ma jeden z ostatnich pierwotnych lasów Europy!',
-      'Puszcza Białowieska jest domem żubrów.',
-      'Mińsk to stolica z szerokimi ulicami.',
-      'Białoruś ma wiele jezior i rzek.',
-      'Bocian biały jest symbolem Białorusi.',
+      'Puszcza Białowieska to ostatni pierwotny las nizinny Europy!',
+      'Białoruś jest domem dla największej populacji żubrów.',
+      'Mińsk został całkowicie odbudowany po II wojnie światowej.',
+      'Bocian biały jest symbolem narodowym Białorusi.',
+      'Białoruś ma ponad 10 000 jezior i 20 000 rzek.',
     ]
   },
   'UKR': {
     code: 'UKR', name: 'Ukraina', nameEn: 'Ukraine', flag: '🇺🇦', icon: '🌻',
     curiosities: [
-      'Ukraina jest największym krajem w Europie!',
-      'Słoneczniki rosną wszędzie na Ukrainie.',
-      'Kijów ma złote kopuły cerkwi.',
-      'Pisanki to pięknie zdobione jajka.',
-      'Barszcz ukraiński jest smaczny i czerwony.',
+      'Ukraina jest największym krajem leżącym w całości w Europie!',
+      'Słoneczniki na polach dały krajowi przydomek "żółto-niebieski".',
+      'Sobór Mądrości Bożej w Kijowie ma 1000-letnie mozaiki.',
+      'Pisanki to ukraińskie jajka zdobione woskiem i farbą.',
+      'Barszcz ukraiński ma ponad 30 regionalnych wersji.',
     ]
   },
   'RUS': {
     code: 'RUS', name: 'Rosja', nameEn: 'Russia', flag: '🇷🇺', icon: '🪆',
     curiosities: [
-      'Rosja to największy kraj na świecie!',
-      'Matrioszki to słynne drewniane lalki.',
-      'Moskwa ma kolorowe cerkwie z cebulastymi kopułami.',
-      'Pociąg transsyberyjski jedzie przez całą Rosję.',
-      'W Rosji zimą jest bardzo zimno i dużo śniegu.',
+      'Rosja rozciąga się przez 11 stref czasowych!',
+      'Matrioszki to lalki chowające w środku mniejsze lalki.',
+      'Cerkiew Wasyla Błogosławionego ma 9 kolorowych kopuł.',
+      'Kolej Transsyberyjska to najdłuższa linia kolejowa świata.',
+      'Bajkał to najgłębsze jezioro na Ziemi z 20% słodkiej wody.',
     ]
   },
   'TUR': {
     code: 'TUR', name: 'Turcja', nameEn: 'Turkey', flag: '🇹🇷', icon: '🎈',
     curiosities: [
-      'Stambuł leży na dwóch kontynentach!',
-      'W Kapadocji można latać balonami.',
-      'Turecka kawa jest gęsta i słodka.',
-      'Kebab pochodzi z Turcji.',
-      'Turcja ma piękne meczety z minaretami.',
+      'Stambuł jako jedyne miasto leży na dwóch kontynentach!',
+      'W Kapadocji setki balonów unoszą się każdego ranka.',
+      'Hagia Sophia była kościołem, meczetem i teraz muzeum.',
+      'Kebab doner został wynaleziony w Turcji w XIX wieku.',
+      'Turecka kąpiel hammam to tradycja sprzed 600 lat.',
     ]
   },
   // ============ ASIA ============
   'JPN': {
     code: 'JPN', name: 'Japonia', nameEn: 'Japan', flag: '🇯🇵', icon: '🗾',
     curiosities: [
-      'W Japonii jest ponad 6800 wysp!',
-      'Japończycy jedzą ryż prawie codziennie.',
-      'Sakury to piękne kwitnące wiśnie.',
-      'W Japonii są pociągi szybsze od samolotów.',
-      'Origami to japońska sztuka składania papieru.',
+      'Japonia składa się z 6852 wysp tworzących łuk na oceanie!',
+      'Sushi pierwotnie służyło do konserwacji ryb, nie jako danie.',
+      'Kwitnące sakury ogląda się podczas święta Hanami.',
+      'Shinkansen - pociąg dużych prędkości - nigdy się nie spóźnia.',
+      'Origami to japońska sztuka składania papieru bez kleju.',
     ]
   },
   'CHN': {
     code: 'CHN', name: 'Chiny', nameEn: 'China', flag: '🇨🇳', icon: '🐉',
     curiosities: [
-      'Wielki Mur Chiński ma ponad 21 000 kilometrów!',
-      'Pandy żyją tylko w Chinach.',
-      'Chińczycy wynaleźli papier i fajerwerki.',
-      'Chiński Nowy Rok świętowany jest z czerwonymi lampionami.',
-      'Pałeczki służą do jedzenia w Chinach.',
+      'Wielki Mur widoczny jest z orbity i budowano go 2000 lat!',
+      'Pandy wielkie żyją dziko tylko w chińskich górach.',
+      'Chińczycy wynaleźli papier, proch, kompas i druk.',
+      'Chiński Nowy Rok trwa 15 dni i kończy świętem lampionów.',
+      'Pałeczkami do jedzenia posługuje się tu od 3000 lat.',
     ]
   },
   'IND': {
     code: 'IND', name: 'Indie', nameEn: 'India', flag: '🇮🇳', icon: '🐘',
     curiosities: [
-      'W Indiach jest ponad 22 oficjalnych języków!',
-      'Taj Mahal to jeden z cudów świata.',
-      'Słonie są świętymi zwierzętami w Indiach.',
-      'Holi to kolorowe święto w Indiach.',
-      'Indie są ojczyzną jogi i curry.',
+      'W Indiach używa się oficjalnie 22 języków i setek dialektów!',
+      'Taj Mahal budowało 20 000 robotników przez 22 lata.',
+      'Słonie świętowane są podczas festiwalu Ganesh Chaturthi.',
+      'Holi to święto kolorów rzucanych w powietrze.',
+      'Joga powstała w Indiach ponad 5000 lat temu.',
     ]
   },
   'THA': {
-    code: 'THA', name: 'Tajlandia', nameEn: 'Thailand', flag: '🇹🇭', icon: '🐘',
+    code: 'THA', name: 'Tajlandia', nameEn: 'Thailand', flag: '🇹🇭', icon: '🛕',
     curiosities: [
-      'Tajlandia nazywana jest "Krajem Uśmiechu"!',
-      'W Tajlandii są piękne złote świątynie.',
-      'Tajski masaż jest znany na całym świecie.',
-      'Słonie pomagają w leśnych pracach.',
-      'Pad Thai to popularne tajskie danie.',
+      'Tajlandia nazywana jest "Krajem Uśmiechu" dzięki gościnności!',
+      'Świątynie buddyjskie pokryte są płatkami złota.',
+      'Tajski masaż ma ponad 2500 lat tradycji.',
+      'Słonie białe są symbolem królestwa od wieków.',
+      'Pad Thai to danie uliczne znane na całym świecie.',
     ]
   },
   'KOR': {
     code: 'KOR', name: 'Korea Południowa', nameEn: 'South Korea', flag: '🇰🇷', icon: '🎮',
     curiosities: [
-      'K-pop to popularna koreańska muzyka!',
-      'Kimchi to fermentowana kapusta.',
-      'Koreańczycy mają specjalny alfabet - hangul.',
-      'Samsung i LG pochodzą z Korei.',
-      'W Korei wiek liczy się od poczęcia!',
+      'K-pop i koreańskie seriale podbijają świat od lat 2010!',
+      'Kimchi to fermentowana kapusta jedzona do każdego posiłku.',
+      'Hangul to alfabet wymyślony przez króla w XV wieku.',
+      'Korea jest światową stolicą e-sportu i gier.',
+      'Koreańczycy obchodzą urodziny już w dniu narodzin - mają wtedy 1 rok!',
     ]
   },
   'VNM': {
     code: 'VNM', name: 'Wietnam', nameEn: 'Vietnam', flag: '🇻🇳', icon: '🍜',
     curiosities: [
-      'Wietnam ma piękne skalne wyspy na morzu.',
-      'Pho to popularna wietnamska zupa.',
-      'Wietnamczycy noszą słynne stożkowe kapelusze.',
-      'Kawa wietnamska jest bardzo mocna.',
-      'Wietnam uprawia dużo ryżu na polach tarasowych.',
+      'Zatoka Ha Long ma ponad 1600 wapiennych wysp!',
+      'Pho to zupa, którą Wietnamczycy jedzą nawet na śniadanie.',
+      'Stożkowe kapelusze nón lá chronią przed słońcem i deszczem.',
+      'Wietnam jest drugim największym eksporterem kawy na świecie.',
+      'Ryż uprawiany jest na tarasach rzeźbionych w góry od pokoleń.',
     ]
   },
   'IDN': {
     code: 'IDN', name: 'Indonezja', nameEn: 'Indonesia', flag: '🇮🇩', icon: '🦎',
     curiosities: [
-      'Indonezja ma ponad 17 000 wysp!',
-      'Smoki z Komodo żyją tylko tutaj.',
-      'Bali to rajska wyspa w Indonezji.',
-      'Indonezja ma wiele wulkanów.',
-      'Orangutany żyją w lasach Indonezji.',
+      'Indonezja to ponad 17 000 wysp rozsianych na 5000 km!',
+      'Smok z Komodo jest największą żyjącą jaszczurką świata.',
+      'Na Bali co dzień składane są ofiary z kwiatów bogom.',
+      'Indonezja ma 130 aktywnych wulkanów.',
+      'Orangutany żyją tu w ostatnich tropikalnych lasach.',
     ]
   },
   'MYS': {
     code: 'MYS', name: 'Malezja', nameEn: 'Malaysia', flag: '🇲🇾', icon: '🏙️',
     curiosities: [
-      'Wieże Petronas były najwyższymi na świecie!',
-      'W Malezji żyją tygrysy i słonie.',
-      'Malezyjskie jedzenie jest pikantne i smaczne.',
-      'W Malezji są stare lasy deszczowe.',
-      'Motyle w Malezji są bardzo kolorowe.',
+      'Wieże Petronas przez 6 lat były najwyższym budynkiem świata!',
+      'Malezyjskie lasy deszczowe mają 130 milionów lat.',
+      'Nasi lemak to kokosowy ryż - narodowe śniadanie.',
+      'Motyle Rajah Brooke są największe w Azji.',
+      'Malezja leży na dwóch oddzielnych lądach.',
     ]
   },
   'PHL': {
     code: 'PHL', name: 'Filipiny', nameEn: 'Philippines', flag: '🇵🇭', icon: '🏝️',
     curiosities: [
-      'Filipiny mają ponad 7600 wysp!',
-      'Można tu zobaczyć najmniejsze małpy - tarsjerze.',
-      'Filipińczycy uwielbiają karaoke.',
-      'Czekoladowe Wzgórza to słynne pagórki.',
-      'Filipiny mają piękne rafy koralowe.',
+      'Filipiny składają się z 7641 wysp!',
+      'Tarsjer to naczelny wielkości pięści z ogromnymi oczami.',
+      'Filipińczycy świętują najdłuższe Boże Narodzenie - od września.',
+      'Czekoladowe Wzgórza na Bohol mają 1200 kopców.',
+      'Filipiny mają jedne z najpiękniejszych raf koralowych świata.',
     ]
   },
   'SAU': {
     code: 'SAU', name: 'Arabia Saudyjska', nameEn: 'Saudi Arabia', flag: '🇸🇦', icon: '🕌',
     curiosities: [
-      'Mekka to najświętsze miasto islamu.',
-      'W Arabii jest dużo pustyni i wielbłądów.',
-      'Ropa naftowa pochodzi spod ziemi Arabii.',
-      'Noce w pustyni są bardzo zimne.',
-      'Arabska kawa podawana jest z daktylami.',
+      'Mekka to najświętsze miasto islamu, odwiedzane przez miliony!',
+      'Pustynię Rub al-Chali nazywa się "Pustą Dzielnicą".',
+      'Pod piaskiem leży 25% światowych rezerw ropy naftowej.',
+      'Noce na pustyni mogą być zimniejsze niż w lodówce.',
+      'Kawa arabska z kardamonem to symbol gościnności.',
     ]
   },
   'ARE': {
     code: 'ARE', name: 'Zjednoczone Emiraty Arabskie', nameEn: 'United Arab Emirates', flag: '🇦🇪', icon: '🏗️',
     curiosities: [
-      'Burj Khalifa to najwyższy budynek świata!',
-      'Dubaj ma sztuczne wyspy w kształcie palm.',
-      'W Dubaju jest kryty stok narciarski.',
-      'Emiraty mają luksusowe hotele.',
-      'Tu można zobaczyć wielbłądy i nowoczesne samochody.',
+      'Burj Khalifa ma 828 metrów - to najwyższy budynek świata!',
+      'Sztuczne wyspy Palm Jumeirah widać z kosmosu.',
+      'W centrum handlowym Ski Dubai pada prawdziwy śnieg.',
+      'Emiraty powstały dopiero w 1971 roku z 7 szejkanatów.',
+      'Tu wyścigi wielbłądów prowadzą roboty-dżokeje.',
     ]
   },
   'ISR': {
     code: 'ISR', name: 'Izrael', nameEn: 'Israel', flag: '🇮🇱', icon: '✡️',
     curiosities: [
-      'Morze Martwe jest tak słone, że można na nim leżeć!',
-      'Jerozolima to święte miasto trzech religii.',
-      'Izrael ma pustynię i piękne plaże.',
-      'Hummus i falafel to pyszne izraelskie potrawy.',
-      'Hebrajski to starożytny język ożywiony na nowo.',
+      'Morze Martwe jest tak słone, że nie można w nim utonąć!',
+      'Jerozolima to święte miasto judaizmu, chrześcijaństwa i islamu.',
+      'Pustynia Negew zajmuje połowę kraju.',
+      'Hummus i falafel to potrawy jedzone tu od tysięcy lat.',
+      'Hebrajski to jedyny martwy język ożywiony jako narodowy.',
     ]
   },
   // ============ AFRICA ============
   'EGY': {
     code: 'EGY', name: 'Egipt', nameEn: 'Egypt', flag: '🇪🇬', icon: '🏺',
     curiosities: [
-      'Wielka Piramida w Gizie ma ponad 4500 lat!',
-      'Sfinks strzeże piramid od tysięcy lat.',
-      'Nil to najdłuższa rzeka Afryki.',
-      'Faraonowie byli mumifikowani po śmierci.',
-      'Hieroglify to starożytne egipskie pismo.',
+      'Wielka Piramida w Gizie była najwyższą budowlą przez 3800 lat!',
+      'Sfinks ma twarz faraona i ciało lwa.',
+      'Nil to jedyna rzeka Egiptu i cała cywilizacja rozwinęła się nad nią.',
+      'Mumifikacja miała zapewnić życie pozagrobowe faraonów.',
+      'Hieroglify odkryto dopiero dzięki Kamieniowi z Rosetty.',
     ]
   },
   'KEN': {
     code: 'KEN', name: 'Kenia', nameEn: 'Kenya', flag: '🇰🇪', icon: '🦁',
     curiosities: [
-      'W Kenii odbywa się wielka migracja zwierząt!',
-      'Można tu zobaczyć lwy, słonie i żyrafy.',
-      'Masajowie to słynny lud kenijski.',
-      'Kenia ma piękne parki narodowe.',
-      'Kenijska kawa jest znana na świecie.',
+      'Wielka migracja przenosi 2 miliony zwierząt przez kenijskie równiny!',
+      'Masajowie potrafią skakać pionowo bardzo wysoko w tańcu.',
+      'Kenia eksportuje kawę i herbatę do całego świata.',
+      'Park Narodowy Masai Mara to dom "wielkiej piątki" Afryki.',
+      'Równik przecina Kenię - można stanąć na obu półkulach naraz.',
     ]
   },
   'MAR': {
     code: 'MAR', name: 'Maroko', nameEn: 'Morocco', flag: '🇲🇦', icon: '🧞',
     curiosities: [
-      'Na Saharze może być zimniej niż w lodówce!',
-      'Marokańskie bazary są pełne kolorów i zapachów.',
-      'Tagine to tradycyjne marokańskie danie.',
-      'Marokańska herbata miętowa jest bardzo słodka.',
-      'W Maroku są piękne niebieskie miasta.',
+      'Na Saharze temperatura w ciągu doby może spaść o 40 stopni!',
+      'Marokańskie bazary zwane sukami są labiryntem sklepów.',
+      'Tagine to danie gotowane w stożkowatym glinianym naczyniu.',
+      'Herbata miętowa z dużą ilością cukru to rytuał gościnności.',
+      'Chefchaouen to miasto całkowicie pomalowane na niebiesko.',
     ]
   },
   'ZAF': {
     code: 'ZAF', name: 'Republika Południowej Afryki', nameEn: 'South Africa', flag: '🇿🇦', icon: '🐧',
     curiosities: [
-      'RPA ma trzy stolice!',
-      'Na plażach RPA żyją pingwiny.',
-      'Góra Stołowa to płaski szczyt w Kapsztadzie.',
-      'RPA ma 11 oficjalnych języków.',
-      'Tu żyje słynna wielka piątka zwierząt.',
+      'RPA ma trzy stolice - każda dla innej władzy!',
+      'Pingwiny afrykańskie żyją na plażach w pobliżu Kapsztadu.',
+      'Góra Stołowa jest płaska jak blat stołu.',
+      'Kraj oficjalnie używa 11 języków.',
+      '"Wielka piątka" safari to lew, słoń, bawół, nosorożec i lampart.',
     ]
   },
   'NGA': {
     code: 'NGA', name: 'Nigeria', nameEn: 'Nigeria', flag: '🇳🇬', icon: '🥁',
     curiosities: [
-      'Nigeria to najbardziej ludny kraj Afryki!',
-      'Nollywood produkuje mnóstwo filmów.',
-      'Nigeria ma ponad 500 różnych języków.',
-      'Jollof rice to popularne danie nigeryjskie.',
-      'Lagos to wielka metropolia.',
+      'Nigeria to najludniejszy kraj Afryki z ponad 200 milionami mieszkańców!',
+      'Nollywood produkuje więcej filmów niż Hollywood.',
+      'W Nigerii mówi się ponad 500 językami.',
+      'Jollof rice to danie, o które Nigeria rywalizuje z Ghaną.',
+      'Lagos jest jednym z najszybciej rosnących miast świata.',
     ]
   },
   'ETH': {
     code: 'ETH', name: 'Etiopia', nameEn: 'Ethiopia', flag: '🇪🇹', icon: '☕',
     curiosities: [
-      'Kawa została odkryta w Etiopii!',
-      'Etiopia ma własny kalendarz.',
-      'Lucy, najsłynniejszy szkielet człowieka, znaleziono tutaj.',
-      'Etiopia nigdy nie była kolonią.',
-      'Injera to etiopski chleb z ciasta.',
+      'Legenda mówi, że pasterz odkrył kawę obserwując ożywione kozy!',
+      'Etiopski kalendarz ma 13 miesięcy i jest 7 lat "za nami".',
+      'Lucy - szkielet przodka człowieka - ma 3,2 miliona lat.',
+      'Etiopia nigdy nie była kolonią europejską.',
+      'Injera to gąbczasty chleb zastępujący sztućce.',
     ]
   },
   'TZA': {
     code: 'TZA', name: 'Tanzania', nameEn: 'Tanzania', flag: '🇹🇿', icon: '🦒',
     curiosities: [
-      'Kilimandżaro to najwyższa góra Afryki!',
-      'Serengeti to słynny park safari.',
-      'Zanzibar to rajska wyspa przypraw.',
-      'W Tanzanii żyją miliony flamingów.',
-      'Tu można zobaczyć wielką migrację gnu.',
+      'Kilimandżaro to najwyższa wolnostojąca góra świata - 5895 m!',
+      'Serengeti dosłownie znaczy "niekończące się równiny".',
+      'Zanzibar był centrum handlu przyprawami przez wieki.',
+      'Jezioro Natron zabarwia flamingi na różowo.',
+      'Miliony gnu i zebr wędrują tu co roku w poszukiwaniu trawy.',
     ]
   },
   'GHA': {
-    code: 'GHA', name: 'Ghana', nameEn: 'Ghana', flag: '🇬🇭', icon: '🍫',
+    code: 'GHA', name: 'Ghana', nameEn: 'Ghana', flag: '🇬🇭', icon: '🎭',
     curiosities: [
-      'Ghana jest jednym z największych producentów kakao!',
-      'Słynne kolorowe trumny pochodzą z Ghany.',
-      'Ghańczycy są bardzo gościnni.',
-      'W Ghanie są zamki z czasów handlu niewolnikami.',
-      'Kente to tradycyjna ghańska tkanina.',
+      'Ghana jest drugim największym producentem kakao po Wybrzeżu Kości Słoniowej!',
+      'Kolorowe trumny w kształcie ryb czy samolotów to ghańska tradycja.',
+      'Ghańczycy witają się pytaniem "Jak się masz?" - odpowiedź brzmi "Dobrze!".',
+      'Zamki niewolnicze na wybrzeżu są dziedzictwem UNESCO.',
+      'Kente to ręcznie tkana tkanina noszona przez króli.',
     ]
   },
   // ============ NORTH AMERICA ============
   'USA': {
     code: 'USA', name: 'Stany Zjednoczone', nameEn: 'United States', flag: '🇺🇸', icon: '🗽',
     curiosities: [
-      'USA ma 50 stanów i każdy jest inny!',
-      'Statua Wolności to prezent od Francji.',
-      'Hollywood produkuje najwięcej filmów.',
-      'Wielki Kanion jest niesamowicie głęboki.',
-      'Hamburger i hot dog to amerykańskie wynalazki.',
+      'Każdy z 50 stanów USA jest jak mały kraj z własnymi prawami!',
+      'Statua Wolności była prezentem od Francji z 1886 roku.',
+      'Hollywood produkuje filmy oglądane na całym świecie.',
+      'Wielki Kanion wyrzeźbiła rzeka Kolorado przez miliony lat.',
+      'Hamburger według legend powstał w New Haven.',
     ]
   },
   'CAN': {
     code: 'CAN', name: 'Kanada', nameEn: 'Canada', flag: '🇨🇦', icon: '🍁',
     curiosities: [
-      'Kanada ma więcej jezior niż wszystkie inne kraje razem!',
-      'Syrop klonowy pochodzi z Kanady.',
-      'Niedźwiedzie polarne żyją na północy.',
-      'Hokej to narodowy sport Kanady.',
-      'Wodospad Niagara leży na granicy z USA.',
+      'Kanada ma 60% wszystkich jezior świata!',
+      'Syrop klonowy zbierany jest z drzew wiosną.',
+      'Niedźwiedzie polarne wędrują po zachodnim wybrzeżu Zatoki Hudsona.',
+      'Hokej na lodzie to narodowa pasja Kanadyjczyków.',
+      'Granica z USA jest najdłuższą niestrzeżoną granicą świata.',
     ]
   },
   'MEX': {
     code: 'MEX', name: 'Meksyk', nameEn: 'Mexico', flag: '🇲🇽', icon: '🌮',
     curiosities: [
-      'Meksyk ma 35 obiektów z listy UNESCO!',
-      'Tacos i burrito pochodzą z Meksyku.',
-      'Piramidy Majów są niesamowite.',
-      'Dzień Zmarłych to kolorowe święto.',
-      'Kakao i czekolada pochodzą z Meksyku.',
+      'Meksyk ma 35 miejsc na liście UNESCO - więcej niż Francja!',
+      'Tacos i tortille to podstawa meksykańskiej kuchni od tysięcy lat.',
+      'Piramida Chichén Itzá wydaje dźwięk kwiczącego węża.',
+      'Día de los Muertos to radosne święto wspominania zmarłych.',
+      'Kakao i wanilia pochodzą z terenów dawnych Azteków.',
     ]
   },
   'CUB': {
     code: 'CUB', name: 'Kuba', nameEn: 'Cuba', flag: '🇨🇺', icon: '🚗',
     curiosities: [
-      'Na Kubie jeżdżą stare, kolorowe samochody!',
-      'Kuba jest słynna z cyguar i muzyki salsa.',
-      'Hawana ma kolorowe kolonialne budynki.',
-      'Kuba to wyspa na Karaibach.',
-      'Kubańska kawa jest bardzo mocna.',
+      'Na Kubie jeżdżą amerykańskie samochody z lat 50. jak z kapsuły czasu!',
+      'Salsa narodziła się z mieszanki afrykańskich i hiszpańskich rytmów.',
+      'Hawana ma kolonialną architekturę w pastelowych kolorach.',
+      'Kuba jest największą wyspą Karaibów.',
+      'Kubańskie cygara uważane są za najlepsze na świecie.',
     ]
   },
   'JAM': {
     code: 'JAM', name: 'Jamajka', nameEn: 'Jamaica', flag: '🇯🇲', icon: '🎶',
     curiosities: [
-      'Reggae i Bob Marley pochodzą z Jamajki!',
-      'Jamajka słynie z szybkich sprinterów.',
-      'Jamajskie plaże są rajskie.',
-      'Jerk chicken to pikantne jamajskie danie.',
-      'Jamajka produkuje słynną kawę Blue Mountain.',
+      'Bob Marley uczynił reggae znanym na całym świecie!',
+      'Usain Bolt - najszybszy człowiek - pochodzi z Jamajki.',
+      'Plaże Jamajki mają biały, a czasem czarny piasek.',
+      'Jerk chicken to pikantne danie marynowane w ziołach.',
+      'Blue Mountain Coffee rośnie na zboczach wulkanu.',
     ]
   },
   'CRI': {
     code: 'CRI', name: 'Kostaryka', nameEn: 'Costa Rica', flag: '🇨🇷', icon: '🦜',
     curiosities: [
-      'Kostaryka ma 5% wszystkich gatunków świata!',
-      'Kostarykańczycy mówią "Pura Vida" - czyste życie.',
-      'Tu żyją kolorowe żaby drzewlaki.',
-      'Kostaryka nie ma armii.',
-      'Lasy deszczowe są domem tukanów.',
+      'Kostaryka chroni 5% bioróżnorodności całej planety!',
+      '"Pura Vida" to pozdrowienie i filozofia życia Kostarykańczyków.',
+      'Czerwone żaby trujące wyglądają jak malowane.',
+      'Kostaryka nie ma armii od 1948 roku.',
+      'Tukany z kolorowymi dziobami żyją w dżunglach.',
     ]
   },
   // ============ SOUTH AMERICA ============
   'BRA': {
     code: 'BRA', name: 'Brazylia', nameEn: 'Brazil', flag: '🇧🇷', icon: '⚽',
     curiosities: [
-      'Amazonia produkuje 20% tlenu na Ziemi!',
-      'Brazylia pięć razy wygrała Mistrzostwa Świata w piłce nożnej.',
-      'Karnawał w Rio to największa impreza świata.',
-      'Statua Chrystusa stoi nad Rio de Janeiro.',
-      'W Brazylii mówi się po portugalsku.',
+      'Amazonia wytwarza 20% tlenu Ziemi i jest nazywana "płucami świata"!',
+      'Brazylia wygrała Mistrzostwa Świata w piłce nożnej 5 razy.',
+      'Karnawał w Rio trwa 5 dni i przyciąga miliony tancerzy.',
+      'Posąg Chrystusa Odkupiciela ma 30 metrów i rozpostarte ramiona.',
+      'Brazylia to jedyny kraj Ameryki Południowej mówiący po portugalsku.',
     ]
   },
   'ARG': {
-    code: 'ARG', name: 'Argentyna', nameEn: 'Argentina', flag: '🇦🇷', icon: '💃',
+    code: 'ARG', name: 'Argentyna', nameEn: 'Argentina', flag: '🇦🇷', icon: '🥩',
     curiosities: [
-      'Argentyna ma lodowce, które wciąż rosną!',
-      'Tango pochodzi z Buenos Aires.',
-      'Argentyńskie steki są słynne na świecie.',
-      'Patagonia ma niesamowite krajobrazy.',
-      'Maradona był argentyńskim bohaterem.',
+      'Lodowiec Perito Moreno wciąż rośnie zamiast topnieć!',
+      'Tango zrodziło się w portowych dzielnicach Buenos Aires.',
+      'Argentyńskie asado to rytuał grillowania mięsa trwający godzinami.',
+      'Patagonia ma błękitne lodowce i wietrzne stepy.',
+      'Diego Maradona i Lionel Messi to argentyńscy bohaterowie futbolu.',
     ]
   },
   'PER': {
     code: 'PER', name: 'Peru', nameEn: 'Peru', flag: '🇵🇪', icon: '🦙',
     curiosities: [
-      'Machu Picchu zostało zbudowane bez użycia kół!',
-      'Lamy i alpaki żyją w Andach.',
-      'Peruwiańska kuchnia jest jedną z najlepszych.',
-      'Inkowie budowali niesamowite miasta.',
-      'Peru ma fragment Amazonii.',
+      'Inkowie zbudowali Machu Picchu bez użycia koła i zaprawy!',
+      'Lamy i alpaki służą tu jako transportowe zwierzęta od tysięcy lat.',
+      'Peruwiańska ceviche to surowa ryba marynowana w limonce.',
+      'Linie Nazca to gigantyczne rysunki widoczne tylko z powietrza.',
+      'Peru ma fragment dżungli amazońskiej.',
     ]
   },
   'COL': {
-    code: 'COL', name: 'Kolumbia', nameEn: 'Colombia', flag: '🇨🇴', icon: '☕',
+    code: 'COL', name: 'Kolumbia', nameEn: 'Colombia', flag: '🇨🇴', icon: '🦋',
     curiosities: [
-      'Kolumbia produkuje jedną z najlepszych kaw!',
-      'Tu żyją kolorowe ptaki i motyle.',
-      'Cartagena ma piękne kolonialne mury.',
-      'Kolumbia ma góry, plaże i dżunglę.',
-      'Szmaragdy kolumbijskie są najpiękniejsze.',
+      'Kolumbia ma więcej gatunków ptaków niż jakikolwiek inny kraj!',
+      'Szmaragdy kolumbijskie są uznawane za najczystsze na świecie.',
+      'Cartagena ma 13 km murów obronnych z XVII wieku.',
+      'Kawa rośnie tu na wulkanicznych zboczach w idealnym klimacie.',
+      'Kolumbia jako jedyna w Ameryce Południowej ma dwa wybrzeża.',
     ]
   },
   'CHL': {
     code: 'CHL', name: 'Chile', nameEn: 'Chile', flag: '🇨🇱', icon: '🗿',
     curiosities: [
-      'Chile jest bardzo długie i wąskie!',
-      'Na Wyspie Wielkanocnej stoją tajemnicze posągi Moai.',
+      'Chile rozciąga się na 4300 km, ale ma średnio tylko 177 km szerokości!',
+      'Posągi Moai na Wyspie Wielkanocnej mają nawet 10 metrów.',
       'Pustynia Atacama jest najsuchszym miejscem na Ziemi.',
-      'Chile ma piękne góry Andy.',
-      'Patagonia chilijska jest dzika i piękna.',
+      'Andy w Chile mają szczyty ponad 6000 metrów.',
+      'Chile słynie z winnic w środkowej dolinie.',
     ]
   },
   'ECU': {
     code: 'ECU', name: 'Ekwador', nameEn: 'Ecuador', flag: '🇪🇨', icon: '🐢',
     curiosities: [
-      'Wyspy Galapagos należą do Ekwadoru!',
-      'Ekwador leży dokładnie na równiku.',
-      'Tu żyją gigantyczne żółwie.',
-      'Banany ekwadorskie są eksportowane na cały świat.',
-      'Quito to jedna z najwyżej położonych stolic.',
+      'Galapagos to wyspy gdzie Darwin rozwinął teorię ewolucji!',
+      'Ekwador leży dokładnie na równiku - stąd jego nazwa.',
+      'Żółwie galapagosie żyją ponad 100 lat.',
+      'Ekwador eksportuje więcej bananów niż jakikolwiek kraj.',
+      'Quito leży na 2850 m n.p.m. - to druga najwyższa stolica świata.',
     ]
   },
   'VEN': {
     code: 'VEN', name: 'Wenezuela', nameEn: 'Venezuela', flag: '🇻🇪', icon: '💧',
     curiosities: [
-      'Wenezuela ma najwyższy wodospad świata - Salto Ángel!',
-      'Tu jest dużo ropy naftowej.',
-      'Arepa to popularne wenezuelskie danie.',
-      'Wenezuela ma piękne plaże karaibskie.',
-      'W lasach żyją kolorowe papugi.',
+      'Salto Ángel to najwyższy wodospad świata - spada z 979 metrów!',
+      'Wenezuela ma największe potwierdzone zasoby ropy naftowej.',
+      'Arepa to kukurydziany chlebek jedzony na śniadanie i kolację.',
+      'Wyspy Los Roques mają rafy koralowe i turkusową wodę.',
+      'Papugi ara latają wolno nad wenezuelskimi lasami.',
     ]
   },
   'BOL': {
-    code: 'BOL', name: 'Boliwia', nameEn: 'Bolivia', flag: '🇧🇴', icon: '🏔️',
+    code: 'BOL', name: 'Boliwia', nameEn: 'Bolivia', flag: '🇧🇴', icon: '🧂',
     curiosities: [
-      'Boliwia ma największą słoną pustynię świata!',
-      'La Paz to najwyżej położona stolica.',
-      'Jezioro Titicaca leży na granicy z Peru.',
-      'Boliwia ma wiele rdzennych kultur.',
-      'Lamy są ważnymi zwierzętami w Boliwii.',
+      'Salar de Uyuni to największa słona pustynia świata - 10 000 km²!',
+      'La Paz leży na 3640 m n.p.m. - to najwyżej położona stolica.',
+      'Jezioro Titicaca na granicy z Peru to najwyższe żeglowne jezioro.',
+      'Boliwia ma 36 oficjalnie uznanych języków rdzennych.',
+      'Lamy hodowane są tu od ponad 4000 lat.',
     ]
   },
   // ============ OCEANIA ============
   'AUS': {
     code: 'AUS', name: 'Australia', nameEn: 'Australia', flag: '🇦🇺', icon: '🦘',
     curiosities: [
-      'Australia jest jednocześnie kontynentem i krajem!',
-      'Kangury i koale żyją tylko tutaj.',
-      'Wielka Rafa Koralowa widoczna jest z kosmosu.',
-      'W Australii są nietypowe zwierzęta jak dziobak.',
-      'Outback to ogromna australijska pustynia.',
+      'Australia jest jedynym krajem będącym całym kontynentem!',
+      'Kangury i koale żyją dziko tylko tutaj.',
+      'Wielka Rafa Koralowa to największa żywa struktura widoczna z kosmosu.',
+      'Dziobak to ssak składający jaja i mający jadowity kolec.',
+      'Outback to czerwona pustynia większa od całej Europy.',
     ]
   },
   'NZL': {
     code: 'NZL', name: 'Nowa Zelandia', nameEn: 'New Zealand', flag: '🇳🇿', icon: '🥝',
     curiosities: [
-      'Kiwi to ptak, który nie potrafi latać!',
-      'Nowa Zelandia ma więcej owiec niż ludzi.',
-      'Tu kręcono Władcę Pierścieni.',
-      'Nowa Zelandia ma gejzery i gorące źródła.',
-      'Maorysi to rdzenni mieszkańcy.',
+      'Kiwi to jedyny ptak na świecie z nozdrzami na końcu dzioba!',
+      'Owiec jest tu 5 razy więcej niż ludzi.',
+      'Władca Pierścieni kręcono w nowozelandzkich krajobrazach.',
+      'Gejzery Rotorua tryskają gorącą wodą kilka razy dziennie.',
+      'Maorysi witają się tradycyjnym hongi - dotknięciem nosów.',
     ]
   },
   'PNG': {
     code: 'PNG', name: 'Papua-Nowa Gwinea', nameEn: 'Papua New Guinea', flag: '🇵🇬', icon: '🦅',
     curiosities: [
-      'Papua-Nowa Gwinea ma ponad 800 języków!',
-      'Tu żyją piękne rajskie ptaki.',
-      'Lasy deszczowe pokrywają większość kraju.',
-      'Plemiona mają tradycyjne stroje i tańce.',
-      'Papua ma wiele wulkanów.',
+      'Papua-Nowa Gwinea ma ponad 840 języków - najwięcej na świecie!',
+      'Rajskie ptaki mają pióra tak kolorowe, że wydają się nierealne.',
+      'Tropikalne lasy pokrywają 70% kraju.',
+      'Niektóre plemiona wciąż żyją tradycyjnie, bez kontaktu z cywilizacją.',
+      'Góry mają szczyty ponad 4500 metrów przy równiku.',
     ]
   },
   'FJI': {
-    code: 'FJI', name: 'Fidżi', nameEn: 'Fiji', flag: '🇫🇯', icon: '🏝️',
+    code: 'FJI', name: 'Fidżi', nameEn: 'Fiji', flag: '🇫🇯', icon: '🐚',
     curiosities: [
-      'Fidżi to ponad 330 wysp na Pacyfiku!',
-      'Woda wokół wysp jest kryształowo czysta.',
-      'Fidżi to raj dla nurków.',
-      'Mieszkańcy są bardzo gościnni.',
-      'Kokosy rosną na każdej wyspie.',
+      'Fidżi składa się z 333 wysp, z których tylko 110 jest zamieszkanych!',
+      'Woda wokół wysp jest ciepła przez cały rok.',
+      'Nurkowanie wśród kolorowych raf to atrakcja numer jeden.',
+      'Fidżyjczycy witają się słowem "Bula!" z szerokim uśmiechem.',
+      'Na wyspach rosną kokosowe palmy przy każdej plaży.',
     ]
   },
   // ============ ADDITIONAL ISLANDS ============
   'CPV': {
-    code: 'CPV', name: 'Zielony Przylądek', nameEn: 'Cape Verde', flag: '🇨🇻', icon: '🏝️',
+    code: 'CPV', name: 'Zielony Przylądek', nameEn: 'Cape Verde', flag: '🇨🇻', icon: '🐋',
     curiosities: [
-      'Zielony Przylądek to 10 pięknych wysp na Atlantyku!',
-      'Na wyspach mówi się po portugalsku.',
-      'Muzyka morna pochodzi właśnie stąd.',
-      'Wyspy mają wulkany i rajskie plaże.',
-      'Żółwie morskie składają jaja na tutejszych plażach.',
+      'Zielony Przylądek to 10 wulkanicznych wysp na Atlantyku!',
+      'Kreolski język tu mówiony łączy portugalski z afrykańskimi.',
+      'Morna - smutna muzyka - wpisana jest na listę UNESCO.',
+      'Wulkan Fogo ostatnio wybuchł w 2014 roku.',
+      'Wieloryby humbaki odwiedzają wody archipelagu każdej zimy.',
     ]
   },
 };
