@@ -5,8 +5,8 @@ import type { Feature, FeatureCollection } from 'geojson';
 import { countries, type Country } from '@/data/countries';
 import { useCountryStatuses, type CountryStatusType } from '@/hooks/useCountryStatuses';
 import { CountryFactCard } from './CountryFactCard';
-import { SmallIslandsOverlay } from './SmallIslandsOverlay';
 import { getPolishName } from '@/lib/countryNames';
+import { getCountryCode } from '@/lib/geoJsonUtils';
 import { Loader2 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
@@ -22,84 +22,12 @@ const codeToSlug: Record<string, string> = {
   'KOR': 'south-korea', 'VNM': 'vietnam',
 };
 
-// Map of country admin names (English) to ISO codes for GeoJSON fallback
-const adminNameToCode: Record<string, string> = {
-  'France': 'FRA', 'Norway': 'NOR', 'Belarus': 'BLR', 'Kosovo': 'XKX',
-  'Northern Cyprus': 'XNC', 'Saudi Arabia': 'SAU', 'United Arab Emirates': 'ARE',
-  'Oman': 'OMN', 'Yemen': 'YEM', 'Jordan': 'JOR', 'Israel': 'ISR',
-  'Palestine': 'PSE', 'Syria': 'SYR', 'Iraq': 'IRQ', 'Iran': 'IRN',
-  'Kuwait': 'KWT', 'Qatar': 'QAT', 'Bahrain': 'BHR', 'Lebanon': 'LBN',
-  'Somaliland': 'SOL', 'Cabo Verde': 'CPV', 'Cape Verde': 'CPV',
-  'Western Sahara': 'ESH', 'South Sudan': 'SSD', 'Taiwan': 'TWN',
-  'North Korea': 'PRK', 'South Korea': 'KOR', 'Dem. Rep. Korea': 'PRK',
-  'Republic of Korea': 'KOR', 'United States of America': 'USA',
-  'United Kingdom': 'GBR', 'Russia': 'RUS', 'South Africa': 'ZAF',
-  'New Zealand': 'NZL', 'Czech Republic': 'CZE', 'Czechia': 'CZE',
-  'Ivory Coast': 'CIV', "Côte d'Ivoire": 'CIV',
-  'Democratic Republic of the Congo': 'COD', 'Republic of the Congo': 'COG',
-  'Central African Republic': 'CAF', 'Equatorial Guinea': 'GNQ',
-  'Guinea-Bissau': 'GNB', 'Sierra Leone': 'SLE', 'Burkina Faso': 'BFA',
-  'Trinidad and Tobago': 'TTO', 'Dominican Republic': 'DOM',
-  'Papua New Guinea': 'PNG', 'East Timor': 'TLS', 'Timor-Leste': 'TLS',
-  'Bosnia and Herzegovina': 'BIH', 'Bosnia and Herz.': 'BIH',
-  'North Macedonia': 'MKD', 'The Gambia': 'GMB', 'Gambia': 'GMB',
-  'Solomon Islands': 'SLB', 'Marshall Islands': 'MHL', 'Eswatini': 'SWZ',
-  'Swaziland': 'SWZ', 'Myanmar': 'MMR', 'Burma': 'MMR',
-  'Brunei Darussalam': 'BRN', 'Brunei': 'BRN', 'Laos': 'LAO',
-  'Lao PDR': 'LAO', 'Vietnam': 'VNM', 'Viet Nam': 'VNM',
-};
-
-/**
- * Extract country code from GeoJSON feature properties.
- * Tries multiple fields and fallbacks to ensure maximum coverage.
- */
-export function getCountryCode(feature: Feature): string | undefined {
-  const props = feature.properties || {};
-
-  // Try various ISO3 property names (normalized to uppercase)
-  const candidates = [
-    props.ISO_A3,
-    props.ADM0_A3,
-    props.SOV_A3,
-    props.A3,
-    props.ISO3,
-    props.WB_A3,
-    props.GU_A3,
-  ];
-
-  for (const raw of candidates) {
-    if (typeof raw === 'string' && raw && raw !== '-99' && raw !== '-1') {
-      return raw.toUpperCase();
-    }
-  }
-
-  // Fallback by admin/country name
-  const adminName = props.ADMIN || props.NAME || props.name || props.SOVEREIGNT;
-  if (typeof adminName === 'string' && adminNameToCode[adminName]) {
-    return adminNameToCode[adminName];
-  }
-
-  return undefined;
-}
-
-/**
- * Get country name in Polish from feature
- */
-function getCountryNamePolish(feature: Feature): string {
-  const code = getCountryCode(feature);
-  if (code) {
-    return getPolishName(code);
-  }
-  const props = feature.properties || {};
-  return props.ADMIN || props.NAME || props.name || 'Nieznany';
-}
-
 function findCountryByCode(code: string): Country | undefined {
   const slug = codeToSlug[code];
   return slug ? countries.find(c => c.id === slug) : undefined;
 }
 
-// Color palette
+// Pastel color palette
 const colors = {
   ocean: 'hsl(200, 30%, 92%)',
   landDefault: 'hsl(220, 10%, 82%)',
@@ -128,17 +56,17 @@ function ZoomToCountry({ selectedCountry, geoData }: { selectedCountry: Selected
   useEffect(() => {
     if (!selectedCountry || !geoData) return;
     
-    const feature = geoData.features.find((f: Feature) => {
-      const code = getCountryCode(f);
-      return code === selectedCountry.code;
-    });
+    const feature = geoData.features.find((f: Feature) => getCountryCode(f) === selectedCountry.code);
+    if (!feature) return;
     
-    if (feature) {
-      const L = (window as any).L;
-      if (L) {
+    const L = (window as any).L;
+    if (L) {
+      try {
         const geoJsonLayer = L.geoJSON(feature);
         const bounds = geoJsonLayer.getBounds();
-        map.flyToBounds(bounds, { padding: [50, 50], duration: 1, maxZoom: 5 });
+        map.flyToBounds(bounds, { padding: [50, 50], duration: 0.8, maxZoom: 5 });
+      } catch (e) {
+        console.error('Zoom error:', e);
       }
     }
   }, [selectedCountry, geoData, map]);
@@ -151,8 +79,7 @@ interface WorldMapLeafletProps {
 }
 
 export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
-  const [hoveredCountryCode, setHoveredCountryCode] = useState<string | null>(null);
-  const [hoveredCountryName, setHoveredCountryName] = useState<string | null>(null);
+  const [hoveredCode, setHoveredCode] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<SelectedCountryInfo | null>(null);
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
   const [loading, setLoading] = useState(true);
@@ -161,16 +88,12 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   
   const { countryStatuses, loading: statusesLoading } = useCountryStatuses();
 
-  // IMPORTANT: react-leaflet GeoJSON doesn't always restyle features when only the style function
-  // dependencies change. A stable key based on statuses ensures colors refresh after admin changes.
+  // Key for GeoJSON refresh when statuses change
   const statusesKey = useMemo(() => {
-    if (!countryStatuses.length) return 'no-statuses';
-    return countryStatuses
-      .map((cs) => `${cs.country_code}:${cs.status}`)
-      .join('|');
+    return countryStatuses.map(cs => `${cs.country_code}:${cs.status}`).join('|');
   }, [countryStatuses]);
   
-  // Load GeoJSON from public folder
+  // Load GeoJSON
   useEffect(() => {
     fetch('/world-110m.geojson')
       .then(res => res.json())
@@ -179,7 +102,7 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
         setLoading(false);
       })
       .catch(err => {
-        console.error('Failed to load map data:', err);
+        console.error('Failed to load map:', err);
         setLoading(false);
       });
   }, []);
@@ -193,8 +116,7 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   const handleCountrySelect = useCallback((code: string | null, name: string | null) => {
     if (code && name) {
       setSelectedCountry({ code, name });
-      const country = findCountryByCode(code);
-      onCountrySelect?.(country || null);
+      onCountrySelect?.(findCountryByCode(code) || null);
     } else {
       setSelectedCountry(null);
       onCountrySelect?.(null);
@@ -204,11 +126,10 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   const getCountryStyle = useCallback((feature: Feature | undefined) => {
     if (!feature) return {};
     
-    const countryCode = getCountryCode(feature);
-    const status = countryCode ? statusByCode.get(countryCode) : undefined;
-    
-    const isHovered = hoveredCountryCode === countryCode;
-    const isSelected = selectedCountry?.code === countryCode;
+    const code = getCountryCode(feature);
+    const status = code ? statusByCode.get(code) : undefined;
+    const isHovered = hoveredCode === code;
+    const isSelected = selectedCountry?.code === code;
     
     let fillColor = colors.landDefault;
     let fillOpacity = 0.7;
@@ -239,65 +160,49 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
     }
     
     return { fillColor, fillOpacity, weight, color, opacity: 1 };
-  }, [hoveredCountryCode, selectedCountry, statusByCode]);
+  }, [hoveredCode, selectedCountry, statusByCode]);
 
   const onEachFeature = useCallback((feature: Feature, layer: Layer) => {
-    const countryCode = getCountryCode(feature);
-    const countryName = getCountryNamePolish(feature);
+    const code = getCountryCode(feature);
+    const polishName = code ? getPolishName(code) : (feature.properties?.NAME || 'Nieznany');
     
     layer.on({
       mouseover: (e: LeafletMouseEvent) => {
-        if (countryCode) {
-          setHoveredCountryCode(countryCode);
-          setHoveredCountryName(countryName);
-        }
+        if (code) setHoveredCode(code);
         e.target.setStyle({ weight: 1.5, color: colors.borderHover, fillOpacity: 0.9 });
         e.target.bringToFront();
       },
       mouseout: (e: LeafletMouseEvent) => {
-        setHoveredCountryCode(null);
-        setHoveredCountryName(null);
+        setHoveredCode(null);
         geoJsonRef.current?.resetStyle(e.target);
       },
       click: () => {
-        if (countryCode) {
-          // Toggle selection
-          if (selectedCountry?.code === countryCode) {
+        if (code) {
+          if (selectedCountry?.code === code) {
             handleCountrySelect(null, null);
           } else {
-            handleCountrySelect(countryCode, countryName);
+            handleCountrySelect(code, polishName);
           }
         }
       },
     });
-    
-    layer.on('touchstart', () => {
-      if (countryCode) {
-        setHoveredCountryCode(countryCode);
-        setHoveredCountryName(countryName);
-      }
-    });
   }, [selectedCountry, handleCountrySelect]);
 
-  // Get hovered country details for tooltip (Polish names)
-  const hoveredCountryData = useMemo(() => {
-    if (!hoveredCountryCode) return null;
-    const country = findCountryByCode(hoveredCountryCode);
-    const polishName = getPolishName(hoveredCountryCode);
+  // Hovered country data for tooltip
+  const hoveredData = useMemo(() => {
+    if (!hoveredCode) return null;
+    const country = findCountryByCode(hoveredCode);
     return {
-      code: hoveredCountryCode,
-      name: polishName || hoveredCountryName || 'Nieznany',
+      code: hoveredCode,
+      name: country?.name || getPolishName(hoveredCode),
       flag: country?.flagEmoji || '🌍',
-      countryDetails: country,
     };
-  }, [hoveredCountryCode, hoveredCountryName]);
+  }, [hoveredCode]);
 
-  const hoveredStatus = hoveredCountryCode ? statusByCode.get(hoveredCountryCode) : null;
+  const hoveredStatus = hoveredCode ? statusByCode.get(hoveredCode) : null;
   const selectedStatus = selectedCountry?.code ? statusByCode.get(selectedCountry.code) : null;
 
-  const isLoading = loading || statusesLoading;
-
-  if (isLoading) {
+  if (loading || statusesLoading) {
     return (
       <div className="relative w-full h-[500px] md:h-[600px] lg:h-[650px] rounded-2xl overflow-hidden flex items-center justify-center" style={{ background: colors.ocean }}>
         <div className="flex flex-col items-center gap-3">
@@ -319,14 +224,12 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
   return (
     <div className="relative w-full h-[500px] md:h-[600px] lg:h-[650px] rounded-2xl overflow-hidden">
       {/* Hover tooltip */}
-      {hoveredCountryData && !selectedCountry && (
+      {hoveredData && !selectedCountry && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] px-4 py-2 bg-card/95 backdrop-blur-md rounded-xl shadow-lg border border-border/50 pointer-events-none animate-fade-in">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">{hoveredCountryData.flag}</span>
+            <span className="text-2xl">{hoveredData.flag}</span>
             <div>
-              <p className="font-display font-bold text-foreground">
-                {hoveredCountryData.countryDetails?.name || hoveredCountryData.name}
-              </p>
+              <p className="font-display font-bold text-foreground">{hoveredData.name}</p>
               <p className={`text-xs font-body ${hoveredStatus === 'available' ? 'text-green-600' : 'text-muted-foreground'}`}>
                 {hoveredStatus === 'available' ? '✓ Kliknij, aby odkryć' : hoveredStatus === 'coming_soon' ? '⏳ Wkrótce' : hoveredStatus === 'soon' ? '🔜 Niebawem' : 'Kliknij po ciekawostki'}
               </p>
@@ -359,34 +262,10 @@ export function WorldMapLeaflet({ onCountrySelect }: WorldMapLeafletProps) {
           onEachFeature={onEachFeature}
           ref={geoJsonRef}
         />
-
-        <SmallIslandsOverlay
-          geoData={geoData}
-          getCountryCode={getCountryCode}
-          statusByCode={statusByCode}
-          colors={colors}
-          hoveredCountryCode={hoveredCountryCode}
-          selectedCountryCode={selectedCountry?.code ?? null}
-          onHover={(code, name) => {
-            setHoveredCountryCode(code);
-            setHoveredCountryName(name);
-          }}
-          onHoverEnd={() => {
-            setHoveredCountryCode(null);
-            setHoveredCountryName(null);
-          }}
-          onSelect={(code, name) => {
-            if (selectedCountry?.code === code) {
-              handleCountrySelect(null, null);
-            } else {
-              handleCountrySelect(code, name);
-            }
-          }}
-        />
         <ZoomToCountry selectedCountry={selectedCountry} geoData={geoData} />
       </MapContainer>
       
-      {/* Country Fact Card - shows for ANY clicked country */}
+      {/* Country Fact Card */}
       {selectedCountry && (
         <CountryFactCard
           countryCode={selectedCountry.code}
