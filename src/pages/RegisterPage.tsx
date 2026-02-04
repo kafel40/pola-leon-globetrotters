@@ -183,7 +183,7 @@ export default function RegisterPage() {
                         <Link to="/prawne?tab=polityka" className="text-primary hover:underline" target="_blank">
                           Politykę Prywatności
                         </Link>
-                        {' '}*
+                        {' '}serwisu Pola i Leon *
                       </Label>
                       {errors.termsAccepted && (
                         <p className="text-sm text-destructive">{errors.termsAccepted}</p>
@@ -221,7 +221,7 @@ export default function RegisterPage() {
                 <Button 
                   type="submit" 
                   className="w-full h-12 rounded-xl font-display text-lg"
-                  disabled={isLoading}
+                  disabled={isLoading || !termsAccepted}
                 >
                   {isLoading ? (
                     <>
@@ -249,11 +249,11 @@ export default function RegisterPage() {
               </div>
 
               <p className="mt-4 text-center text-xs text-muted-foreground font-body leading-relaxed">
-                Rejestrując się lub logując, akceptujesz nasz{' '}
+                Logując się przez Google lub Apple, akceptujesz{' '}
                 <Link to="/prawne?tab=regulamin" className="text-primary hover:underline">
                   Regulamin
                 </Link>
-                {' '}oraz{' '}
+                {' '}i{' '}
                 <Link to="/prawne?tab=polityka" className="text-primary hover:underline">
                   Politykę Prywatności
                 </Link>

@@ -146,11 +146,11 @@ export default function LoginPage() {
               </div>
 
               <p className="mt-4 text-center text-xs text-muted-foreground font-body leading-relaxed">
-                Rejestrując się lub logując, akceptujesz nasz{' '}
+                Logując się, akceptujesz{' '}
                 <Link to="/prawne?tab=regulamin" className="text-primary hover:underline">
                   Regulamin
                 </Link>
-                {' '}oraz{' '}
+                {' '}i{' '}
                 <Link to="/prawne?tab=polityka" className="text-primary hover:underline">
                   Politykę Prywatności
                 </Link>
