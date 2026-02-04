@@ -145,6 +145,18 @@ export default function LoginPage() {
                 <AppleSignInButton />
               </div>
 
+              <p className="mt-4 text-center text-xs text-muted-foreground font-body leading-relaxed">
+                Rejestrując się lub logując, akceptujesz nasz{' '}
+                <Link to="/prawne?tab=regulamin" className="text-primary hover:underline">
+                  Regulamin
+                </Link>
+                {' '}oraz{' '}
+                <Link to="/prawne?tab=polityka" className="text-primary hover:underline">
+                  Politykę Prywatności
+                </Link>
+                .
+              </p>
+
               <div className="mt-6 text-center text-sm text-muted-foreground font-body">
                 Nie masz jeszcze konta?{' '}
                 <Link to="/rejestracja" className="text-primary hover:underline font-semibold">
