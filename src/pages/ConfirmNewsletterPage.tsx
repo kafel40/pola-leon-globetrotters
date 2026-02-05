@@ -7,6 +7,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, XCircle, Loader2, Mail, Home } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
+interface ConfirmationResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+  email?: string;
+}
+
 export default function ConfirmNewsletterPage() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
@@ -26,20 +33,24 @@ export default function ConfirmNewsletterPage() {
 
   const confirmSubscription = async (token: string) => {
     try {
-      const { data, error } = await supabase.functions.invoke('confirm-newsletter', {
-        body: { token },
+      // Use secure RPC function instead of edge function
+      // This prevents token exposure via SELECT queries
+      const { data, error } = await supabase.rpc('confirm_newsletter_subscription', {
+        _token: token,
       });
 
       if (error) {
         throw new Error(error.message);
       }
 
-      if (data.success) {
+      const result = data as unknown as ConfirmationResponse;
+
+      if (result?.success) {
         setStatus('success');
-        setMessage(data.message);
+        setMessage(result.message || 'Subskrypcja została potwierdzona.');
       } else {
         setStatus('error');
-        setMessage(data.error || 'Wystąpił błąd podczas potwierdzania subskrypcji.');
+        setMessage(result?.error || 'Wystąpił błąd podczas potwierdzania subskrypcji.');
       }
     } catch (err) {
       console.error('Confirmation error:', err);
