@@ -438,6 +438,10 @@ export type Database = {
         Args: { _ebook_id: string; _payment_verified?: boolean }
         Returns: boolean
       }
+      confirm_newsletter_subscription: {
+        Args: { _token: string }
+        Returns: Json
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
