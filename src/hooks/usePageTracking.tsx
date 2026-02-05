@@ -22,13 +22,15 @@ export function usePageTracking() {
     const trackPageVisit = async () => {
       try {
         const visitorId = getOrCreateVisitorId();
-
-        await supabase.from('page_visits').insert({
-          visitor_id: visitorId,
-          page_path: location.pathname,
-          user_agent: navigator.userAgent,
-          referrer: document.referrer || null,
-          user_id: user?.id || null,
+        
+        // Use secure RPC function instead of direct INSERT
+        // This validates and sanitizes inputs server-side
+        await (supabase.rpc as any)('log_page_visit', {
+          _visitor_id: visitorId,
+          _page_path: location.pathname,
+          _user_agent: navigator.userAgent?.substring(0, 512) || null,
+          _referrer: document.referrer?.substring(0, 512) || null,
+          _user_id: user?.id || null,
         });
       } catch (error) {
         // Silent fail - don't disrupt user experience

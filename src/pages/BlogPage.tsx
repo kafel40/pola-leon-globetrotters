@@ -21,6 +21,7 @@ interface BlogPost {
   category_id: string | null;
   tags: string[];
   published_at: string | null;
+  author_name?: string | null;
   category?: { name: string; slug: string } | null;
 }
 
@@ -63,14 +64,15 @@ export default function BlogPage() {
   };
 
   const fetchAllTags = async () => {
-    const { data } = await supabase
-      .from('blog_posts')
+    // Use secure view that doesn't expose author_id
+    const { data } = await (supabase
+      .from('public_blog_posts' as any)
       .select('tags')
-      .eq('is_published', true);
+    );
     
     const tagsSet = new Set<string>();
     data?.forEach(post => {
-      post.tags?.forEach((tag: string) => tagsSet.add(tag));
+      (post as any).tags?.forEach((tag: string) => tagsSet.add(tag));
     });
     setAllTags(Array.from(tagsSet).sort());
   };
@@ -78,14 +80,13 @@ export default function BlogPage() {
   const fetchPosts = async () => {
     setLoading(true);
     
-    let query = supabase
-      .from('blog_posts')
+    // Use secure view that hides author_id and provides author_name
+    let query = (supabase
+      .from('public_blog_posts' as any)
       .select(`
-        id, title, slug, excerpt, cover_image_url, category_id, tags, published_at,
-        blog_categories(name, slug)
+        id, title, slug, excerpt, cover_image_url, category_id, tags, published_at, author_name
       `, { count: 'exact' })
-      .eq('is_published', true)
-      .order('published_at', { ascending: false });
+      .order('published_at', { ascending: false }));
 
     if (searchQuery) {
       query = query.or(`title.ilike.%${searchQuery}%,excerpt.ilike.%${searchQuery}%`);
@@ -108,9 +109,29 @@ export default function BlogPage() {
     const { data, count, error } = await query.range(from, to);
 
     if (!error) {
-      setPosts(data?.map(post => ({
-        ...post,
-        category: post.blog_categories as Category | null
+      // Fetch categories separately for the posts we got
+      const categoryIds = [...new Set(data?.map((p: any) => p.category_id).filter(Boolean))];
+      let categoriesMap: Record<string, Category> = {};
+      
+      if (categoryIds.length > 0) {
+        const { data: cats } = await supabase
+          .from('blog_categories')
+          .select('id, name, slug')
+          .in('id', categoryIds);
+        cats?.forEach(c => { categoriesMap[c.id] = c; });
+      }
+      
+      setPosts(data?.map((post: any) => ({
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        cover_image_url: post.cover_image_url,
+        category_id: post.category_id,
+        tags: post.tags || [],
+        published_at: post.published_at,
+        author_name: post.author_name,
+        category: post.category_id ? categoriesMap[post.category_id] : null
       })) || []);
       setTotalCount(count || 0);
     }
