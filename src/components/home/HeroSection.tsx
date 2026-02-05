@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Compass, Sparkles } from 'lucide-react';
-
 export function HeroSection() {
-  return (
-    <section className="relative overflow-hidden bg-hero py-16 md:py-24 lg:py-32">
+  return <section className="relative overflow-hidden bg-hero py-16 md:py-24 lg:py-32">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-20 -right-20 w-72 h-72 bg-dreamy-peach rounded-full opacity-40 blur-3xl" />
@@ -25,17 +23,19 @@ export function HeroSection() {
           {/* Heading */}
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground animate-fade-in-up">
             Odkrywaj świat razem z{' '}
-            <span className="text-gradient">Polą i Leonem</span>
+            <span className="text-gradient">
+Polą i Leonem</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            Poznaj bajki edukacyjne z różnych zakątków świata. Każda historia to nowa przygoda, 
-            która uczy geografii, kultury i emocji w bezpieczny, radosny sposób.
-          </p>
+          <p className="text-lg md:text-xl text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{
+          animationDelay: '0.1s'
+        }}>Poznaj bajki edukacyjne z różnych zakątków świata. Każda historia to nowa przygoda, która uczy geografii, kultury i emocji w radosny sposób.</p>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{
+          animationDelay: '0.2s'
+        }}>
             <Button size="lg" asChild className="font-display text-lg px-8 py-6 rounded-2xl shadow-card hover:shadow-glow transition-all">
               <Link to="/mapa">
                 <Compass className="h-5 w-5 mr-2" />
@@ -50,9 +50,11 @@ export function HeroSection() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 animate-fade-in-up" style={{
+          animationDelay: '0.3s'
+        }}>
             <div className="p-4 rounded-2xl bg-card/50 backdrop-blur shadow-dreamy">
-              <div className="font-display text-2xl md:text-3xl font-bold text-primary">35</div>
+              <div className="font-display text-2xl md:text-3xl font-bold text-primary">20</div>
               <div className="text-sm text-muted-foreground font-body">krajów</div>
             </div>
             <div className="p-4 rounded-2xl bg-card/50 backdrop-blur shadow-dreamy">
@@ -70,6 +72,5 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }

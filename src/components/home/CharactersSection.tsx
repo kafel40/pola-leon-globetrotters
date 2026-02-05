@@ -1,10 +1,8 @@
 import { Star, Heart, Lightbulb, Zap } from 'lucide-react';
 import polaImage from '@/assets/characters/pola.png';
 import leonImage from '@/assets/characters/leon.png';
-
 export function CharactersSection() {
-  return (
-    <section className="py-16 md:py-24 bg-background">
+  return <section className="py-16 md:py-24 bg-background">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -22,13 +20,7 @@ export function CharactersSection() {
             <div className="relative bg-card rounded-3xl p-8 shadow-card border border-border/50">
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0 w-20 h-20 rounded-full overflow-hidden bg-dreamy-lavender ring-4 ring-dreamy-lavender/50">
-                  <img 
-                    src={polaImage} 
-                    alt="Pola - 4-letnia bohaterka bajek" 
-                    className="w-full h-full object-cover object-top"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <img alt="Pola - 4-letnia bohaterka bajek" className="w-full h-full object-cover object-top" loading="lazy" decoding="async" src="/lovable-uploads/f8e25d7e-2aa7-4289-a144-bf1f337e4664.png" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Pola</h3>
@@ -58,13 +50,7 @@ export function CharactersSection() {
             <div className="relative bg-card rounded-3xl p-8 shadow-card border border-border/50">
               <div className="flex items-start gap-6">
                 <div className="flex-shrink-0 w-20 h-20 rounded-full overflow-hidden bg-dreamy-mint ring-4 ring-dreamy-mint/50">
-                  <img 
-                    src={leonImage} 
-                    alt="Leon - 2-letni bohater bajek" 
-                    className="w-full h-full object-cover object-top"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <img alt="Leon - 2-letni bohater bajek" className="w-full h-full object-cover object-top" loading="lazy" decoding="async" src="/lovable-uploads/1b39e4c5-42a2-44d9-bdb1-189bc24fd375.png" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Leon</h3>
@@ -89,6 +75,5 @@ export function CharactersSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
