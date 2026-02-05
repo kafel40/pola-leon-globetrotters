@@ -429,7 +429,35 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_blog_posts: {
+        Row: {
+          author_name: string | null
+          category_id: string | null
+          content: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          excerpt: string | null
+          id: string | null
+          is_published: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          og_image_url: string | null
+          published_at: string | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       admin_restore_user: { Args: { _user_id: string }; Returns: boolean }

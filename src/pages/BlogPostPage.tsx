@@ -25,6 +25,7 @@ interface BlogPost {
   meta_title: string | null;
   meta_description: string | null;
   og_image_url: string | null;
+  author_name?: string | null;
   category?: { name: string; slug: string } | null;
 }
 
@@ -43,22 +44,45 @@ export default function BlogPostPage() {
 
   const fetchPost = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from('blog_posts')
+    // Use secure view that hides author_id and provides author_name
+    const { data, error } = await (supabase
+      .from('public_blog_posts' as any)
       .select(`
-        *,
-        blog_categories(name, slug)
+        id, title, slug, excerpt, content, cover_image_url, category_id, tags, 
+        published_at, meta_title, meta_description, og_image_url, author_name
       `)
       .eq('slug', slug)
-      .eq('is_published', true)
-      .single();
+      .single());
 
     if (error || !data) {
       setNotFound(true);
     } else {
+      // Fetch category separately
+      let category: { name: string; slug: string } | null = null;
+      if ((data as any).category_id) {
+        const { data: cat } = await supabase
+          .from('blog_categories')
+          .select('name, slug')
+          .eq('id', (data as any).category_id)
+          .single();
+        category = cat;
+      }
+      
       setPost({
-        ...data,
-        category: data.blog_categories as { name: string; slug: string } | null
+        id: (data as any).id,
+        title: (data as any).title,
+        slug: (data as any).slug,
+        excerpt: (data as any).excerpt,
+        content: (data as any).content,
+        cover_image_url: (data as any).cover_image_url,
+        category_id: (data as any).category_id,
+        tags: (data as any).tags || [],
+        published_at: (data as any).published_at,
+        meta_title: (data as any).meta_title,
+        meta_description: (data as any).meta_description,
+        og_image_url: (data as any).og_image_url,
+        author_name: (data as any).author_name,
+        category
       });
     }
     setLoading(false);
