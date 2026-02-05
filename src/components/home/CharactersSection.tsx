@@ -24,7 +24,7 @@ export function CharactersSection() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Pola</h3>
-                  <p className="text-sm text-accent-foreground font-body mb-3">4 lata</p>
+                  <p className="text-sm text-accent-foreground font-body mb-3"> 5 lat</p>
                   <p className="text-muted-foreground font-body leading-relaxed">
                     Starsza, spokojna i bardzo ciekawa świata. Pola uwielbia zadawać pytania i pełni rolę przewodniczki dla Leona. Zawsze chętnie tłumaczy bratu nowe rzeczy.
                   </p>
@@ -54,7 +54,7 @@ export function CharactersSection() {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-display text-2xl font-bold text-foreground mb-1">Leon</h3>
-                  <p className="text-sm text-secondary-foreground font-body mb-3">2 lata</p>
+                  <p className="text-sm text-secondary-foreground font-body mb-3">   3 lata</p>
                   <p className="text-muted-foreground font-body leading-relaxed">
                     Młodszy, żywiołowy i pełen emocji. Leon uczy się świata przez doświadczenie i zabawę. Wszędzie widzi przygodę i radość!
                   </p>
