@@ -344,6 +344,11 @@ export default function AdminPage() {
               <AdminGeoJsonVerificationSection />
             </TabsContent>
 
+            {/* Vouchers Tab */}
+            <TabsContent value="vouchers">
+              <AdminVouchersSection />
+            </TabsContent>
+
             {/* Blog Tab */}
             <TabsContent value="blog">
               <AdminBlogSection />
