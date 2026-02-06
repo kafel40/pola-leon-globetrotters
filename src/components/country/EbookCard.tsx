@@ -24,6 +24,8 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
   const [downloading, setDownloading] = useState<string | null>(null);
   const [acquiring, setAcquiring] = useState(false);
   const [addingToLibrary, setAddingToLibrary] = useState(false);
+  const [voucherCode, setVoucherCode] = useState('');
+  const { validateVoucher, clearVoucher, loading: voucherLoading, result: voucherResult } = useVoucher();
 
   const hasPdf = !!ebook.pdf_url;
   const hasEpub = !!ebook.epub_url;
