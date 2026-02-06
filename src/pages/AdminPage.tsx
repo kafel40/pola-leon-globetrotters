@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText, Palette, Globe } from 'lucide-react';
+import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText, Palette, Globe, Ticket } from 'lucide-react';
 import { countries } from '@/data/countries';
 import { Link, Navigate } from 'react-router-dom';
 import { AdminKPISection } from '@/components/admin/AdminKPISection';
@@ -22,6 +22,7 @@ import { AdminVisitsChart } from '@/components/admin/AdminVisitsChart';
 import { AdminBlogSection } from '@/components/admin/AdminBlogSection';
 import { AdminCountriesSection } from '@/components/admin/AdminCountriesSection';
 import { AdminGeoJsonVerificationSection } from '@/components/admin/AdminGeoJsonVerificationSection';
+import { AdminVouchersSection } from '@/components/admin/AdminVouchersSection';
 
 interface Ebook {
   id: string;
