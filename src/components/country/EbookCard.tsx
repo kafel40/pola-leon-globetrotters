@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { FileText, BookOpen, Headphones, ShoppingCart, Loader2, Library, Palette } from 'lucide-react';
+import { FileText, BookOpen, Headphones, ShoppingCart, Loader2, Library, Palette, Ticket, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Ebook } from '@/hooks/useCountryEbooks';
 import { useAuth } from '@/hooks/useAuth';
 import { useAudioPlayer } from '@/components/audio/AudioPlayerContext';
 import { usePdfViewer } from '@/components/pdf/PdfViewerContext';
+import { useVoucher, VoucherResult } from '@/hooks/useVoucher';
 import { Link } from 'react-router-dom';
 interface EbookCardProps {
   ebook: Ebook;
