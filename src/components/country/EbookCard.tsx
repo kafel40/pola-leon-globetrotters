@@ -235,13 +235,77 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
           {/* Price or Free badge */}
           {isPaid && !isOwned ? (
             <div className="mb-3">
-              <span className="text-lg font-bold text-primary">{price.toFixed(2)} PLN</span>
+              {hasDiscount ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm line-through text-muted-foreground">{price.toFixed(2)} PLN</span>
+                  <span className="text-lg font-bold text-primary">{displayPrice.toFixed(2)} PLN</span>
+                  <Badge variant="secondary" className="text-xs">
+                    -{voucherResult?.discount_type === 'percentage' 
+                      ? `${voucherResult.discount_value}%` 
+                      : `${voucherResult?.discount_applied?.toFixed(2)} PLN`}
+                  </Badge>
+                </div>
+              ) : (
+                <span className="text-lg font-bold text-primary">{price.toFixed(2)} PLN</span>
+              )}
             </div>
           ) : (
             <div className="mb-3">
               <span className="text-sm font-medium text-secondary-foreground bg-secondary/50 px-2 py-1 rounded-full">
                 {isOwned ? '✓ W bibliotece' : 'Bezpłatnie'}
               </span>
+            </div>
+          )}
+
+          {/* Voucher input - only for paid, not-owned ebooks when user is logged in */}
+          {user && isPaid && !isOwned && (
+            <div className="mb-3">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Ticket className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    value={voucherCode}
+                    onChange={(e) => {
+                      setVoucherCode(e.target.value.toUpperCase());
+                      if (voucherResult) clearVoucher();
+                    }}
+                    placeholder="Kod zniżkowy"
+                    className="pl-9 h-9 font-mono uppercase text-sm"
+                  />
+                </div>
+                {voucherResult?.valid ? (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={handleClearVoucher}
+                    className="h-9"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={handleApplyVoucher}
+                    disabled={voucherLoading || !voucherCode.trim()}
+                    className="h-9"
+                  >
+                    {voucherLoading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Check className="h-4 w-4" />
+                    )}
+                  </Button>
+                )}
+              </div>
+              {voucherResult && !voucherResult.valid && (
+                <p className="text-xs text-destructive mt-1">{voucherResult.error}</p>
+              )}
+              {voucherResult?.valid && (
+                <p className="text-xs text-secondary-foreground mt-1">
+                  ✓ Kod zastosowany
+                </p>
+              )}
             </div>
           )}
 
@@ -337,7 +401,7 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
           ) : (
             <Button size="sm" onClick={handleBuy}>
               <ShoppingCart className="mr-2 h-4 w-4" />
-              Kup za {price.toFixed(2)} PLN
+              Kup za {displayPrice.toFixed(2)} PLN
             </Button>
           )}
         </div>
