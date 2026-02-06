@@ -182,6 +182,20 @@ export function EbookCard({ ebook, isOwned, onAcquire }: EbookCardProps) {
     });
   };
 
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) return;
+    await validateVoucher(voucherCode, ebook.id);
+  };
+
+  const handleClearVoucher = () => {
+    setVoucherCode('');
+    clearVoucher();
+  };
+
+  // Calculate display price considering voucher
+  const displayPrice = voucherResult?.valid ? voucherResult.final_price! : price;
+  const hasDiscount = voucherResult?.valid && voucherResult.final_price! < price;
+
   if (!hasAnyFile) return null;
 
   return (
