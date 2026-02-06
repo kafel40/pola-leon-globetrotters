@@ -298,7 +298,7 @@ export default function AdminPage() {
           </div>
 
           <Tabs defaultValue="dashboard" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex">
+            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -310,6 +310,10 @@ export default function AdminPage() {
               <TabsTrigger value="ebooks" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 <span className="hidden sm:inline">Bajki</span>
+              </TabsTrigger>
+              <TabsTrigger value="vouchers" className="flex items-center gap-2">
+                <Ticket className="h-4 w-4" />
+                <span className="hidden sm:inline">Vouchery</span>
               </TabsTrigger>
               <TabsTrigger value="blog" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
