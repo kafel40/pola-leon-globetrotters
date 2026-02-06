@@ -427,6 +427,107 @@ export type Database = {
         }
         Relationships: []
       }
+      voucher_uses: {
+        Row: {
+          discount_applied: number
+          ebook_id: string
+          id: string
+          used_at: string
+          user_id: string
+          voucher_id: string
+        }
+        Insert: {
+          discount_applied?: number
+          ebook_id: string
+          id?: string
+          used_at?: string
+          user_id: string
+          voucher_id: string
+        }
+        Update: {
+          discount_applied?: number
+          ebook_id?: string
+          id?: string
+          used_at?: string
+          user_id?: string
+          voucher_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "voucher_uses_ebook_id_fkey"
+            columns: ["ebook_id"]
+            isOneToOne: false
+            referencedRelation: "ebooks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "voucher_uses_voucher_id_fkey"
+            columns: ["voucher_id"]
+            isOneToOne: false
+            referencedRelation: "vouchers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vouchers: {
+        Row: {
+          code: string
+          created_at: string
+          discount_type: Database["public"]["Enums"]["discount_type"]
+          discount_value: number
+          ebook_id: string | null
+          id: string
+          is_active: boolean
+          max_uses: number | null
+          max_uses_per_user: number
+          min_price: number
+          updated_at: string
+          used_count: number
+          valid_from: string
+          valid_until: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_type?: Database["public"]["Enums"]["discount_type"]
+          discount_value?: number
+          ebook_id?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          max_uses_per_user?: number
+          min_price?: number
+          updated_at?: string
+          used_count?: number
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_type?: Database["public"]["Enums"]["discount_type"]
+          discount_value?: number
+          ebook_id?: string | null
+          id?: string
+          is_active?: boolean
+          max_uses?: number | null
+          max_uses_per_user?: number
+          min_price?: number
+          updated_at?: string
+          used_count?: number
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vouchers_ebook_id_fkey"
+            columns: ["ebook_id"]
+            isOneToOne: false
+            referencedRelation: "ebooks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       public_blog_posts: {
@@ -471,10 +572,15 @@ export type Database = {
         Returns: Json
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      validate_voucher: {
+        Args: { _code: string; _ebook_id: string; _user_id?: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "user"
       country_status: "available" | "coming_soon" | "soon" | "none"
+      discount_type: "percentage" | "fixed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -604,6 +710,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "user"],
       country_status: ["available", "coming_soon", "soon", "none"],
+      discount_type: ["percentage", "fixed"],
     },
   },
 } as const

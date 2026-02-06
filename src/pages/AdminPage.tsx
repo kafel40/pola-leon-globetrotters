@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText, Palette, Globe } from 'lucide-react';
+import { Loader2, Plus, Trash2, Edit, Upload, BookOpen, LayoutDashboard, Users, Megaphone, FileText, Palette, Globe, Ticket } from 'lucide-react';
 import { countries } from '@/data/countries';
 import { Link, Navigate } from 'react-router-dom';
 import { AdminKPISection } from '@/components/admin/AdminKPISection';
@@ -22,6 +22,7 @@ import { AdminVisitsChart } from '@/components/admin/AdminVisitsChart';
 import { AdminBlogSection } from '@/components/admin/AdminBlogSection';
 import { AdminCountriesSection } from '@/components/admin/AdminCountriesSection';
 import { AdminGeoJsonVerificationSection } from '@/components/admin/AdminGeoJsonVerificationSection';
+import { AdminVouchersSection } from '@/components/admin/AdminVouchersSection';
 
 interface Ebook {
   id: string;
@@ -297,7 +298,7 @@ export default function AdminPage() {
           </div>
 
           <Tabs defaultValue="dashboard" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex">
+            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden sm:inline">Dashboard</span>
@@ -309,6 +310,10 @@ export default function AdminPage() {
               <TabsTrigger value="ebooks" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 <span className="hidden sm:inline">Bajki</span>
+              </TabsTrigger>
+              <TabsTrigger value="vouchers" className="flex items-center gap-2">
+                <Ticket className="h-4 w-4" />
+                <span className="hidden sm:inline">Vouchery</span>
               </TabsTrigger>
               <TabsTrigger value="blog" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
@@ -337,6 +342,11 @@ export default function AdminPage() {
             <TabsContent value="countries" className="space-y-6">
               <AdminCountriesSection />
               <AdminGeoJsonVerificationSection />
+            </TabsContent>
+
+            {/* Vouchers Tab */}
+            <TabsContent value="vouchers">
+              <AdminVouchersSection />
             </TabsContent>
 
             {/* Blog Tab */}
