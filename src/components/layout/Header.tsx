@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logoAvatar from '@/assets/logo-avatar.png';
 import { Menu, Globe, BookOpen, Users, Map, ChevronDown, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
@@ -33,9 +34,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-display text-lg font-bold transition-transform group-hover:scale-105">
-            PL
-          </div>
+          <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover transition-transform group-hover:scale-105" />
           <span className="hidden sm:block font-display text-xl font-bold text-foreground">
             Pola i Leon
           </span>
@@ -126,9 +125,7 @@ export function Header() {
           <SheetContent side="right" className="w-[300px] sm:w-[350px] overflow-y-auto">
             <div className="flex flex-col gap-6 mt-8 pb-8">
               <div className="flex items-center gap-2 mb-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-display text-lg font-bold">
-                  PL
-                </div>
+                <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover" />
                 <span className="font-display text-xl font-bold">Pola i Leon</span>
               </div>
 

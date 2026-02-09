@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import logoAvatar from '@/assets/logo-avatar.png';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,9 +12,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground font-display text-lg font-bold">
-                PL
-              </div>
+              <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover" />
               <span className="font-display text-xl font-bold">Pola i Leon</span>
             </Link>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">
