@@ -24,4 +24,18 @@ export default defineConfig(({ mode }) => ({
     include: ['react', 'react-dom', 'leaflet', 'react-leaflet', '@react-leaflet/core'],
     force: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-popover', '@radix-ui/react-tabs', '@radix-ui/react-toast', '@radix-ui/react-tooltip'],
+          'vendor-map': ['leaflet', 'react-leaflet', '@react-leaflet/core'],
+          'vendor-pdf': ['pdfjs-dist', '@react-pdf-viewer/core', '@react-pdf-viewer/default-layout'],
+          'vendor-charts': ['recharts'],
+          'vendor-query': ['@tanstack/react-query'],
+        },
+      },
+    },
+  },
 }));
