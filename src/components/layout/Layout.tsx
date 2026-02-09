@@ -1,8 +1,10 @@
-import { ReactNode } from 'react';
+import { ReactNode, lazy, Suspense } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { AnnouncementBar } from './AnnouncementBar';
-import { CookieConsent } from './CookieConsent';
+
+// Lazy load CookieConsent - not critical for initial render
+const CookieConsent = lazy(() => import('./CookieConsent').then(m => ({ default: m.CookieConsent })));
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,7 +19,9 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
-      <CookieConsent />
+      <Suspense fallback={null}>
+        <CookieConsent />
+      </Suspense>
     </div>
   );
 }
