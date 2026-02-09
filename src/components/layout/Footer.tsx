@@ -12,7 +12,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover" />
+              <img src={logoAvatar} alt="Pola i Leon" className="h-12 w-12 rounded-full object-cover" />
               <span className="font-display text-xl font-bold">Pola i Leon</span>
             </Link>
             <p className="text-sm text-muted-foreground font-body leading-relaxed">

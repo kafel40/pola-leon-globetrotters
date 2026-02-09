@@ -34,7 +34,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover transition-transform group-hover:scale-105" />
+          <img src={logoAvatar} alt="Pola i Leon" className="h-12 w-12 rounded-full object-cover transition-transform group-hover:scale-105" />
           <span className="hidden sm:block font-display text-xl font-bold text-foreground">
             Pola i Leon
           </span>
@@ -125,7 +125,7 @@ export function Header() {
           <SheetContent side="right" className="w-[300px] sm:w-[350px] overflow-y-auto">
             <div className="flex flex-col gap-6 mt-8 pb-8">
               <div className="flex items-center gap-2 mb-4">
-                <img src={logoAvatar} alt="Pola i Leon" className="h-10 w-10 rounded-xl object-cover" />
+                <img src={logoAvatar} alt="Pola i Leon" className="h-12 w-12 rounded-full object-cover" />
                 <span className="font-display text-xl font-bold">Pola i Leon</span>
               </div>
 
