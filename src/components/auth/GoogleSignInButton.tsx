@@ -11,8 +11,14 @@ export function GoogleSignInButton() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      const { error } = await lovable.auth.signInWithOAuth('google', {
+      const { error } = await (lovable.auth.signInWithOAuth as (
+        provider: string,
+        opts?: { redirect_uri?: string; extraParams?: Record<string, string> }
+      ) => Promise<{ error?: { message: string } | null }>)('google', {
         redirect_uri: window.location.origin,
+        extraParams: {
+          hl: 'pl',
+        },
       });
 
       if (error) {
